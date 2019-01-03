@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec"
+    "test": "./node_modules/.bin/mocha --reporter spec && ./node_modules/.bin/jshint"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "istanbul": "^0.4.5",
+    "jshint": "^2.9.7",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.9",
     "request": "^2.88.0",
