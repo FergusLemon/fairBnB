@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/FergusLemon/fairBnB/issues"
   },
-  "homepage": "https://github.com/FergusLemon/fairBnB#readme"
+  "homepage": "https://github.com/FergusLemon/fairBnB#readme",
+  "devDependencies": {
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.2.0"
+  }
 }
