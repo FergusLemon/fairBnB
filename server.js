@@ -1,8 +1,10 @@
 var app = require('./app');
 var port = process.env.PORT || 3000;
+app.set('view engine', 'pug');
 
 app.get('/', function(req, res) {
-  res.status(200).send("Checking nodemon works.");
+  res.render('index');
+  res.status(200);
 });
 
 var server = app.listen(port, function() {
