@@ -1,5 +1,10 @@
 # FairBnB
 
+### Build Status
+[![Build Status](https://travis-ci.org/FergusLemon/fairBnB.svg?branch=master)](https://travis-ci.org/FergusLemon/fairBnB)
+
+Travis CI was chosen for continuous integration testing on this project.
+
 ### Client Specifications
 
 #### Headline specifications
