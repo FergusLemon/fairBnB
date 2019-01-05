@@ -8,13 +8,17 @@ describe("Homepage Test", function() {
     return driver.quit();
   });
 
+  it("opens the FairBnB website", function() {
+    return driver.get("localhost:3000");
+  });
+
   it("has 'FairBnB' as a title", function() {
-    driver.get("localhost:3000");
-    var title = driver.getTitle().then(function(title) {
-      return expect(title).to.equal("FairBnB");
-    });
-    process.on('unhandledRejection', function(reason, promise) {
-      console.log('Unhandled Rejection at:', reason.stack || reason);
+    return driver.getTitle()
+    .then(function(title) {
+      expect(title).to.equal("FairBnB");
+    })
+    .catch(function(reason) {
+      console.log("The title of the page is not 'FairBnB'.");
     });
   });
 });
