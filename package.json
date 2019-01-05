@@ -7,8 +7,14 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha --reporter spec && ./node_modules/.bin/jshint"
+    "test": "./node_modules/.bin/mocha --reporter spec",
+    "jshint": "./node_modules/.bin/jshint",
+    "coverage": "istanbul cover tape ./test/*.js && istanbul check-coverage --statements 100 --functions 100 --lines 100 --branches 100"
   },
+  "pre-commit": [
+    "jshint",
+    "coverage"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/FergusLemon/fairBnB.git"
@@ -25,6 +31,7 @@
     "jshint": "^2.9.7",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.9",
+    "pre-commit": "^1.2.2",
     "request": "^2.88.0",
     "sinon": "^7.2.2",
     "webpack": "^4.28.3",
@@ -36,6 +43,7 @@
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "mongoose": "^5.4.1",
+    "pug": "^2.0.3",
     "validator": "^10.10.0"
   }
 }
