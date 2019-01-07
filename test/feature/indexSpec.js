@@ -15,7 +15,7 @@ describe("Homepage Test", function() {
   it("has 'FairBnB' as a title", function() {
     return driver.getTitle()
     .then(function(title) {
-      expect(title).to.equal("FairBnB");
+      expect(title).to.equal("TESTTEST");
     })
     .catch(function(reason) {
       console.log("The title of the page is not 'FairBnB'.");

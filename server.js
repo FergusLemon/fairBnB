@@ -1,9 +1,10 @@
 var app = require('./app');
 var port = process.env.PORT || 3000;
-app.set('view engine', 'pug');
+var path = require('path');
+//app.set('view engine', 'pug');
 
 app.get('/', function(req, res) {
-  res.render('index');
+  res.sendFile(path.join(__dirname + '/views/index.html'));
   res.status(200);
 });
 
