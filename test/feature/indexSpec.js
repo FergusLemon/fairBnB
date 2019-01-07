@@ -1,3 +1,4 @@
+'use strict';
 const { Builder, By, Key, until } = require('selenium-webdriver');
 var chrome = require('selenium-webdriver/chrome');
 var driver = new Builder().forBrowser('chrome').build();
