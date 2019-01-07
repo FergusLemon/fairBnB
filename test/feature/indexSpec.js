@@ -41,6 +41,6 @@ describe("The homepage", function() {
       } catch (err) {
           console.log("The sign up link does not go to the new user registration page.");
       }
-      });
+    });
   });
 });
