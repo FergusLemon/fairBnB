@@ -5,6 +5,19 @@
 
 Travis CI was chosen for continuous integration testing on this project.
 
+### Technologies Used
+##### Languages
+   - Javascript
+
+##### Back-end
+   - NodeJs as the runtime environment and software platform to build the app and start up a web-server.
+   - Express as the web-app framework and for setting up the web-server, routing, HTML templating etc...
+   - Pug for the HTML template.
+            
+##### Database 
+   - MongoDB with Mongoose as the ORM.
+
+
 ### Client Specifications
 
 #### Headline specifications
@@ -33,4 +46,3 @@ Travis CI was chosen for continuous integration testing on this project.
    - Their request to book a space is confirmed; and
    - Their request to book a space is denied.
 10. A 'chat' functionality once a space has been booked, allowing users whose space-booking request has been confirmed to chat with the user that owns that space.
-11. Basic payment implementation though Stripe.
