@@ -50,14 +50,23 @@ describe("The user registration page", function() {
       console.log("Error message for developers: " + err);
     }
   });
-  it("has a submit button that takes a user back to the homepage", async function() {
-    await driver.findElement(By.id("register")).click();
-    try {
-      var url = await driver.getCurrentUrl();
-      expect(url).to.equal("http://localhost:3000/");
-    } catch (err) {
-      console.log("The user was not taken back to the homepage.");
+
+  describe("when a valid sign up occurs", function() {
+    it("shows the user a welcome message", async function() {
+      await driver.get("http://localhost:3000/user/new");
+      await driver.findElement(By.id("username")).sendKeys("test@test.com");
+      var username = await driver.findElement(By.id("username")).getAttribute("value");
+      await driver.findElement(By.id("password")).sendKeys("p@ssW0rd");
+      await driver.findElement(By.id("firstname")).sendKeys("Tess");
+      await driver.findElement(By.id("lastname")).sendKeys("User");
+      await driver.findElement(By.id("register")).click();
+      var message = await driver.findElement(By.id("message")).getText();
+      try {
+        expect(message).to.equal("Welcome " + username + "!");
+      } catch (err) {
+      console.log("The user was not shown a welcome message.");
       console.log("Error message for developers: " + err);
-    }
+      }
+    });
   });
 });
