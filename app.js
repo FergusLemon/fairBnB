@@ -11,6 +11,6 @@ app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'pug');
 
 app.use('/', index);
-app.use('/user', user);
+app.use('/users', user);
 
 module.exports = app;

@@ -9,7 +9,7 @@ const lastName = Selector('#lastname');
 
 
 fixture `New User Registration Test`
-  .page `http://localhost:3000/user/new`;
+  .page `http://localhost:3000/users/new`;
 
   test('Has a page title', async t => {
     await t
@@ -38,5 +38,5 @@ fixture `New User Registration Test`
     await fillOutForm(t)
     await t
       .click('#register')
-      .expect(Selector('#message').innerText).eql('Welcome test@testmail.com!');
+      .expect(Selector('#message').innerText).eql("Let's get started!");
   });
