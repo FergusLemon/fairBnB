@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title FairBnB
+  body
+    header
+      nav
+       a#sign-up(href="/user/new") Sign Up
+    form(action="/user/new", method="POST")
+      label(for="username") Username
+      input#username(type="email", name="username")
+      br
+      label(for="password") Password
+      input#password(type="password", name="password")
+      br
+      label(for="firstname") First Name
+      input#firstname(type="text", name="firstname")
+      br
+      label(for="lastname") Last name
+      input#lastname(type="text", name="lastname")
+      br
+      button#register(type="submit") Register
