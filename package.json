@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "nodemon --exec babel-node bin/www",
-    "test": "./node_modules/.bin/mocha --timeout 10000 --reporter spec ./test/* ./test/feature/*",
+    "test": "./node_modules/.bin/mocha --reporter spec ./test/; testcafe chrome test/feature/* --app \"node bin/www\"",
     "jshint": "./node_modules/.bin/jshint",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha"
   },
@@ -32,15 +32,14 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "chai": "^4.2.0",
-    "chromedriver": "^2.45.0",
     "istanbul": "^0.4.5",
     "jshint": "^2.9.7",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.9",
     "pre-commit": "^1.2.2",
     "request": "^2.88.0",
-    "selenium-webdriver": "^4.0.0-alpha.1",
     "sinon": "^7.2.2",
+    "testcafe": "^0.23.3",
     "webpack": "^4.28.3",
     "webpack-cli": "^3.2.0"
   },
