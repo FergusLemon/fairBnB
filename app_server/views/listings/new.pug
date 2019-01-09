@@ -1,0 +1,17 @@
+extends ../layout.pug
+
+block content
+  form#new-listing(action="/listings", method="POST")
+    label(for="name") Name
+    br
+    input#name(type="text", name="name")
+    br
+    label(for="price") Price Per Night
+    br
+    input#price(type="number", name="price")
+    br
+    label(for="description") Describe Your Property
+    br
+    textarea#description(form="new-listing", name="description")
+    br
+    button#create-listing(type="submit") Create Listing

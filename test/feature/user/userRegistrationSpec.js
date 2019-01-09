@@ -1,6 +1,6 @@
 'use strict';
 import { Selector } from 'testcafe';
-import { fillOutForm } from '../../helpers/testCafeHelpers';
+import { fillOutNewUserForm } from '../../helpers/testCafeHelpers';
 
 const username = Selector('#username');
 const password = Selector('#password');
@@ -25,7 +25,7 @@ fixture `New User Registration Test`
   });
 
   test('A new user can fill out his or her details', async t => {
-    await fillOutForm(t)
+    await fillOutNewUserForm(t)
     await t
       .expect(username.value).eql('test@testmail.com')
       .expect(password.value).eql('P@$$w0rdH3aVy')
@@ -35,7 +35,7 @@ fixture `New User Registration Test`
 
 
   test('A new user recieves a welcome messasge when they register', async t => {
-    await fillOutForm(t)
+    await fillOutNewUserForm(t)
     await t
       .click('#register')
       .expect(Selector('#message').innerText).eql("Let's get started!");
