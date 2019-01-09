@@ -1,16 +1,28 @@
 'use strict';
 
-function User(obj) {
+function User(userDetails) {
 
-  this.invalidUserDetails = function() {
-    if(!obj || !obj.username || !obj.firstname || !obj.lastname) return true;
+  this.properties = [];
+
+  this.invalidDetails = function() {
+    if(!userDetails || !userDetails.username ||
+    !userDetails.firstname || !userDetails.lastname) return true;
   };
 
-  if(this.invalidUserDetails()) throw new Error("A user must have a username,\
+  if(this.invalidDetails()) throw new Error("A user must have a username,\
  first name and a last name.");
 
   this.getUsername = function() {
-    return obj.username;
+    return userDetails.username;
+  };
+
+  this.addProperty = function(property) {
+    this.properties.push(property);
+    return true;
+  };
+
+  this.getProperties = function() {
+    return this.properties;
   };
 
 }

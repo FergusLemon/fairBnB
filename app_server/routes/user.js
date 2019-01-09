@@ -2,17 +2,17 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/new', function(req, res, next) {
-  res.render('user/new');
+  res.render('users/new');
 });
 
-router.post('/new', function(req, res, next) {
+router.post('/', function(req, res, next) {
   var username = req.body.username;
-  res.redirect('/user' + '/' + username);
+  res.redirect('/users' + '/' + username);
 });
 
 router.get('/:username', function(req, res, next) {
-  var welcome = "Welcome " + req.params.username + "!";
-  res.render('index', { welcomeMessage: welcome });
+  var welcome = "Let's get started!";
+  res.render('users/overview', { welcomeMessage: welcome });
 });
 
 module.exports = router;
