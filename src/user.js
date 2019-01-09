@@ -2,6 +2,8 @@
 
 function User(userDetails) {
 
+  this.properties = [];
+
   this.invalidDetails = function() {
     if(!userDetails || !userDetails.username ||
     !userDetails.firstname || !userDetails.lastname) return true;
@@ -12,6 +14,15 @@ function User(userDetails) {
 
   this.getUsername = function() {
     return userDetails.username;
+  };
+
+  this.addProperty = function(property) {
+    this.properties.push(property);
+    return true;
+  };
+
+  this.getProperties = function() {
+    return this.properties;
   };
 
 }
