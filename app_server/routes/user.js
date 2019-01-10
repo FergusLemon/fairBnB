@@ -1,18 +1,11 @@
 var express = require('express');
 var router = express.Router();
+var ctrlUser = require('../controllers/user');
 
-router.get('/new', function(req, res, next) {
-  res.render('users/new');
-});
+router.get('/new', ctrlUser.new);
 
-router.post('/', function(req, res, next) {
-  var username = req.body.username;
-  res.redirect('/users' + '/' + username);
-});
+router.post('/', ctrlUser.users);
 
-router.get('/:username', function(req, res, next) {
-  var welcome = "Let's get started!";
-  res.render('users/overview', { welcomeMessage: welcome });
-});
+router.get('/:username', ctrlUser.overview);
 
 module.exports = router;
