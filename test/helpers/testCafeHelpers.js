@@ -30,3 +30,9 @@ export async function fillOutNewListingForm(t) {
     .typeText(description, 'A nice test casa.')
     .typeText(price, String(100));
 };
+
+export async function createNewListing(t) {
+  await fillOutNewListingForm(t)
+  await t
+    .click('#create-listing');
+};
