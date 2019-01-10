@@ -1,6 +1,7 @@
 extends ../layout.pug
 block content
-  article#1
-    p#name Name: #{property.name}
-    p#description Description: #{property.description}
-    p#price Price Per Night: #{property.price}
+  each property, index in properties
+    article(id=index)
+      h4(id="name-"+index)= "Name: " + property.name
+      p(id="description-"+index)= "Description: " + property.description
+      p(id="price-"+index)= "Price Per Night: " + property.price
