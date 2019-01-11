@@ -8,4 +8,6 @@ router.post('/', ctrlListing.listings);
 
 router.get('/', ctrlListing.listings);
 
+router.get('/:listingName', ctrlListing.getListing);
+
 module.exports = router;
