@@ -1,5 +1,8 @@
 extends ../layout.pug
 
+block nav
+  a#sign-in(href="/session/new") Sign In
+
 block content
   form(action="/users", method="POST")
     label(for="username") Username

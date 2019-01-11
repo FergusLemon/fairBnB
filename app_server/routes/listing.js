@@ -6,4 +6,6 @@ router.get('/new', ctrlListing.new);
 
 router.post('/', ctrlListing.listings);
 
+router.get('/', ctrlListing.listings);
+
 module.exports = router;
