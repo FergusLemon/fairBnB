@@ -6,6 +6,7 @@ var index = require('./app_server/routes/index');
 var user = require('./app_server/routes/user');
 var listing = require('./app_server/routes/listing');
 var session = require('./app_server/routes/session');
+require('./app_server/models/db');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
