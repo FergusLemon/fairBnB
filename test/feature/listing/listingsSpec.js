@@ -51,6 +51,15 @@ fixture `Listings Page`
       .expect(Selector('#booking-end-date').value).eql("2019-12-31");
   })
 
+  test('The user is taken back to his or her profile page once a booking request is made', async t => {
+    await t
+    .click('#name-1')
+      .typeText('#booking-start-date', "2019-12-25")
+      .typeText('#booking-end-date', "2019-12-31")
+      .click('#booking-request')
+      .expect(Selector('#add-listing').exists).ok();
+  })
+
   test("When signed in a user should not see 'sign in' or 'sign up' links in the nav bar", async t => {
     await t
       .expect(Selector('#sign-in').exists).notOk()

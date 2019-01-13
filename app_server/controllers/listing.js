@@ -27,3 +27,7 @@ module.exports.getListing = function(req, res) {
     price: "100"
   });
 };
+
+module.exports.addBookingRequest = function(req, res) {
+  res.render('users/overview');
+};

@@ -7,8 +7,9 @@ block content
     h4(id="name-"+index)= "Name: " + name
     p(id="description-"+index)= "Description: " + description
     p(id="price-"+index)= "Price Per Night: " + price
-  input(id="booking-start-date", type="date")
-  br
-  input(id="booking-end-date", type="date")
-  br
-  button#booking-request(type="submit") Send Booking Request
+  form(action=":listing-id/booking-request/new", method="POST")
+    input(id="booking-start-date", type="date")
+    br
+    input(id="booking-end-date", type="date")
+    br
+    button#booking-request(type="submit") Send Booking Request
