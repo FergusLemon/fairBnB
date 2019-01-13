@@ -11,6 +11,9 @@ before_script:
   - sleep 3
   - fluxbox >/dev/null 2>&1 &
 
+after_success:
+  - npm run coveralls
+
 dist: trusty
 sudo: required
 

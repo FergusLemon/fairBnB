@@ -8,4 +8,8 @@ router.post('/', ctrlListing.listings);
 
 router.get('/', ctrlListing.listings);
 
+router.get('/:listingName', ctrlListing.getListing);
+
+router.post('/:listing-id/booking-request/new', ctrlListing.addBookingRequest);
+
 module.exports = router;

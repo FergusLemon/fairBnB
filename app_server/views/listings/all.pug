@@ -1,7 +1,11 @@
 extends ../layout.pug
+block nav
+  a#view-listings-nav(href="/listings") View Listings
+
 block content
   each property, index in properties
-    article(id=index)
-      h4(id="name-"+index)= "Name: " + property.name
-      p(id="description-"+index)= "Description: " + property.description
-      p(id="price-"+index)= "Price Per Night: " + property.price
+    a(id="property-"+index, href="/listings/" + property.name)
+      article(id=index)
+        h4(id="name-"+index)= "Name: " + property.name
+        p(id="description-"+index)= "Description: " + property.description
+        p(id="price-"+index)= "Price Per Night: " + property.price
