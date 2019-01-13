@@ -35,23 +35,20 @@ fixture `Listings Page`
       .expect(Selector('#booking-request').exists).ok();
   })
 
-  test('The user should be able to choose a start date for a booking', async t => {
+  test('The start and end date pickers should be empty by default', async t => {
     await t
       .click('#name-1')
-      .expect(Selector('#booking-start-date').exists).ok();
+      .expect(Selector('#booking-start-date').value).eql("")
+      .expect(Selector('#booking-end-date').value).eql("");
   })
 
-  test('The start date picker should be empty by default', async t => {
-    await t
-      .click('#name-1')
-      .expect(Selector('#booking-start-date').value).eql("");
-  })
-
-  test('The user should be able to choose a start date', async t => {
+  test('The user should be able to choose a start and an end date', async t => {
     await t
     .click('#name-1')
       .typeText('#booking-start-date', "2019-12-25")
-      .expect(Selector('#booking-start-date').value).eql("2019-12-25");
+      .typeText('#booking-end-date', "2019-12-31")
+      .expect(Selector('#booking-start-date').value).eql("2019-12-25")
+      .expect(Selector('#booking-end-date').value).eql("2019-12-31");
   })
 
   test("When signed in a user should not see 'sign in' or 'sign up' links in the nav bar", async t => {
