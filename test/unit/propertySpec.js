@@ -2,7 +2,7 @@
 
 describe("Property", function() {
 
-  var Property = require("../src/property");
+  var Property = require("../../src/property");
   var expect = require("chai").expect;
 
   var propertyDetails = {
