@@ -8,4 +8,6 @@ router.post('/', ctrlUser.users);
 
 router.get('/:username', ctrlUser.overview);
 
+router.get('/:user-id/booking-requests', ctrlUser.getBookingRequests);
+
 module.exports = router;

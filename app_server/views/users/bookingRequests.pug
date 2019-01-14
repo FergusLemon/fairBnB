@@ -1,0 +1,8 @@
+extends ../layout.pug
+block nav
+  a#view-listings-nav(href="/listings") View Listings
+
+block content
+  ul#inbound-booking-requests
+  each request, index in bookingRequests
+    li(id=index)= "Request for: " + request.propertyName + " received on: " + request.requestMadeDate
