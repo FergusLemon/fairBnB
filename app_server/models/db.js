@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+require('./users');
 
 var dbURI = 'mongodb://localhost/FairBNB';
 mongoose.connect(dbURI, {useNewUrlParser: true});
