@@ -8,9 +8,9 @@
   },
   "scripts": {
     "start": "nodemon --exec babel-node bin/www",
-    "test": "./node_modules/.bin/mocha --reporter spec ./test/database/*.js; testcafe chrome test/feature/* --app \"node bin/www\"",
+    "test": "./node_modules/.bin/mocha --reporter spec ./test/*Spec.js; testcafe chrome test/feature/* --app \"node bin/www\"",
     "jshint": "./node_modules/.bin/jshint",
-    "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
+    "coverage": "./node_modules/.bin/istanbul cover --include-all-sources test/**/*.js && instanbul check-coverage",
     "coveralls": "npm run coverage -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "pre-commit": [
