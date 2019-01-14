@@ -19,14 +19,11 @@ fixture `User Overview Page`
       .expect(Selector('#sign-up').exists).notOk();
   });
 
-  test("Has a 'add listing' option", async t => {
+  test("Has an overview of options available to the user", async t => {
     await t
-      .expect(Selector('#add-listing').innerText).eql("Add Listing");
-  });
-
-  test("Has a 'view listings' option", async t => {
-    await t
-      .expect(Selector('#view-listings').innerText).eql("View Listings");
+      .expect(Selector('#add-listing').innerText).eql("Add Listing")
+      .expect(Selector('#view-listings').innerText).eql("View Listings")
+      .expect(Selector('#booking-requests').innerText).eql("Booking Requests");
   });
 
   test("A user can see listings when they click on the 'view listings link'", async t => {
@@ -34,4 +31,11 @@ fixture `User Overview Page`
       .click('#view-listings')
       .expect(Selector('#name-1').exists).ok()
       .expect(Selector('#name-2').exists).ok();
+  });
+
+  test("A user can see his or her booking requests", async t => {
+    await t
+      .click('#booking-requests')
+      .expect(Selector('#inbound-booking-requests').exists).ok()
+      .expect(Selector('li').withAttribute('id', '0').innerText).contains("Request for: Test Casa");
   });
