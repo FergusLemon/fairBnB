@@ -1,29 +1,18 @@
 'use strict';
 const expect = require('chai').expect;
 const Listing = require('../app_server/models/listings');
-
-let listingDetails = {
+const ValidObject = require('./helpers/modelHelpers');
+const mongoose = require('mongoose');
+const ownerId = mongoose.Types.ObjectId();
+const details = {
   name: "Casa Test",
   description: "A delightful small test listing.",
-  price: 100
+  price: 100,
+  owner: ownerId
 };
+const validDetails = new ValidObject(details);
 
-let noName = {
-  description: listingDetails.description,
-  price: listingDetails.price
-};
-
-let noDescription = {
-  name: listingDetails.name,
-  price: listingDetails.price
-};
-
-let noPrice = {
-  name: listingDetails.name,
-  description: listingDetails.description
-};
-
-describe('name', () => {
+describe('A listing', () => {
   describe('when no details are provided', () => {
     it('is invalid', () => {
       let listing = new Listing();
@@ -32,60 +21,90 @@ describe('name', () => {
       });
     });
   });
-  describe('when no name is provided', () => {
-    it('is invalid', () => {
-      let listing = new Listing(noName);
-      listing.validate((err) => {
-        expect(err.errors.name).to.exist;
-      });
-    });
-  });
-  describe('when details are provided', () => {
-    it('is valid', () => {
-      let listing = new Listing(listingDetails);
-      listing.validate((err) => {
-        expect(err).to.equal(null);
-        expect(listing.name).to.equal(listingDetails.name);
-      });
-    });
-  });
-});
 
-describe('description', () => {
-  describe('when no description is provided', () => {
-    it('is invalid', () => {
-      let listing = new Listing(noDescription);
-      listing.validate((err) => {
-        expect(err.errors.description).to.exist;
+  describe('Name is required', () => {
+    describe('when not provided', () => {
+      it('is invalid', () => {
+        let validListing = new ValidObject(details);
+        let noName = validListing.removePath('name');
+        let listing = new Listing(noName);
+        listing.validate((err) => {
+          expect(err.errors.name).to.exist;
+        });
+      });
+    });
+    describe('when provided', () => {
+      it('is valid', () => {
+        let listing = new Listing(validDetails);
+        listing.validate((err) => {
+          expect(err).to.equal(null);
+          expect(listing.name).to.equal(validDetails.name);
+        });
       });
     });
   });
-  describe('when details are provided', () => {
-    it('is valid', () => {
-      let listing = new Listing(listingDetails);
-      listing.validate((err) => {
-        expect(err).to.equal(null);
-        expect(listing.description).to.equal(listingDetails.description);
-      });
-    });
-  });
-});
 
-describe('price', () => {
-  describe('when no price is provided', () => {
-    it('is invalid', () => {
-      let listing = new Listing(noPrice);
-      listing.validate((err) => {
-        expect(err.errors.price).to.exist;
+  describe('Description', () => {
+    describe('when not provided', () => {
+      it('is invalid', () => {
+        let validListing = new ValidObject(details);
+        let noDescription = validListing.removePath('description');
+        let listing = new Listing(noDescription);
+        listing.validate((err) => {
+          expect(err.errors.description).to.exist;
+        });
+      });
+    });
+    describe('when provided', () => {
+      it('is valid', () => {
+        let listing = new Listing(validDetails);
+        listing.validate((err) => {
+          expect(err).to.equal(null);
+          expect(listing.description).to.equal(validDetails.description);
+        });
       });
     });
   });
-  describe('when details are provided', () => {
-    it('is valid', () => {
-      let listing = new Listing(listingDetails);
-      listing.validate((err) => {
-        expect(err).to.equal(null);
-        expect(listing.price).to.equal(listingDetails.price);
+
+  describe('Price', () => {
+    describe('when not provided', () => {
+      it('is invalid', () => {
+        let validListing = new ValidObject(details);
+        let noPrice = validListing.removePath('price');
+        let listing = new Listing(noPrice);
+        listing.validate((err) => {
+          expect(err.errors.price).to.exist;
+        });
+      });
+    });
+    describe('when provided', () => {
+      it('is valid', () => {
+        let listing = new Listing(validDetails);
+        listing.validate((err) => {
+          expect(err).to.equal(null);
+          expect(listing.price).to.equal(validDetails.price);
+        });
+      });
+    });
+  });
+  describe('Owner', () => {
+    describe('when not provided', () => {
+      it('is invalid', () => {
+        let validListing = new ValidObject(details);
+        let noOwner = validListing.removePath('owner');
+        let listing = new Listing(noOwner);
+        listing.validate((err) => {
+          expect(err.errors.owner).to.exist;
+        });
+      });
+    });
+    describe('when provided', () => {
+      it('is valid', () => {
+        let listing = new Listing(validDetails);
+        listing.validate((err) => {
+          expect(err).to.equal(null);
+          expect(listing.owner).to.equal(validDetails.owner);
+        });
       });
     });
   });

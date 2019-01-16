@@ -1,124 +1,111 @@
 'use strict';
 const expect = require('chai').expect;
 const User = require('../app_server/models/users');
-
-let userDetails = {
-  username: "test@gmail.com",
+const ValidObject = require('./helpers/modelHelpers');
+const details = {
+  username: "test@testmail.com",
   password: "p@$$W0rd",
-  firstname: "First",
-  lastname: "Test",
-  phoneNumber: "+447778988989"
+  firstname: "Tess",
+  lastname: "User",
+  phoneNumber: "+447777777777"
 };
+const validDetails = new ValidObject(details);
 
-let noUsername = {
-  password: "p@$$W0rd",
-  firstname: userDetails.firstname,
-  lastname: userDetails.lastname
-};
-
-let noFirstName = {
-  username: userDetails.username,
-  password: "p@$$W0rd",
-  lastname: userDetails.lastname
-};
-
-let noLastName = {
-  username: userDetails.username,
-  password: "p@$$W0rd",
-  firstname: userDetails.firstname
-};
-
-let userDetailsNoPhone = {
-  username: "test@gmail.com",
-  password: "p@$$W0rd",
-  firstname: "First",
-  lastname: "Test"
-};
-
-describe('username', function() {
-  describe('when no details are provided', function() {
-    it('should be invalid', function() {
+describe('A user', () => {
+  describe('when no details are provided', () => {
+    it('should be invalid', () => {
       let user = new User();
-      user.validate(function(err) {
+      user.validate((err) => {
         expect(err.errors.username).to.exist;
       });
     })
   });
-  describe('when no username is provided', function() {
-    it('should be invalid', function() {
-      let user = new User(noUsername);
-      user.validate(function(err) {
-        expect(err.errors.username).to.exist;
+  describe('Username is required', () => {
+    describe('when not provided', () => {
+      it('should be invalid', () => {
+        let validUser = new ValidObject(details);
+        let noUsername = validUser.removePath('username');
+        let user = new User(noUsername);
+        user.validate((err) => {
+          expect(err.errors.username).to.exist;
+        });
+      });
+    });
+    describe('when provided', () => {
+      it('should be valid', () => {
+        let user = new User(validDetails);
+        user.validate((err) => {
+          expect(err).to.equal(null);
+          expect(user.username).to.equal(validDetails.username);
+        });
       });
     });
   });
-  describe('when a username is provided that does not already exist', function() {
-    it('should be valid', function() {
-      let user = new User(userDetails);
-      user.validate(function(err) {
-        expect(err).to.equal(null);
-        expect(user.username).to.equal(userDetails.username);
+
+  describe('First name is required', () => {
+    describe('when not provided', () => {
+      it('should be invalid', () => {
+        let validUser = new ValidObject(details);
+        let noFirstName = validUser.removePath('firstname');
+        let user = new User(noFirstName);
+        user.validate( (err) => {
+          expect(err.errors.firstname).to.exist;
+        });
+      });
+    });
+    describe('when provided', () => {
+      it('should be valid', () => {
+        let user = new User(validDetails);
+        user.validate((err) => {
+          expect(err).to.equal(null);
+          expect(user.firstname).to.equal(validDetails.firstname);
+        });
       });
     });
   });
-//  describe('when a username is provided that already exists', function() {
-//    it('should be invalid', function() {
-//      let user = new User(userDetails);
-//      let userCopy = new User(userDetails);
-//      userCopy.validate(function(err) {
-//        console.log(user);
-//        console.log(userCopy);
-//        expect(err.errors.username).to.exist;
-//      });
-//    });
-//  });
-});
 
-describe('firstname', function() {
-  it('should be invalid if no firstname is provided', function() {
-    let user = new User(noFirstName);
-    user.validate(function(err) {
-      expect(err.errors.firstname).to.exist;
+  describe('Last name is required', () => {
+    describe('when not provided', () => {
+      it('should be invalid', () => {
+        let validUser = new ValidObject(details);
+        let noLastName = validUser.removePath('lastname');
+        let user = new User(noLastName);
+        user.validate((err) => {
+          expect(err.errors.lastname).to.exist;
+        });
+      });
+    });
+    describe('when provided', () => {
+      it('should be valid', () => {
+        let user = new User(validDetails);
+        user.validate((err) => {
+          expect(err).to.equal(null);
+          expect(user.lastname).to.equal(validDetails.lastname);
+        });
+      });
     });
   });
-  it('should be valid when a firstname is provided', function() {
-    let user = new User(userDetails);
-    user.validate(function(err) {
-      expect(err).to.equal(null);
-      expect(user.firstname).to.equal(userDetails.firstname);
-    });
-  });
-});
 
-describe('lastname', function() {
-  it('should be invalid if no lastname is provided', function() {
-    let user = new User(noLastName);
-    user.validate(function(err) {
-      expect(err.errors.lastname).to.exist;
+  describe('Phone number is optional', () => {
+    describe('when provided', () => {
+      it('should be valid', () => {
+        let user = new User(validDetails);
+        user.validate((err) => {
+          expect(err).to.equal(null);
+          expect(user.phoneNumber).to.equal(validDetails.phoneNumber);
+        });
+      });
     });
-  });
-  it('should be valid when a lastname is provided', function() {
-    let user = new User(userDetails);
-    user.validate(function(err) {
-      expect(err).to.equal(null);
-      expect(user.lastname).to.equal(userDetails.lastname);
-    });
-  });
-});
-
-describe('phoneNumber', function() {
-  it('is optional, there should be no error if one is provided', function() {
-    let user = new User(userDetails);
-    user.validate(function(err) {
-      expect(err).to.equal(null);
-      expect(user.phoneNumber).to.equal(userDetails.phoneNumber);
-    });
-  });
-  it('is optional, there should be no error if one is not provided', function() {
-    let user = new User(userDetailsNoPhone);
-    user.validate(function(err) {
-      expect(err).to.equal(null);
-      expect(user.phoneNumber).to.equal(undefined);
+    describe('when not provided', () => {
+      it('should be valid', () => {
+        let validUser = new ValidObject(details);
+        let noPhone = validUser.removePath('phoneNumber');
+        let user = new User(noPhone);
+        user.validate((err) => {
+          expect(err).to.equal(null);
+          expect(user.phoneNumber).to.equal('');
+        });
+      });
     });
   });
 });
