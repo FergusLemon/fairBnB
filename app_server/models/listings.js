@@ -1,0 +1,15 @@
+'use strict';
+
+const mongoose = require('mongoose');
+const ObjectId = mongoose.Schema.Types.ObjectId;
+const BookingRequest = require('./bookingRequests');
+const bookingRequestSchema = BookingRequest.schema;
+const listingSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  description: { type: String, required: true },
+  price: { type: Number, required: true },
+  owner: { type: ObjectId, required: true },
+  bookingRequests: [bookingRequestSchema]
+});
+
+module.exports = mongoose.model('Listing', listingSchema);

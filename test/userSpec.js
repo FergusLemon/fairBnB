@@ -1,72 +1,111 @@
 'use strict';
+const expect = require('chai').expect;
+const User = require('../app_server/models/users');
+const ValidObject = require('./helpers/modelHelpers');
+const details = {
+  username: "test@testmail.com",
+  password: "p@$$W0rd",
+  firstname: "Tess",
+  lastname: "User",
+  phoneNumber: "+447777777777"
+};
+const validDetails = new ValidObject(details);
 
-describe("User", function() {
-
-  var User = require('../src/user');
-  var expect = require('chai').expect;
-  var sinon = require('sinon');
-
-  var userDetails = {
-    username: "test@gmail.com",
-    firstname: "First",
-    lastname: "Test"
-  };
-  var noUsername = {
-    firstname: userDetails.firstname,
-    lastname: userDetails.lastname
-  };
-  var noFirstName = {
-    username: userDetails.username,
-    lastname: userDetails.lastname
-  };
-  var noLastName = {
-    username: userDetails.username,
-    firstname: userDetails.firstname
-  };
-  var error = "A user must have a username, first name and a last name.";
-
-
-  describe("required details passed in to create a user", function() {
-    it("throws an error if no details are provided", function() {
-      var badConstruction = function() { var user = new User(); };
-      expect(badConstruction).to.throw(error);
+describe('A user', () => {
+  describe('when no details are provided', () => {
+    it('should be invalid', () => {
+      let user = new User();
+      user.validate((err) => {
+        expect(err.errors.username).to.exist;
+      });
+    })
+  });
+  describe('Username is required', () => {
+    describe('when not provided', () => {
+      it('should be invalid', () => {
+        let validUser = new ValidObject(details);
+        let noUsername = validUser.removePath('username');
+        let user = new User(noUsername);
+        user.validate((err) => {
+          expect(err.errors.username).to.exist;
+        });
+      });
     });
-    it("throws an error if no username is provided", function() {
-      var badConstruction = function() { var user = new User(noUsername); };
-      expect(badConstruction).to.throw(error);
-    });
-    it("throws an error if no first name is provided", function() {
-      var badConstruction = function() { var user = new User(noFirstName); };
-      expect(badConstruction).to.throw(error);
-    });
-    it("throws an error if no last name is provided", function() {
-      var badConstruction = function() { var user = new User(noLastName); };
-      expect(badConstruction).to.throw(error);
+    describe('when provided', () => {
+      it('should be valid', () => {
+        let user = new User(validDetails);
+        user.validate((err) => {
+          expect(err).to.equal(null);
+          expect(user.username).to.equal(validDetails.username);
+        });
+      });
     });
   });
 
-  describe("getUsername", function() {
-    it("returns a user's username", function() {
-      var user = new User(userDetails);
-      expect(user.getUsername()).to.equal(userDetails.username);
+  describe('First name is required', () => {
+    describe('when not provided', () => {
+      it('should be invalid', () => {
+        let validUser = new ValidObject(details);
+        let noFirstName = validUser.removePath('firstname');
+        let user = new User(noFirstName);
+        user.validate( (err) => {
+          expect(err.errors.firstname).to.exist;
+        });
+      });
+    });
+    describe('when provided', () => {
+      it('should be valid', () => {
+        let user = new User(validDetails);
+        user.validate((err) => {
+          expect(err).to.equal(null);
+          expect(user.firstname).to.equal(validDetails.firstname);
+        });
+      });
     });
   });
 
-  describe("listings", function() {
-    var user, property;
-    beforeEach(function() {
-      user = new User(userDetails);
-      property = sinon.spy();
-      user.addProperty(property);
+  describe('Last name is required', () => {
+    describe('when not provided', () => {
+      it('should be invalid', () => {
+        let validUser = new ValidObject(details);
+        let noLastName = validUser.removePath('lastname');
+        let user = new User(noLastName);
+        user.validate((err) => {
+          expect(err.errors.lastname).to.exist;
+        });
+      });
     });
-
-    it("can be added by a user", function() {
-      expect(user.properties).to.include(property);
+    describe('when provided', () => {
+      it('should be valid', () => {
+        let user = new User(validDetails);
+        user.validate((err) => {
+          expect(err).to.equal(null);
+          expect(user.lastname).to.equal(validDetails.lastname);
+        });
+      });
     });
+  });
 
-    it("that a user owns can be seen collectively", function() {
-      var properties = user.getProperties();
-      expect(properties).to.include(property);
+  describe('Phone number is optional', () => {
+    describe('when provided', () => {
+      it('should be valid', () => {
+        let user = new User(validDetails);
+        user.validate((err) => {
+          expect(err).to.equal(null);
+          expect(user.phoneNumber).to.equal(validDetails.phoneNumber);
+        });
+      });
+    });
+    describe('when not provided', () => {
+      it('should be valid', () => {
+        let validUser = new ValidObject(details);
+        let noPhone = validUser.removePath('phoneNumber');
+        let user = new User(noPhone);
+        user.validate((err) => {
+          expect(err).to.equal(null);
+          expect(user.phoneNumber).to.equal('');
+        });
+      });
     });
   });
 });
