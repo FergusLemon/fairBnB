@@ -1,6 +1,6 @@
 'use strict';
 const expect = require('chai').expect;
-const Listing = require('../app_server/models/listings');
+const Listing = require('../app_api/models/listings');
 const ValidObject = require('./helpers/modelHelpers');
 const mongoose = require('mongoose');
 const ownerId = mongoose.Types.ObjectId();

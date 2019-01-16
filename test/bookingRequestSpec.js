@@ -1,6 +1,6 @@
 'use strict';
 const expect = require('chai').expect;
-const BookingRequest = require('../app_server/models/bookingRequests');
+const BookingRequest = require('../app_api/models/bookingRequests');
 const mongoose = require('mongoose');
 const listingId = mongoose.Types.ObjectId();
 const requestorId = mongoose.Types.ObjectId();

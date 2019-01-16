@@ -1,6 +1,6 @@
 'use strict';
 const expect = require('chai').expect;
-const User = require('../app_server/models/users');
+const User = require('../app_api/models/users');
 const ValidObject = require('./helpers/modelHelpers');
 const details = {
   username: "test@testmail.com",
