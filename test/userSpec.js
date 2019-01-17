@@ -1,5 +1,8 @@
 'use strict';
+
 const expect = require('chai').expect;
+const sinon = require('sinon');
+const sinonTest = require('sinon-test');
 const User = require('../app_api/models/users');
 const ValidObject = require('./helpers/modelHelpers');
 const details = {
@@ -107,5 +110,13 @@ describe('A user', () => {
         });
       });
     });
+  });
+
+  describe('Full Name', () => {
+    it('should return the full name of a user', (function() {
+      let user = new User(validDetails);
+      let fullname = user.fullName;
+      expect(fullname).to.equal(user.firstname + " " + user.lastname);
+    }));
   });
 });
