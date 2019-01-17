@@ -1,10 +1,10 @@
-var express = require('express');
-var router = express.Router();
-var ctrlUser = require('../controllers/user');
+const express = require('express');
+const router = express.Router();
+const ctrlUser = require('../controllers/user');
 
 router.get('/new', ctrlUser.new);
 
-router.post('/', ctrlUser.users);
+router.post('/', ctrlUser.createUser);
 
 router.get('/:username', ctrlUser.overview);
 

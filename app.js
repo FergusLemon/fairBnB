@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
 const server = require('./app_server/routes/index');
+const api = require('./app_api/routes/index');
 const apiUser = require('./app_api/routes/users');
 const user = require('./app_server/routes/user');
 const listing = require('./app_server/routes/listing');
@@ -17,6 +18,7 @@ app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'pug');
 
 app.use('/', server);
+app.use('/api', api);
 app.use('/api/users', apiUser);
 app.use('/users', user);
 app.use('/listings', listing);
