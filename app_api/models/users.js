@@ -13,12 +13,4 @@ userSchema.virtual('fullName').get(function() {
   return this.firstname + " " + this.lastname;
 });
 
-userSchema.methods.getUser = function(cb) {
-  this.model('User').find({
-    username: this.username
-  }, function(err, val) {
-    cb(!!val);
-  });
-};
-
 module.exports = mongoose.model('User', userSchema);

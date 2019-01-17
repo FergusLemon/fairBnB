@@ -50,7 +50,7 @@ describe('CRUD operations on a user', () => {
   it("updates an existing user's details in the database", async () => {
     await user.save();
     let newUsername = { username: "new@newmail.com" };
-    await (User.update(query, newUsername ));
+    await (User.updateOne(query, newUsername ));
     let result = await User.findOne(query);
     let updatedUser = await User.findOne(newUsername);
     expect(result).to.equal(null);

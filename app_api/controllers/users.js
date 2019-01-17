@@ -1,14 +1,23 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const User = mongoose.model('User');
+const User = require('../models/users');
+//const Factory = require('../../test/helpers/factories');
+//let userDetails = Factory.validUserOne();
 
 let sendJsonResponse = function(res, status, content) {
   res.status(status).json(content);
 };
 
 module.exports.createUser = (req, res) => {
-  
+  var user = new User(req.body);
+  user.save((err, user) => {
+    if (err) {
+      sendJsonResponse(res, 400, err);
+    } else {
+      sendJsonResponse(res, 201, user);
+    }
+  });
 };
 //module.exports.getUser = function(req, res) {
 //  if (req.params && req.params.userid) {
