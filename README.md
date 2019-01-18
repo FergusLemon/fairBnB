@@ -18,6 +18,14 @@ Travis CI was chosen for continuous integration testing on this project.
 ##### Database 
    - MongoDB with Mongoose as the ORM.
 
+### Testing
+##### Tools
+  - Mocha and Chai for unit testing with Sinon for spies, stubs and mocks.
+  - TestCafe for feature testing.
+  - Postman for testing routes and API calls, on top of unit tests.
+  - Istanbul for code coverage.
+  - Travis CI for continous integration testing.
+
 
 ### Client Specifications
 
