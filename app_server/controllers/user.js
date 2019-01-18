@@ -26,7 +26,7 @@ module.exports.createUser = (req, res) => {
       if (response.statusCode === 201) {
         res.redirect('users/' + body.username);
       } else {
-        console.log("Something went wrong with the database.");
+        res.send("Something went wrong with the database.");
       }
     }
   );
