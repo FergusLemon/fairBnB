@@ -2,11 +2,12 @@
 
 const mongoose = require('mongoose');
 const User = require('../models/users');
-//const Factory = require('../../test/helpers/factories');
-//let userDetails = Factory.validUserOne();
 
 let sendJsonResponse = function(res, status, content) {
-  res.status(status).json(content);
+  console.log(status);
+  console.log(content);
+  res.status(status);
+  res.json(content);
 };
 
 module.exports.createUser = (req, res) => {

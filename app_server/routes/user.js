@@ -6,7 +6,7 @@ router.get('/new', ctrlUser.getSignUpForm);
 
 router.post('/', ctrlUser.createUser);
 
-router.get('/:username', ctrlUser.gerUserHomepage);
+router.get('/:username', ctrlUser.getUserHomepage);
 
 router.get('/:user-id/booking-requests', ctrlUser.getBookingRequests);
 
