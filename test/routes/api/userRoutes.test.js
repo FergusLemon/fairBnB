@@ -14,8 +14,13 @@ const Factory = require('../../helpers/factories');
 chai.use(sinonChai);
 
 describe('when a user is saved in the database', () => {
+  let userDetails, user;
+  beforeEach(() => {
+    userDetails = Factory.validUserOne();
+    user = new User(userDetails);
+  });
+
   it('should call save once', sandboxed(function() {
-    let userDetails = Factory.validUserOne();
     let req = {
       body: userDetails
     };
@@ -25,14 +30,12 @@ describe('when a user is saved in the database', () => {
         this.statusCalledWith = arg;
       }
     };
-    let user = new User(req.body);
     this.stub(User.prototype, 'save');
     UserController.createUser(req, res);
     expect(User.prototype.save.callCount).to.equal(1);
     expect(User.prototype.save.callCount).to.not.equal(2);
-    }));
-  it('should respond with a 201 status code', sandboxed(async function() {
-    let userDetails = Factory.validUserOne();
+  }));
+  it('should respond with a 201 status code', sandboxed(function() {
     let req = {
       body: userDetails
     };
@@ -43,9 +46,27 @@ describe('when a user is saved in the database', () => {
       },
       json: sinon.stub()
     };
-    let user = new User(req.body);
     this.stub(User.prototype, 'save').yields(null, user);
-    await UserController.createUser(req, res);
+    UserController.createUser(req, res);
     expect(res.statusCalledWith).to.contain(201);
-    }));
+  }));
+});
+
+describe('when a user is not saved in the database', () => {
+  it('should respond with a 400 status code', sandboxed(function() {
+    let req = {
+      body: {}
+    };
+    let res = {
+      statusCalledWith: '',
+      status: function(arg) {
+        this.statusCalledWith += arg;
+      },
+      json: sinon.stub()
+    };
+    let err = this.stub();
+    this.stub(User.prototype, 'save').yields(err);
+    UserController.createUser(req, res);
+    expect(res.statusCalledWith).to.contain(400);
+  }));
 });
