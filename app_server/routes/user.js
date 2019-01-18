@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const ctrlUser = require('../controllers/user');
 
-router.get('/new', ctrlUser.new);
+router.get('/new', ctrlUser.getSignUpForm);
 
 router.post('/', ctrlUser.createUser);
 
-router.get('/:username', ctrlUser.overview);
+router.get('/:username', ctrlUser.gerUserHomepage);
 
 router.get('/:user-id/booking-requests', ctrlUser.getBookingRequests);
 

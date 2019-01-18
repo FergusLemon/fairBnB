@@ -1,10 +1,8 @@
 'use strict';
 const request = require('request');
-let apiOptions = {
-  server: "http://localhost:3000"
-};
+const { server } = require('./../../config');
 
-module.exports.new = (req, res) => {
+module.exports.getSignUpForm = (req, res) => {
   res.render('users/new');
 };
 
@@ -19,7 +17,7 @@ module.exports.createUser = (req, res) => {
   let path = "/api/users";
 
   request.post( {
-    url: apiOptions.server + path,
+    url: server + path,
     json: postData
   },
     (err, response, body) => {
@@ -32,8 +30,8 @@ module.exports.createUser = (req, res) => {
   );
 };
 
-module.exports.overview = (req, res) => {
-  var welcome = "Let's get started!";
+module.exports.getUserHomepage = (req, res) => {
+  let welcome = "Let's get started!";
   res.render('users/overview', { welcomeMessage: welcome });
 };
 
