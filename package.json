@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "nodemon --exec babel-node bin/www",
-    "test": "./node_modules/.bin/mocha --reporter spec ./test/*.js; ./node_modules/.bin/mocha --reporter spec ./test/routes/*.js; testcafe chrome test/feature/* --app \"node bin/www\"",
+    "test": "./node_modules/.bin/mocha --reporter spec ./test/*.js; ./node_modules/.bin/mocha --reporter spec ./test/routes/*/*.js; testcafe chrome test/feature/* --app \"node bin/www\"",
     "jshint": "./node_modules/.bin/jshint",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
     "coveralls": "npm run coverage -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
@@ -43,6 +43,7 @@
     "request": "^2.88.0",
     "sinon": "^7.2.2",
     "sinon-chai": "^3.3.0",
+    "sinon-mongoose": "^2.2.1",
     "sinon-test": "^2.4.0",
     "testcafe": "^0.23.3"
   },
