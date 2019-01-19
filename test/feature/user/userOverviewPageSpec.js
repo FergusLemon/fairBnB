@@ -1,12 +1,33 @@
 'use strict';
 import { Selector } from 'testcafe';
 import { signUp } from '../../helpers/testCafeHelpers';
+const mongoose = require('mongoose');
+const { environment } = require('../../../config');
+let mongoDB, db;
 
 fixture `User Overview Page`
   .page `http://localhost:3000/users/new`
-  .beforeEach( async t => {
+  .before(async t => {
+    if ( `${environment}` === "test" ) {
+      mongoDB = 'mongodb://localhost/TestFairBnB';
+      mongoose.connect(mongoDB, {useNewUrlParser: true} );
+      mongoose.Promise = global.Promise;
+      db = mongoose.connection;
+      db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+    }
+  })
+  .beforeEach(async t => {
     await signUp(t)
-    });
+    console.log(db.collections.users);
+    const dbSetUp = await mongoose.connection.db.dropCollection('users', (err) => {
+      console.log('Collection dropped.');
+    })
+  })
+  .afterEach(async t => {
+    const dbTearDown = await mongoose.connection.close((err) => {
+      console.log("Connection closed.");
+    })
+  });
 
   test('Has the welcome message for new users', async t => {
     await t
