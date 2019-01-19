@@ -2,6 +2,9 @@ language: node_js
 node_js:
   - "node"
 
+services:
+  - mongodb
+
 before_install:
   - stty cols 80
 
@@ -10,6 +13,10 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3
   - fluxbox >/dev/null 2>&1 &
+  - sleep 15
+  - mongo TestFairBnB --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
+  - sleep 15
+  - mongo TestCafeFairBnB --eval 'db.createUser({user:"travis",pwd:"test",roles:["readWrite"]});'
 
 after_success:
   - npm run coveralls

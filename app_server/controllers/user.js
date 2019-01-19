@@ -1,18 +1,46 @@
-module.exports.new = function(req, res) {
+'use strict';
+const request = require('request');
+const { server } = require('./../../config');
+
+module.exports.getSignUpForm = (req, res) => {
   res.render('users/new');
 };
 
-module.exports.users = function(req, res) {
-  var username = req.body.username;
-  res.redirect('users/' + username);
+module.exports.createUser = (req, res) => {
+  let postData = {
+    username: req.body.username,
+    password: req.body.password,
+    lastname: req.body.lastname,
+    firstname: req.body.firstname,
+    phoneNumber: req.body.phoneNumber
+  };
+  let path = "/api/users";
+
+  request.post( {
+    url: server + path,
+    json: postData
+  },
+    (err, response, body) => {
+      if (response.statusCode === 201) {
+        res.redirect('users/' + body.username);
+      } else {
+        res.send("Something went wrong with the database.");
+      }
+    }
+  );
 };
 
-module.exports.overview = function(req, res) {
-  var welcome = "Let's get started!";
+module.exports.getUserHomepage = (req, res) => {
+  let welcome = "Let's get started!";
   res.render('users/overview', { welcomeMessage: welcome });
 };
 
-module.exports.getBookingRequests = function(req, res) {
+module.exports.getUserHomepage = (req, res) => {
+  let welcome = "Let's get started!";
+  res.render('users/overview', { welcomeMessage: welcome });
+};
+
+module.exports.getBookingRequests = (req, res) => {
   res.render('users/bookingRequests', {
     bookingRequests: [{
       propertyName: 'Test Casa',

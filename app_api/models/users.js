@@ -9,4 +9,8 @@ const userSchema = new mongoose.Schema({
   phoneNumber: { type: String }
 });
 
+userSchema.virtual('fullName').get(function() {
+  return this.firstname + " " + this.lastname;
+});
+
 module.exports = mongoose.model('User', userSchema);

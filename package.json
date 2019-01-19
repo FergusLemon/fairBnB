@@ -8,7 +8,7 @@
   },
   "scripts": {
     "start": "nodemon --exec babel-node bin/www",
-    "test": "./node_modules/.bin/mocha --reporter spec ./test/*.js; testcafe chrome test/feature/* --app \"node bin/www\"",
+    "test": "./node_modules/.bin/mocha --reporter spec ./test/*.js; ./node_modules/.bin/mocha --reporter spec ./test/routes/*/*.js; testcafe chrome test/feature/* --app \"node bin/www\"",
     "jshint": "./node_modules/.bin/jshint",
     "coverage": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha",
     "coveralls": "npm run coverage -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
@@ -42,6 +42,9 @@
     "pre-commit": "^1.2.2",
     "request": "^2.88.0",
     "sinon": "^7.2.2",
+    "sinon-chai": "^3.3.0",
+    "sinon-mongoose": "^2.2.1",
+    "sinon-test": "^2.4.0",
     "testcafe": "^0.23.3"
   },
   "dependencies": {
@@ -50,6 +53,7 @@
     "body-parser": "^1.18.3",
     "cookie-parser": "^1.4.3",
     "debug": "^4.1.1",
+    "dotenv": "^6.2.0",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "js-datepicker": "^4.0.10",

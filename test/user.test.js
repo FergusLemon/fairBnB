@@ -1,6 +1,9 @@
 'use strict';
+
 const expect = require('chai').expect;
-const User = require('../app_server/models/users');
+const sinon = require('sinon');
+const sinonTest = require('sinon-test');
+const User = require('../app_api/models/users');
 const ValidObject = require('./helpers/modelHelpers');
 const details = {
   username: "test@testmail.com",
@@ -107,5 +110,13 @@ describe('A user', () => {
         });
       });
     });
+  });
+
+  describe('Full Name', () => {
+    it('should return the full name of a user', (function() {
+      let user = new User(validDetails);
+      let fullname = user.fullName;
+      expect(fullname).to.equal(user.firstname + " " + user.lastname);
+    }));
   });
 });

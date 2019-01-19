@@ -6,7 +6,7 @@ const username = Selector('#username');
 const password = Selector('#password');
 const firstName = Selector('#firstname');
 const lastName = Selector('#lastname');
-
+const phoneNumber = Selector('#phoneNumber');
 
 fixture `New User Registration Test`
   .page `http://localhost:3000/users/new`;
@@ -21,7 +21,8 @@ fixture `New User Registration Test`
       .expect(username.innerText).eql("")
       .expect(password.innerText).eql("")
       .expect(firstName.innerText).eql("")
-      .expect(lastName.innerText).eql("");
+      .expect(lastName.innerText).eql("")
+      .expect(phoneNumber.innerText).eql("");
   });
 
   test('A new user can fill out his or her details', async t => {
@@ -30,7 +31,8 @@ fixture `New User Registration Test`
       .expect(username.value).eql('test@testmail.com')
       .expect(password.value).eql('P@$$w0rdH3aVy')
       .expect(firstName.value).eql('Test')
-      .expect(lastName.value).eql('User');
+      .expect(lastName.value).eql('User')
+      .expect(phoneNumber.value).eql('07777 777 7777');
   });
 
 
