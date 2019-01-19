@@ -4,7 +4,7 @@ import { signUp } from '../../helpers/testCafeHelpers';
 const mongoose = require('mongoose');
 const { environment } = require('../../../config');
 
-const mongoDB = 'mongodb://localhost/TestFairBnB';
+const mongoDB = 'mongodb://localhost/TestCafeFairBnB';
 mongoose.connect(mongoDB, {useNewUrlParser: true} );
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
