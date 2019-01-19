@@ -13,7 +13,7 @@ export async function fillOutNewUserForm(t) {
     .typeText(username, 'test@testmail.com')
     .typeText(password, 'P@$$w0rdH3aVy')
     .typeText(firstName, 'Test')
-    .typeText(lastName, 'User')
+    .typeText(lastName, 'User');
 };
 
 export async function signUp(t) {
