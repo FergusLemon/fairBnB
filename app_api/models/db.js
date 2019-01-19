@@ -1,22 +1,32 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const { environment } = require('../../config');
 require('./users');
+let mongoDbUri;
 
-var dbURI = 'mongodb://localhost/FairBNB';
-mongoose.connect(dbURI, {useNewUrlParser: true});
+if ( `$environment` === "test" ) {
+  mongoDbUri = 'mongodb://localhost/TestFairBnB';
+} else {
+  mongoDbUri = 'mongodb://localhost/DevFairBnB';
+}
 
-mongoose.connection.on('connected', function() {
-  console.log("Mongoose conncected to " + dbURI);
+mongoose.connect(mongoDbUri, { useNewUrlParser: true });
+mongoose.Promise = global.Promise;
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error: '));
+
+db.on('connected', function() {
+  console.log("Mongoose conncected to " + mongoDbUri );
 });
 
-mongoose.connection.on('disconnected', function() {
+db.on('disconnected', function() {
   console.log("Mongoose disconnected");
 });
 
-mongoose.connection.on('error', function(err) {
+db.on('error', function(err) {
   console.log("Mongoose conncection error: " + err);
 });
 
-var gracefulShutDown = function(msg, callback) {
+const gracefulShutDown = function(msg, callback) {
   mongoose.connection.close(function() {
     console.log('Mongoose disconnected through ' + msg);
   });
