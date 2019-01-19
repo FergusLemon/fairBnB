@@ -13,6 +13,8 @@ before_script:
   - "sh -e /etc/init.d/xvfb start"
   - sleep 3
   - fluxbox >/dev/null 2>&1 &
+  - sleep 15
+  - mongo TestFairBnB --eval 'db.createUser({user:"travis"wd:"test",roles:["readWrite"]});'
 
 after_success:
   - npm run coveralls
