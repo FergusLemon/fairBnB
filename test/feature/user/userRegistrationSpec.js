@@ -32,7 +32,7 @@ fixture `New User Registration Test`
       .expect(password.value).eql('P@$$w0rdH3aVy')
       .expect(firstName.value).eql('Test')
       .expect(lastName.value).eql('User')
-      .expect(phoneNumber.value).eql('');
+      .expect(phoneNumber.value).eql('07777 777 7777');
   });
 
 
