@@ -35,6 +35,11 @@ module.exports.getUserHomepage = (req, res) => {
   res.render('users/overview', { welcomeMessage: welcome });
 };
 
+module.exports.getUserHomepage = (req, res) => {
+  let welcome = "Let's get started!";
+  res.render('users/overview', { welcomeMessage: welcome });
+};
+
 module.exports.getBookingRequests = (req, res) => {
   res.render('users/bookingRequests', {
     bookingRequests: [{
