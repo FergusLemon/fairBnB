@@ -1,12 +1,15 @@
-module.exports.new = function(req, res, next) {
-  res.render('session/new');
+'use strict';
+
+module.exports.new = function(req, res) {
+  let loginError = req.flash('error');
+  res.render('session/new', { message: loginError });
 };
 
-module.exports.users = function(req, res, next) {
-  var username = req.body.username;
-  res.redirect('session/' + username);
+module.exports.authenticateUser = (req, res) => {
+  let username = req.body.username;
+  res.redirect('/session/:username');
 };
 
-module.exports.overview = function(req, res, next) {
+module.exports.overview = function(req, res) {
   res.render('index');
 };
