@@ -64,3 +64,17 @@ describe('CRUD operations on a user', () => {
     expect(result).to.equal(null);
   });
 });
+
+describe('Storing passwords securely', () => {
+  let user, query;
+  beforeEach(() => {
+    user = new User(firstUserDetails);
+    query = { username: user.username };
+  });
+
+  it('does not store passwords as plaintext', async () => {
+    await user.save();
+    let result = await (User.findOne(query));
+    expect(result.password).to.not.equal(firstUserDetails.password);
+  });
+});
