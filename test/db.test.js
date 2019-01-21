@@ -64,3 +64,39 @@ describe('CRUD operations on a user', () => {
     expect(result).to.equal(null);
   });
 });
+
+describe('Storing passwords securely', () => {
+  let user, query, result;
+  beforeEach( async () => {
+    user = new User(firstUserDetails);
+    query = { username: user.username };
+    await user.save();
+    result = await (User.findOne(query));
+  });
+
+  it('does not store passwords as plaintext', async () => {
+    expect(result.password).to.not.equal(firstUserDetails.password);
+  });
+  it("stores the hash of the user's password", async () => {
+    expect(result.password).to.equal(user.password);
+  });
+});
+
+describe("Comparing a user's password with the database record", () => {
+  let user, result, query;
+  beforeEach( async () => {
+    user = new User(firstUserDetails);
+    query = { username: user.username };
+    await user.save();
+    result = await (User.findOne(query));
+  });
+
+  it('returns true when two passwords match', async () => {
+    let promise = await result.comparePassword(firstUserDetails.password);
+    expect(promise).to.equal(true);
+  });
+  it('returns false when two passwords match', async () => {
+    let promise = await result.comparePassword('random password');
+    expect(promise).to.equal(false);
+  });
+});
