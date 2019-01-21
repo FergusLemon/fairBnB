@@ -29,6 +29,18 @@ userSchema.pre('save', function(next) {
   });
 });
 
+userSchema.methods.comparePassword = function(candidatePassword) {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(candidatePassword, this.password)
+    .then((result) => {
+      resolve(result);
+    })
+    .catch((err) => {
+      reject(err);
+    });
+  });
+};
+
 userSchema.virtual('fullName').get(function() {
   return this.firstname + " " + this.lastname;
 });
