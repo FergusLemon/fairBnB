@@ -16,9 +16,10 @@ const password = Selector('#password');
 
 fixture `User Login`
   .page `http://localhost:3000`
-  .beforeEach(async t => {
+  .before(async t => {
     let user = new User(validUserDetails);
     user.save();
+    console.log("Test User added to database.");
   })
   .after(async t => {
     const dbDropCollection = await mongoose.connection.db.dropCollection('users', (err) => {
