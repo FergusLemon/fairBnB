@@ -60,7 +60,6 @@ fixture `User Login`
 
   test('An existing user can sign in', async t => {
     await t
-      .debug()
       .click('#sign-in')
       .typeText(username, validUsername)
       .typeText(password, validPassword)
