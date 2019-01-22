@@ -18,6 +18,6 @@ module.exports.dropCollection = async (collection) => {
 
 module.exports.closeConnection = async () => {
   await mongoose.connection.close((err) => {
-    console.log("Connection to databse closed successfully.");
+    console.log("Connection to database closed successfully.");
   })
 };
