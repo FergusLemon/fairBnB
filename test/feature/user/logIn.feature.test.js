@@ -5,18 +5,14 @@ const User = require('../../../app_api/models/users');
 const validUsername = "test@testmail.com";
 const validPassword = "P@$$w0rdH3aVy";
 const mongoose = require('mongoose');
+const databaseHelper = require('../../helpers/dbSetupHelper');
 const { environment } = require('../../../config');
-
-if ( `${environment}` === "test" ) {
-  const mongoDB = 'mongodb://localhost/TestFairBnB';
-  mongoose.connect(mongoDB, { useNewUrlParser: true } );
-  mongoose.Promise = global.Promise;
-  const db = mongoose.connection;
-  db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-}
-
 const username = Selector('#username');
 const password = Selector('#password');
+
+if ( `${environment}` === "test" ) {
+  databaseHelper.setUpTestDatabase();
+}
 
 fixture `User Login`
   .page `http://localhost:3000`
@@ -26,14 +22,10 @@ fixture `User Login`
     console.log("Test User added to database.");
   })
   .afterEach(async t => {
-    const dbDropCollection = await mongoose.connection.db.dropCollection('users', (err) => {
-      console.log('Collection dropped.');
-    })
+    databaseHelper.dropCollection('users');
   })
   .after(async t => {
-    const dbTearDown = await mongoose.connection.close((err) => {
-      console.log("Connection closed.");
-    })
+    databaseHelper.closeConnection();
   });
 
   test('There is a sign in link for the user', async t => {
