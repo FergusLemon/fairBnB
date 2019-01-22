@@ -1,12 +1,14 @@
 'use strict';
 import { Selector } from 'testcafe';
 import { signUp } from '../../helpers/testCafeHelpers';
-const User = require('../../../app_api/models/users');
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..', '..', '..');
+const User = require(path.join(HOMEDIR, 'app_api', 'models', 'users'));
+const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
+const { environment } = require(path.join(HOMEDIR, 'config'));
 const validUsername = "test@testmail.com";
 const validPassword = "P@$$w0rdH3aVy";
 const mongoose = require('mongoose');
-const databaseHelper = require('../../helpers/dbSetupHelper');
-const { environment } = require('../../../config');
 const username = Selector('#username');
 const password = Selector('#password');
 

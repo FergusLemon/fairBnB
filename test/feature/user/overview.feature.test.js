@@ -2,8 +2,10 @@
 import { Selector } from 'testcafe';
 import { signUp } from '../../helpers/testCafeHelpers';
 const mongoose = require('mongoose');
-const databaseHelper = require('../../helpers/dbSetupHelper');
-const { environment } = require('../../../config');
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..', '..', '..');
+const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
+const { environment } = require(path.join(HOMEDIR, 'config'));
 
 if ( `${environment}` === "test" ) {
   let showTest = databaseHelper.setUpTestDatabase();

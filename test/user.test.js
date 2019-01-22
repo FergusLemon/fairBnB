@@ -3,8 +3,10 @@
 const expect = require('chai').expect;
 const sinon = require('sinon');
 const sinonTest = require('sinon-test');
-const User = require('../app_api/models/users');
-const ValidObject = require('./helpers/modelHelpers');
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..');
+const User = require(path.join(HOMEDIR, 'app_api', 'models', 'users'));
+const ValidObject = require(path.join(HOMEDIR, 'test', 'helpers', 'modelHelpers'));
 const details = {
   username: "validate@user.com",
   password: "schema",

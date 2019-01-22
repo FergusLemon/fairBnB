@@ -1,11 +1,14 @@
 'use strict';
 const expect = require('chai').expect;
-const BookingRequest = require('../app_api/models/bookingRequests');
 const mongoose = require('mongoose');
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..');
+const BookingRequest = require(path.join(HOMEDIR, 'app_api', 'models', 'bookingRequests'));
+const ValidObject = require(path.join(HOMEDIR, 'test', 'helpers', 'modelHelpers'));
+const dateFormatter = require(path.join(HOMEDIR, 'test', 'helpers', 'dateHelpers'));
+
 const listingId = mongoose.Types.ObjectId();
 const requestorId = mongoose.Types.ObjectId();
-const ValidObject = require('./helpers/modelHelpers');
-const dateFormatter = require('./helpers/dateHelpers');
 const details = {
   listing: listingId,
   requestor: requestorId,

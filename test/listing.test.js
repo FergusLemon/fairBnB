@@ -1,8 +1,10 @@
 'use strict';
 const expect = require('chai').expect;
-const Listing = require('../app_api/models/listings');
-const ValidObject = require('./helpers/modelHelpers');
 const mongoose = require('mongoose');
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..');
+const Listing = require(path.join(HOMEDIR, 'app_api', 'models', 'listings'));
+const ValidObject = require(path.join(HOMEDIR, 'test', 'helpers', 'modelHelpers'));
 const ownerId = mongoose.Types.ObjectId();
 const details = {
   name: "Casa Test",

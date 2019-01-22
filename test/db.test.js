@@ -2,10 +2,12 @@
 
 const expect = require('chai').expect;
 const mongoose = require('mongoose');
-const databaseHelper = require('./helpers/dbSetupHelper');
-const { environment } = require('../config');
-const User = require('../app_api/models/users');
-const Factory = require('./helpers/factories');
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..');
+const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
+const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
+const { environment } = require(path.join(HOMEDIR, 'config'));
+const User = require(path.join(HOMEDIR, 'app_api', 'models', 'users'));
 const firstUserDetails = Factory.validUserOne();
 const secondUserDetails = Factory.validUserTwo();
 
