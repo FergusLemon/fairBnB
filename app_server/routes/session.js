@@ -12,10 +12,6 @@ passport.use(new LocalStrategy(
       if (await !user) {
         return done(null, false, { message: 'Incorrect username.' });
       }
-      console.log(user);
-      console.log(user.id);
-      console.log(password);
-      console.log(await user.comparePassword(password));
       let isPasswordCorrect = await user.comparePassword(password);
       if (isPasswordCorrect === false) {
         return done(null, false, { message: 'Incorrect password.' });
