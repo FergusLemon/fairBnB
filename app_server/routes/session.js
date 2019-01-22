@@ -40,4 +40,3 @@ router.post('/', passport.authenticate('local', {
 router.get('/:username', sessionController.overview);
 
 module.exports = router;
-

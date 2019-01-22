@@ -7,7 +7,7 @@ module.exports.new = function(req, res) {
 
 module.exports.authenticateUser = (req, res) => {
   let username = req.body.username;
-  res.redirect('/session/:username');
+  res.redirect('/session/' + username);
 };
 
 module.exports.overview = function(req, res) {

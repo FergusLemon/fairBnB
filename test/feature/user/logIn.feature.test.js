@@ -3,9 +3,10 @@ import { Selector } from 'testcafe';
 const User = require('../../../app_api/models/users');
 const Factory = require('../../helpers/factories');
 const validUserDetails = Factory.validUserOne();
+
 const mongoose = require('mongoose');
 const mongoDB = 'mongodb://localhost/TestCafeFairBnB';
-mongoose.connect(mongoDB, {useNewUrlParser: true} );
+mongoose.connect(mongoDB, { useNewUrlParser: true } );
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
@@ -16,13 +17,13 @@ const password = Selector('#password');
 fixture `User Login`
   .page `http://localhost:3000`
   .beforeEach(async t => {
-    const dbDropCollection = await mongoose.connection.db.dropCollection('users', (err) => {
-      console.log('Collection dropped.');
-    })
     let user = new User(validUserDetails);
     user.save();
   })
   .after(async t => {
+    const dbDropCollection = await mongoose.connection.db.dropCollection('users', (err) => {
+      console.log('Collection dropped.');
+    })
     const dbTearDown = await mongoose.connection.close((err) => {
       console.log("Connection closed.");
     })
