@@ -4,11 +4,13 @@ import { signUp } from '../../helpers/testCafeHelpers';
 const mongoose = require('mongoose');
 const { environment } = require('../../../config');
 
-const mongoDB = 'mongodb://localhost/TestCafeFairBnB';
-mongoose.connect(mongoDB, {useNewUrlParser: true} );
-mongoose.Promise = global.Promise;
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+if ( `${environment}` === "test" ) {
+  const mongoDB = 'mongodb://localhost/TestFairBnB';
+  mongoose.connect(mongoDB, { useNewUrlParser: true } );
+  mongoose.Promise = global.Promise;
+  const db = mongoose.connection;
+  db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+}
 
 fixture `User Overview Page`
   .page `http://localhost:3000/users/new`

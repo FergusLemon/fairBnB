@@ -7,12 +7,17 @@ const User = require('../../app_api/models/users');
 
 passport.use(new LocalStrategy(
   function(username, password, done) {
-    User.findOne({ username: username }, function(err, user) {
+    User.findOne({ username: username }, async function(err, user) {
       if (err) { return done(err); }
-      if (!user) {
+      if (await !user) {
         return done(null, false, { message: 'Incorrect username.' });
       }
-      if (!user.comparePassword(password)) {
+      console.log(user);
+      console.log(user.id);
+      console.log(password);
+      console.log(await user.comparePassword(password));
+      let isPasswordCorrect = await user.comparePassword(password);
+      if (isPasswordCorrect === false) {
         return done(null, false, { message: 'Incorrect password.' });
       }
       return done(null, user);

@@ -6,9 +6,9 @@ const sinonTest = require('sinon-test');
 const User = require('../app_api/models/users');
 const ValidObject = require('./helpers/modelHelpers');
 const details = {
-  username: "test@testmail.com",
-  password: "p@$$W0rd",
-  firstname: "Tess",
+  username: "validate@user.com",
+  password: "schema",
+  firstname: "Valid",
   lastname: "User",
   phoneNumber: "+447777777777"
 };
