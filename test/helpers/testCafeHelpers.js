@@ -1,3 +1,4 @@
+'use strict';
 import { Selector } from 'testcafe';
 
 const username = Selector('#username');

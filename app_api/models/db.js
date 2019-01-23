@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { environment } = require('../../config');
-require('./users');
+require('./user');
 let mongoDbUri;
 
 if ( `$environment` === "test" ) {

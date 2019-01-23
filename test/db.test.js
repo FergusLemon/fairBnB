@@ -2,30 +2,25 @@
 
 const expect = require('chai').expect;
 const mongoose = require('mongoose');
-const { environment } = require('../config');
-const User = require('../app_api/models/users');
-const Factory = require('./helpers/factories');
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..');
+const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
+const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
+const { environment } = require(path.join(HOMEDIR, 'config'));
+const User = require(path.join(HOMEDIR, 'app_api', 'models', 'user'));
 const firstUserDetails = Factory.validUserOne();
 const secondUserDetails = Factory.validUserTwo();
 
 if ( `${environment}` === "test" ) {
-  const mongoDB = 'mongodb://localhost/TestFairBnB';
-  mongoose.connect(mongoDB, {useNewUrlParser: true} );
-  mongoose.Promise = global.Promise;
-  const db = mongoose.connection;
-  db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+  databaseHelper.setUpTestDatabase();
 }
 
 beforeEach(() => {
-  mongoose.connection.collections['users'].drop((err) => {
-    console.log('collection dropped');
-  });
+  databaseHelper.dropCollection('users');
 });
 
 after(() => {
-  mongoose.connection.close((err) => {
-    console.log('Connection closed.');
-  });
+  databaseHelper.closeConnection();
 });
 
 describe('CRUD operations on a user', () => {

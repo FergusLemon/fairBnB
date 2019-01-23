@@ -11,3 +11,5 @@ block content
     input#password(type="password", name="password")
     br
     button#sign-in(type="submit") Sign In
+  if locals.message
+    p(id="error-message")=message

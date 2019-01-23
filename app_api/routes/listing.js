@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const listingsController = require('../controllers/listings');
+const listingsController = require('../controllers/listing');
 
 router.get('/listings', listingsController.getAllListings);
 router.get('/users/:user-id/listings/:listing-id', listingsController.getListing);

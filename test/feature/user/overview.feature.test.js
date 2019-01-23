@@ -2,26 +2,23 @@
 import { Selector } from 'testcafe';
 import { signUp } from '../../helpers/testCafeHelpers';
 const mongoose = require('mongoose');
-const { environment } = require('../../../config');
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..', '..', '..');
+const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
+const { environment } = require(path.join(HOMEDIR, 'config'));
 
-const mongoDB = 'mongodb://localhost/TestCafeFairBnB';
-mongoose.connect(mongoDB, {useNewUrlParser: true} );
-mongoose.Promise = global.Promise;
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+if ( `${environment}` === "test" ) {
+  let showTest = databaseHelper.setUpTestDatabase();
+}
 
 fixture `User Overview Page`
   .page `http://localhost:3000/users/new`
   .beforeEach(async t => {
     await signUp(t)
-    const dbSetUp = await mongoose.connection.db.dropCollection('users', (err) => {
-      console.log('Collection dropped.');
-    })
+    databaseHelper.dropCollection('users');
   })
   .after(async t => {
-    const dbTearDown = await mongoose.connection.close((err) => {
-      console.log("Connection closed.");
-    })
+    databaseHelper.closeConnection();
   });
 
   test('Has the welcome message for new users', async t => {

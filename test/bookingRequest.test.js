@@ -1,19 +1,13 @@
 'use strict';
 const expect = require('chai').expect;
-const BookingRequest = require('../app_api/models/bookingRequests');
 const mongoose = require('mongoose');
-const listingId = mongoose.Types.ObjectId();
-const requestorId = mongoose.Types.ObjectId();
-const ValidObject = require('./helpers/modelHelpers');
-const dateFormatter = require('./helpers/dateHelpers');
-const details = {
-  listing: listingId,
-  requestor: requestorId,
-  requestStartDate: '2019-12-25',
-  requestEndDate: '2019-12-31',
-  requestMadeDate: '2019-01-12'
-};
-const validDetails = new ValidObject(details);
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..');
+const BookingRequest = require(path.join(HOMEDIR, 'app_api', 'models', 'bookingRequest'));
+const ValidObject = require(path.join(HOMEDIR, 'test', 'helpers', 'modelHelpers'));
+const dateFormatter = require(path.join(HOMEDIR, 'test', 'helpers', 'dateHelpers'));
+const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
+const bookingRequestFactoryDetails = Factory.validBookingRequest();
 
 describe('A booking request', () => {
   describe('when no details are provided', () => {
@@ -27,7 +21,7 @@ describe('A booking request', () => {
   describe('Listing ID is required', () => {
     describe('when not provided', () => {
       it('is invalid', () => {
-        let validBookingRequest = new ValidObject(details);
+        let validBookingRequest = new ValidObject(bookingRequestFactoryDetails);
         let noListing = validBookingRequest.removePath('listing');
         let bookingRequest = new BookingRequest(noListing);
         bookingRequest.validate((err) => {
@@ -37,10 +31,10 @@ describe('A booking request', () => {
     });
     describe('when provided', () => {
       it('is valid', () => {
-        let bookingRequest = new BookingRequest(validDetails);
+        let bookingRequest = new BookingRequest(bookingRequestFactoryDetails);
         bookingRequest.validate((err) => {
           expect(err).to.equal(null);
-          expect(bookingRequest.listing).to.equal(validDetails.listing);
+          expect(bookingRequest.listing).to.equal(bookingRequestFactoryDetails.listing);
         });
       });
     });
@@ -48,7 +42,7 @@ describe('A booking request', () => {
   describe('Requestor ID is required', () => {
     describe('when not provided', () => {
       it('is invalid', () => {
-        let validBookingRequest = new ValidObject(details);
+        let validBookingRequest = new ValidObject(bookingRequestFactoryDetails);
         let noRequestor = validBookingRequest.removePath('requestor');
         let bookingRequest = new BookingRequest(noRequestor);
         bookingRequest.validate((err) => {
@@ -58,10 +52,10 @@ describe('A booking request', () => {
     });
     describe('when provided', () => {
       it('is valid', () => {
-        let bookingRequest = new BookingRequest(validDetails);
+        let bookingRequest = new BookingRequest(bookingRequestFactoryDetails);
         bookingRequest.validate((err) => {
           expect(err).to.equal(null);
-          expect(bookingRequest.requestor).to.equal(validDetails.requestor);
+          expect(bookingRequest.requestor).to.equal(bookingRequestFactoryDetails.requestor);
         });
       });
     });
@@ -69,7 +63,7 @@ describe('A booking request', () => {
   describe('Start date is required', () => {
     describe('when not provided', () => {
       it('is invalid', () => {
-        let validBookingRequest = new ValidObject(details);
+        let validBookingRequest = new ValidObject(bookingRequestFactoryDetails);
         let noStartDate = validBookingRequest.removePath('requestStartDate');
         let bookingRequest = new BookingRequest(noStartDate);
         bookingRequest.validate((err) => {
@@ -79,11 +73,11 @@ describe('A booking request', () => {
     });
     describe('when provided', () => {
       it('is valid', () => {
-        let bookingRequest = new BookingRequest(validDetails);
+        let bookingRequest = new BookingRequest(bookingRequestFactoryDetails);
         bookingRequest.validate((err) => {
           expect(err).to.equal(null);
           let formattedDate = dateFormatter.format(bookingRequest.requestStartDate);
-          expect(formattedDate).to.equal(validDetails.requestStartDate);
+          expect(formattedDate).to.equal(bookingRequestFactoryDetails.requestStartDate);
         });
       });
     });
@@ -91,7 +85,7 @@ describe('A booking request', () => {
   describe('End date is required', () => {
     describe('when not provided', () => {
       it('is invalid', () => {
-        let validBookingRequest = new ValidObject(details);
+        let validBookingRequest = new ValidObject(bookingRequestFactoryDetails);
         let noEndDate = validBookingRequest.removePath('requestEndDate');
         let bookingRequest = new BookingRequest(noEndDate);
         bookingRequest.validate((err) => {
@@ -101,11 +95,11 @@ describe('A booking request', () => {
     });
     describe('when provided', () => {
       it('is valid', () => {
-        let bookingRequest = new BookingRequest(validDetails);
+        let bookingRequest = new BookingRequest(bookingRequestFactoryDetails);
         bookingRequest.validate((err) => {
           expect(err).to.equal(null);
           let formattedDate = dateFormatter.format(bookingRequest.requestEndDate);
-          expect(formattedDate).to.equal(validDetails.requestEndDate);
+          expect(formattedDate).to.equal(bookingRequestFactoryDetails.requestEndDate);
         });
       });
     });
@@ -113,7 +107,7 @@ describe('A booking request', () => {
   describe('The date and time the request was made is required', () => {
     describe('when not provided', () => {
       it('is invalid', () => {
-        let validBookingRequest = new ValidObject(details);
+        let validBookingRequest = new ValidObject(bookingRequestFactoryDetails);
         let noMadeDate = validBookingRequest.removePath('requestMadeDate');
         let bookingRequest = new BookingRequest(noMadeDate);
         bookingRequest.validate((err) => {
@@ -123,11 +117,11 @@ describe('A booking request', () => {
     });
     describe('when provided', () => {
       it('is valid', () => {
-        let bookingRequest = new BookingRequest(validDetails);
+        let bookingRequest = new BookingRequest(bookingRequestFactoryDetails);
         bookingRequest.validate((err) => {
           expect(err).to.equal(null);
           let formattedDate = dateFormatter.format(bookingRequest.requestMadeDate);
-          expect(formattedDate).to.equal(validDetails.requestMadeDate);
+          expect(formattedDate).to.equal(bookingRequestFactoryDetails.requestMadeDate);
         });
       });
     });
