@@ -1,6 +1,8 @@
 'use strict';
 const request = require('request');
-const { server } = require('./../../config');
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..', '..');
+const { server } = require(path.join(HOMEDIR, 'config'));
 
 module.exports.getSignUpForm = (req, res) => {
   res.render('users/new');
@@ -15,7 +17,6 @@ module.exports.createUser = (req, res) => {
     phoneNumber: req.body.phoneNumber
   };
   let path = "/api/users";
-
   request.post( {
     url: server + path,
     json: postData
@@ -28,11 +29,6 @@ module.exports.createUser = (req, res) => {
       }
     }
   );
-};
-
-module.exports.getUserHomepage = (req, res) => {
-  let welcome = "Let's get started!";
-  res.render('users/overview', { welcomeMessage: welcome });
 };
 
 module.exports.getUserHomepage = (req, res) => {
