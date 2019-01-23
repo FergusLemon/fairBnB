@@ -3,7 +3,7 @@ import { Selector } from 'testcafe';
 import { signUp } from '../../helpers/testCafeHelpers';
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..', '..');
-const User = require(path.join(HOMEDIR, 'app_api', 'models', 'users'));
+const User = require(path.join(HOMEDIR, 'app_api', 'models', 'user'));
 const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
 const { environment } = require(path.join(HOMEDIR, 'config'));
 const validUsername = "test@testmail.com";

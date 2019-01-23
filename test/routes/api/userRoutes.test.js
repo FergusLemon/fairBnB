@@ -8,9 +8,11 @@ const sinonMongoose = require('sinon-mongoose');
 const sandboxed = sinonTest(sinon);
 const chai = require('chai');
 const expect = chai.expect;
-const UserController = require('../../../app_api/controllers/users');
-const User = require('../../../app_api/models/users');
-const Factory = require('../../helpers/factories');
+const path = require('path');
+const HOMEDIR = require(path.join(__dirname, '..', '..', '..'));
+const UserController = require(path.join(HOMEDIR, 'app_api', 'controllers', 'user'));
+const User = require(path.join(HOMEDIR, 'app_api', 'models', 'user'));
+const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
 chai.use(sinonChai);
 
 describe('when a user is saved in the database', () => {

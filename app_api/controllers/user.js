@@ -1,7 +1,7 @@
 'use strict';
 
 const mongoose = require('mongoose');
-const User = require('../models/users');
+const User = require('../models/user');
 
 let sendJsonResponse = function(res, status, content) {
   res.status(status);

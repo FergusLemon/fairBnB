@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const bookingRequestsController = require('../controllers/bookingRequests');
+const bookingRequestsController = require('../controllers/bookingRequest');
 
 router.get('/users/:user-id/booking-requests', bookingRequestsController.getAllOutbound);
 router.get('/users/:user-id/listings/booking-requests', bookingRequestsController.getAllInbound);

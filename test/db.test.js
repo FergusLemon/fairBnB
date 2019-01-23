@@ -7,7 +7,7 @@ const HOMEDIR = path.join(__dirname, '..');
 const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
 const { environment } = require(path.join(HOMEDIR, 'config'));
-const User = require(path.join(HOMEDIR, 'app_api', 'models', 'users'));
+const User = require(path.join(HOMEDIR, 'app_api', 'models', 'user'));
 const firstUserDetails = Factory.validUserOne();
 const secondUserDetails = Factory.validUserTwo();
 

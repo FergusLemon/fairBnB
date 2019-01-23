@@ -2,7 +2,7 @@
 
 const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
-const BookingRequest = require('./bookingRequests');
+const BookingRequest = require('./bookingRequest');
 const bookingRequestSchema = BookingRequest.schema;
 const listingSchema = new mongoose.Schema({
   name: { type: String, required: true },

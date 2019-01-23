@@ -6,9 +6,11 @@ const sandboxed = sinonTest(sinon);
 const sinonChai = require('sinon-chai');
 const chai = require('chai');
 const expect = chai.expect;
-const UserController = require('../../../app_server/controllers/user');
 const request = require('request');
-const Factory = require('../../helpers/factories');
+const path = require('path');
+const HOMEDIR = require(path.join(__dirname, '..', '..'));
+const UserController = require(path.join(HOMEDIR, 'app_server', 'controllers', 'user'));
+const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
 chai.use(sinonChai);
 
 describe('creating a user', () => {
