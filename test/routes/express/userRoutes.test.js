@@ -8,7 +8,7 @@ const chai = require('chai');
 const expect = chai.expect;
 const request = require('request');
 const path = require('path');
-const HOMEDIR = require(path.join(__dirname, '..', '..'));
+const HOMEDIR = path.join(__dirname, '..', '..', '..');
 const UserController = require(path.join(HOMEDIR, 'app_server', 'controllers', 'user'));
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
 chai.use(sinonChai);
