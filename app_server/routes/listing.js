@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express');
 const router = express.Router();
 const path = require('path');
@@ -6,11 +7,11 @@ const listingController = require(path.join(HOMEDIR, 'app_server', 'controllers'
 
 router.get('/new', listingController.new);
 
-router.post('/', listingController.listings);
+router.post('/', listingController.addListing);
 
-router.get('/', listingController.listings);
+router.get('/', listingController.getAllListings);
 
-router.get('/:listingName', listingController.getListing);
+router.get('/:listing-name', listingController.getListing);
 
 router.post('/:listing-id/booking-request/new', listingController.addBookingRequest);
 
