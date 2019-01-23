@@ -9,21 +9,21 @@ const chai = require('chai');
 const expect = chai.expect;
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..', '..');
-const UserController = require(path.join(HOMEDIR, 'app_api', 'controllers', 'user'));
-const User = require(path.join(HOMEDIR, 'app_api', 'models', 'user'));
+const ListingController = require(path.join(HOMEDIR, 'app_api', 'controllers', 'listing'));
+const Listing = require(path.join(HOMEDIR, 'app_api', 'models', 'listing'));
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
 chai.use(sinonChai);
 
-describe('when a user is saved in the database', () => {
-  let userDetails, user;
+describe('when a listing is saved in the database', () => {
+  let listingDetails, listing;
   beforeEach(() => {
-    userDetails = Factory.validUserOne();
-    user = new User(userDetails);
+    listingDetails = Factory.validListing();
+    listing = new Listing(listingDetails);
   });
 
   it('should call save once', sandboxed(function() {
     let req = {
-      body: userDetails
+      body: listingDetails
     };
     let res = {
       statusCalledWith: '',
@@ -31,14 +31,14 @@ describe('when a user is saved in the database', () => {
         this.statusCalledWith = arg;
       }
     };
-    this.stub(User.prototype, 'save');
-    UserController.createUser(req, res);
-    expect(User.prototype.save.callCount).to.equal(1);
-    expect(User.prototype.save.callCount).to.not.equal(2);
+    this.stub(Listing.prototype, 'save');
+    ListingController.createListing(req, res);
+    expect(Listing.prototype.save.callCount).to.equal(1);
+    expect(Listing.prototype.save.callCount).to.not.equal(2);
   }));
   it('should respond with a 201 status code', sandboxed(function() {
     let req = {
-      body: userDetails
+      body: listingDetails
     };
     let res = {
       statusCalledWith: '',
@@ -47,13 +47,13 @@ describe('when a user is saved in the database', () => {
       },
       json: sinon.stub()
     };
-    this.stub(User.prototype, 'save').yields(null, user);
-    UserController.createUser(req, res);
+    this.stub(Listing.prototype, 'save').yields(null, listing);
+    ListingController.createListing(req, res);
     expect(res.statusCalledWith).to.contain(201);
   }));
 });
 
-describe('when a user is not saved in the database', () => {
+describe('when a listing is not saved in the database', () => {
   it('should respond with a 400 status code', sandboxed(function() {
     let req = {
       body: {}
@@ -66,8 +66,8 @@ describe('when a user is not saved in the database', () => {
       json: sinon.stub()
     };
     let err = this.stub();
-    this.stub(User.prototype, 'save').yields(err);
-    UserController.createUser(req, res);
+    this.stub(Listing.prototype, 'save').yields(err);
+    ListingController.createListing(req, res);
     expect(res.statusCalledWith).to.contain(400);
   }));
 });
