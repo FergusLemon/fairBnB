@@ -1,13 +1,15 @@
 const express = require('express');
 const router = express.Router();
-const ctrlUser = require('../controllers/user');
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..', '..');
+const userController = require(path.join(HOMEDIR, 'app_server', 'controllers', 'user'));
 
-router.get('/new', ctrlUser.getSignUpForm);
+router.get('/new', userController.getSignUpForm);
 
-router.post('/', ctrlUser.createUser);
+router.post('/', userController.createUser);
 
-router.get('/:username', ctrlUser.getUserHomepage);
+router.get('/:username', userController.getUserHomepage);
 
-router.get('/:user-id/booking-requests', ctrlUser.getBookingRequests);
+router.get('/:user-id/booking-requests', userController.getBookingRequests);
 
 module.exports = router;

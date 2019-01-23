@@ -1,15 +1,17 @@
-var express = require('express');
-var router = express.Router();
-var ctrlListing = require('../controllers/listing');
+const express = require('express');
+const router = express.Router();
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..', '..');
+const listingController = require(path.join(HOMEDIR, 'app_server', 'controllers', 'listing'));
 
-router.get('/new', ctrlListing.new);
+router.get('/new', listingController.new);
 
-router.post('/', ctrlListing.listings);
+router.post('/', listingController.listings);
 
-router.get('/', ctrlListing.listings);
+router.get('/', listingController.listings);
 
-router.get('/:listingName', ctrlListing.getListing);
+router.get('/:listingName', listingController.getListing);
 
-router.post('/:listing-id/booking-request/new', ctrlListing.addBookingRequest);
+router.post('/:listing-id/booking-request/new', listingController.addBookingRequest);
 
 module.exports = router;
