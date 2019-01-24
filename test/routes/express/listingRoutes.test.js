@@ -17,7 +17,12 @@ describe('creating a listing', () => {
   let listingDetails, req;
   beforeEach(() => {
     listingDetails = Factory.validListing();
-    req = { body: listingDetails };
+    req = {
+      body: listingDetails,
+      session: {
+        passport: { user: "stubbedID" }
+      }
+    };
   });
   it('makes a post request to the API wrapping the DB', sandboxed(function() {
     let res = {
@@ -27,7 +32,7 @@ describe('creating a listing', () => {
       }
     };
     this.stub(request, 'post');
-    ListingController.addListing(req, res);
+    ListingController.createListing(req, res);
     expect(request.post).to.have.been.calledOnce;
   }));
   it('responds with an error if it is passed a 403 status code back from the API', sandboxed(function() {
@@ -38,7 +43,7 @@ describe('creating a listing', () => {
       }
     };
     this.stub(request, 'post').yields(null, { statusCode: 403 });
-    ListingController.addListing(req, res);
+    ListingController.createListing(req, res);
     expect(res.sendCalledWith).to.contain('Something went wrong');
   }));
   it('does not send an error if it is passed a 201 status code', sandboxed(function() {
@@ -52,8 +57,8 @@ describe('creating a listing', () => {
         this.redirectCalledWith = arg;
       }
     };
-    this.stub(request, 'post').yields(null, { statusCode: 201 }, { ownerID: "stubbedOwnerID" });
-    ListingController.addListing(req, res);
+    this.stub(request, 'post').yields(null, { statusCode: 201 }, { owner: "stubbedOwnerID" });
+    ListingController.createListing(req, res);
     expect(res.sendCalledWith).to.contain('');
     expect(res.redirectCalledWith).to.contain('users/stubbedOwnerID');
     expect(res.redirectCalledWith).to.not.contain('Something went wrong');

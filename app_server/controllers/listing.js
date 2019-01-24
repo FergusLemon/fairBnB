@@ -8,12 +8,12 @@ module.exports.new = function(req, res) {
   res.render('listings/new');
 };
 
-module.exports.addListing = function(req, res) {
+module.exports.createListing = function(req, res) {
   let postData = {
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
-    owner: req.body.ownerID
+    owner: req.session.passport.user
   };
   let path = "/api/listings";
   request.post( {
@@ -22,7 +22,8 @@ module.exports.addListing = function(req, res) {
   },
     (err, response, body) => {
       if (response.statusCode === 201) {
-        res.redirect('users/' + body.ownerID);
+        let id = body.owner
+        res.redirect('users/' + id);
       } else {
         res.send("Something went wrong with the database.");
       }

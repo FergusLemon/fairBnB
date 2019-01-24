@@ -7,11 +7,11 @@ const listingController = require(path.join(HOMEDIR, 'app_server', 'controllers'
 
 router.get('/new', listingController.new);
 
-router.post('/', listingController.addListing);
+router.post('/', listingController.createListing);
 
 router.get('/', listingController.getAllListings);
 
-router.get('/:listing-name', listingController.getListing);
+router.get('/:listing', listingController.getListing);
 
 router.post('/:listing-id/booking-request/new', listingController.addBookingRequest);
 

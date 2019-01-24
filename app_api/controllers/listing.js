@@ -11,7 +11,7 @@ let sendJsonResponse = function(res, status, content) {
 
 module.exports.createListing = (req, res) => {
   let listing = new Listing(req.body);
-  listing.save((err, user) => {
+  listing.save((err, listing) => {
     if (err) {
       sendJsonResponse(res, 400, err);
     } else {
