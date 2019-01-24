@@ -64,3 +64,50 @@ describe('creating a listing', () => {
     expect(res.redirectCalledWith).to.not.contain('Something went wrong');
   }));
 });
+
+describe('retrieving all listings', () => {
+  let req;
+  beforeEach(() => {
+    req = {};
+  });
+
+  it('makes a get request to the API wrapping the DB', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      }
+    };
+    this.stub(request, 'get');
+    ListingController.getAllListings(req, res);
+    expect(request.get).to.have.been.calledOnce;
+  }));
+  it('responds with an error if it is passed a 403 status code back from the API', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      }
+    };
+    this.stub(request, 'get').yields(null, { statusCode: 403 });
+    ListingController.getAllListings(req, res);
+    expect(res.sendCalledWith).to.contain('Something went wrong');
+  }));
+  it('does not send an error if it is passed a 201 status code', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      },
+      renderCalledWith: '',
+      render: function(arg) {
+        this.renderCalledWith = arg;
+      }
+    };
+    this.stub(request, 'get').yields(null, { statusCode: 201 }, { listings: [{ name: "Test Casa", description: "Nice test casa.", price: 100 }] });
+    ListingController.getAllListings(req, res);
+    expect(res.sendCalledWith).to.contain('');
+    expect(res.renderCalledWith).to.contain('listings/all');
+    expect(res.renderCalledWith).to.not.contain('Something went wrong');
+  }));
+});

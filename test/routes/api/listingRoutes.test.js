@@ -71,3 +71,43 @@ describe('when a listing is not saved in the database', () => {
     expect(res.statusCalledWith).to.contain(400);
   }));
 });
+
+describe('when listings are successfully retrieved', () => {
+  let listingDetails, listing, listings;
+  beforeEach(() => {
+    listingDetails = Factory.validListing();
+    listing = new Listing(listingDetails);
+    listings = Listing.find();
+  });
+  it('should respond with a 201 status code', sandboxed(function() {
+    let req = {};
+    let res = {
+      statusCalledWith: '',
+      status: function(arg) {
+        this.statusCalledWith += arg;
+      },
+      json: sinon.stub()
+    };
+    this.stub(Listing, 'find').yields(null, listings);
+    ListingController.getAllListings(req, res);
+    expect(res.statusCalledWith).to.contain(201);
+  }));
+});
+describe('when listings are not retrieved successfully', () => {
+  it('should respond with a 400 status code', sandboxed(function() {
+    let req = {
+      body: {}
+    };
+    let res = {
+      statusCalledWith: '',
+      status: function(arg) {
+        this.statusCalledWith += arg;
+      },
+      json: sinon.stub()
+    };
+    let err = this.stub();
+    this.stub(Listing, 'find').yields(err);
+    ListingController.getAllListings(req, res);
+    expect(res.statusCalledWith).to.contain(400);
+  }));
+});

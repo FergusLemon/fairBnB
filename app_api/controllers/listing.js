@@ -19,3 +19,14 @@ module.exports.createListing = (req, res) => {
     }
   });
 };
+
+module.exports.getAllListings = (req, res) => {
+  let listings = [];
+  Listing.find((err) => {
+    if (err) {
+      sendJsonResponse(res, 400, err);
+    } else {
+      sendJsonResponse(res, 201, listings);
+    }
+  });
+};

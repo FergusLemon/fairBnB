@@ -3,9 +3,9 @@ block nav
   a#view-listings-nav(href="/listings") View Listings
 
 block content
-  each property, index in properties
-    a(id="property-"+index, href="/listings/" + property.name)
+  each listing, index in listings
+    a(id="listing-"+index, href="/listings/" + listing.name)
       article(id=index)
-        h4(id="name-"+index)= "Name: " + property.name
-        p(id="description-"+index)= "Description: " + property.description
-        p(id="price-"+index)= "Price Per Night: " + property.price
+        h4(id="name-"+index)= "Name: " + listing.name
+        p(id="description-"+index)= "Description: " + listing.description
+        p(id="price-"+index)= "Price Per Night: " + listing.price

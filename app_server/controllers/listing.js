@@ -31,20 +31,22 @@ module.exports.createListing = function(req, res) {
 };
 
 module.exports.getAllListings = function(req, res) {
-  res.render('listings/all', {
-    properties: [{
-      name: req.body.name,
-      description: req.body.description,
-      price: req.body.price
-    }, {
-      name: "Dummy Casa 1",
-      description: "A great first dummy casa with fantastic views.",
-      price: "100"
-    }, {
-      name: "Dummy Casa 2",
-      description: "A cosy second dummy casa with superb amenities.",
-      price: "50"
-    }]
+  let path = "/api/listings";
+  request.get( {
+    url: server + path,
+  },
+    (err, response, body) => {
+      console.log(body);
+      if (response.statusCode === 201) {
+        res.render('listings/all', { listings: [{
+          name: body.name,
+          description: body.description,
+          price: body.price
+          }]
+        });
+      } else {
+        res.send("Something went wrong with the database.");
+      }
   });
 };
 
