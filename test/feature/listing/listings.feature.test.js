@@ -1,6 +1,5 @@
 'use strict';
 import { Selector } from 'testcafe';
-import { Role } from 'testcafe';
 import { createNewListing } from '../../helpers/testCafeHelpers';
 import { signUp } from '../../helpers/testCafeHelpers';
 const path = require('path');
@@ -8,12 +7,6 @@ const HOMEDIR = path.join(__dirname, '..', '..', '..');
 const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
 const { environment } = require(path.join(HOMEDIR, 'config'));
 const mongoose = require('mongoose');
-const propertyOwner = Role('http://localhost:3000/session/new', async t => {
-  await t
-    .typeText('#username', 'test@testmail.com')
-    .typeText('#password', 'P@$$w0rdH3aVy')
-    .click('#sign-in');
-});
 
 if ( `${environment}` === "test" ) {
   databaseHelper.setUpTestDatabase();
@@ -24,7 +17,6 @@ fixture `Listings Page`
   .beforeEach( async t => {
     await signUp(t)
     await t
-      .useRole(propertyOwner)
       .click('#add-listing')
     await createNewListing(t)
     await t
