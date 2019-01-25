@@ -11,5 +11,5 @@ module.exports.authenticateUser = (req, res) => {
 };
 
 module.exports.overview = function(req, res) {
-  res.render('index');
+  res.render('users/overview');
 };

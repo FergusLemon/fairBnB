@@ -15,6 +15,7 @@ module.exports.createListing = function(req, res) {
     price: req.body.price,
     owner: req.session.passport.user
   };
+  console.log(postData);
   let path = "/api/listings";
   request.post( {
     url: server + path,
@@ -38,12 +39,7 @@ module.exports.getAllListings = function(req, res) {
     (err, response, body) => {
       console.log(body);
       if (response.statusCode === 201) {
-        res.render('listings/all', { listings: [{
-          name: body.name,
-          description: body.description,
-          price: body.price
-          }]
-        });
+        res.render('listings/all', { listings: body });
       } else {
         res.send("Something went wrong with the database.");
       }

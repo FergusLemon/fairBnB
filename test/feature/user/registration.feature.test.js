@@ -1,12 +1,19 @@
 'use strict';
 import { Selector } from 'testcafe';
 import { fillOutNewUserForm } from '../../helpers/testCafeHelpers';
+import { createNewListing } from '../../helpers/testCafeHelpers';
 
-const username = Selector('#username');
-const password = Selector('#password');
-const firstName = Selector('#firstname');
-const lastName = Selector('#lastname');
-const phoneNumber = Selector('#phoneNumber');
+const usernameField = Selector('#username');
+const passwordField = Selector('#password');
+const firstNameField = Selector('#firstname');
+const lastNameField = Selector('#lastname');
+const phoneNumberField = Selector('#phoneNumber');
+const username = 'test@testmail.com';
+const password = 'P@$$w0rdH3aVy';
+const firstName = 'Test';
+const lastName = 'User';
+const phoneNumber = '07777 777 7777';
+const message = "Let's get started!";
 
 fixture `New User Registration Test`
   .page `http://localhost:3000/users/new`;
@@ -18,27 +25,31 @@ fixture `New User Registration Test`
 
   test('There is an empty new user registration form', async t => {
     await t
-      .expect(username.innerText).eql("")
-      .expect(password.innerText).eql("")
-      .expect(firstName.innerText).eql("")
-      .expect(lastName.innerText).eql("")
-      .expect(phoneNumber.innerText).eql("");
+      .expect(usernameField.innerText).eql("")
+      .expect(passwordField.innerText).eql("")
+      .expect(firstNameField.innerText).eql("")
+      .expect(lastNameField.innerText).eql("")
+      .expect(phoneNumberField.innerText).eql("");
   });
 
   test('A new user can fill out his or her details', async t => {
     await fillOutNewUserForm(t)
     await t
-      .expect(username.value).eql('test@testmail.com')
-      .expect(password.value).eql('P@$$w0rdH3aVy')
-      .expect(firstName.value).eql('Test')
-      .expect(lastName.value).eql('User')
-      .expect(phoneNumber.value).eql('07777 777 7777');
+      .expect(usernameField.value).eql(username)
+      .expect(passwordField.value).eql(password)
+      .expect(firstNameField.value).eql(firstName)
+      .expect(lastNameField.value).eql(lastName)
+      .expect(phoneNumberField.value).eql(phoneNumber);
   });
 
 
-  test('A new user recieves a welcome messasge when they register', async t => {
+  test('A new user can add a listing', async t => {
     await fillOutNewUserForm(t)
     await t
       .click('#register')
-      .expect(Selector('#message').innerText).eql("Let's get started!");
+      .expect(Selector('#add-listing').exists).ok()
+      .click('#add-listing')
+    await createNewListing(t)
+    await t
+      .expect(Selector('#view-listings').exists).ok();
   });

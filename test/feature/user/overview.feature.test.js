@@ -21,11 +21,6 @@ fixture `User Overview Page`
     databaseHelper.closeConnection();
   });
 
-  test('Has the welcome message for new users', async t => {
-    await t
-      .expect(Selector('#message').innerText).eql("Let's get started!");
-  });
-
   test('Does not have a sign in or sign up link in the nav bar', async t => {
     await t
       .expect(Selector('#sign-in').exists).notOk()

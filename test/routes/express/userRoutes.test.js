@@ -53,10 +53,9 @@ describe('creating a user', () => {
         this.redirectCalledWith = arg;
       }
     };
-    this.stub(request, 'post').yields(null, { statusCode: 201 }, { username: "stubbed@stubmail.com" });
+    this.stub(request, 'post').yields(null, { statusCode: 201 }, { id: "stub" });
     UserController.createUser(req, res);
     expect(res.sendCalledWith).to.contain('');
-    expect(res.redirectCalledWith).to.contain('users/stubbed@stubmail.com');
     expect(res.redirectCalledWith).to.not.contain('Something went wrong');
   }));
 });

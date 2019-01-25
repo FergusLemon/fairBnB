@@ -5,6 +5,7 @@ const HOMEDIR = path.join(__dirname, '..', '..');
 const Listing = require(path.join(HOMEDIR, 'app_api', 'models', 'listing'));
 
 let sendJsonResponse = function(res, status, content) {
+  console.log(content);
   res.status(status);
   res.json(content);
 };
@@ -21,8 +22,7 @@ module.exports.createListing = (req, res) => {
 };
 
 module.exports.getAllListings = (req, res) => {
-  let listings = [];
-  Listing.find((err) => {
+  Listing.find((err, listings) => {
     if (err) {
       sendJsonResponse(res, 400, err);
     } else {

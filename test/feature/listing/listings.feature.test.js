@@ -3,12 +3,21 @@ import { Selector } from 'testcafe';
 import { Role } from 'testcafe';
 import { createNewListing } from '../../helpers/testCafeHelpers';
 import { signUp } from '../../helpers/testCafeHelpers';
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..', '..', '..');
+const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
+const { environment } = require(path.join(HOMEDIR, 'config'));
+const mongoose = require('mongoose');
 const propertyOwner = Role('http://localhost:3000/session/new', async t => {
   await t
     .typeText('#username', 'test@testmail.com')
     .typeText('#password', 'P@$$w0rdH3aVy')
     .click('#sign-in');
-})
+});
+
+if ( `${environment}` === "test" ) {
+  databaseHelper.setUpTestDatabase();
+}
 
 fixture `Listings Page`
   .page `http://localhost:3000/listings/new`
@@ -20,7 +29,14 @@ fixture `Listings Page`
     await createNewListing(t)
     await t
       .click('#view-listings')
-    });
+    })
+  .afterEach(async t => {
+    databaseHelper.dropCollection('users');
+    databaseHelper.dropCollection('listings');
+  })
+  .after(async t => {
+    databaseHelper.closeConnection();
+  });
 
   test('There is a listing on the page', async t => {
     await t
