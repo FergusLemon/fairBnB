@@ -104,7 +104,7 @@ describe('retrieving all listings', () => {
         this.renderCalledWith = arg;
       }
     };
-    this.stub(request, 'get').yields(null, { statusCode: 201 }, { listings: [{ name: "Test Casa", description: "Nice test casa.", price: 100 }] });
+    this.stub(request, 'get').yields(null, { statusCode: 201 }, { listings: { name: "Test Casa", description: "Nice test casa.", price: 100 } });
     ListingController.getAllListings(req, res);
     expect(res.sendCalledWith).to.contain('');
     expect(res.renderCalledWith).to.contain('listings/all');

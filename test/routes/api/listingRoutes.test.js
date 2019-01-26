@@ -45,7 +45,7 @@ describe('when a listing is saved in the database', () => {
       status: function(arg) {
         this.statusCalledWith += arg;
       },
-      json: sinon.stub()
+      send: sinon.stub()
     };
     this.stub(Listing.prototype, 'save').yields(null, listing);
     ListingController.createListing(req, res);
@@ -63,7 +63,7 @@ describe('when a listing is not saved in the database', () => {
       status: function(arg) {
         this.statusCalledWith += arg;
       },
-      json: sinon.stub()
+      send: sinon.stub()
     };
     let err = this.stub();
     this.stub(Listing.prototype, 'save').yields(err);
@@ -86,7 +86,7 @@ describe('when listings are successfully retrieved', () => {
       status: function(arg) {
         this.statusCalledWith += arg;
       },
-      json: sinon.stub()
+      send: sinon.stub()
     };
     this.stub(Listing, 'find').yields(null, listings);
     ListingController.getAllListings(req, res);
@@ -103,7 +103,7 @@ describe('when listings are not retrieved successfully', () => {
       status: function(arg) {
         this.statusCalledWith += arg;
       },
-      json: sinon.stub()
+      send: sinon.stub()
     };
     let err = this.stub();
     this.stub(Listing, 'find').yields(err);
