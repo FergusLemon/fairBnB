@@ -46,10 +46,17 @@ module.exports.getAllListings = function(req, res) {
 };
 
 module.exports.getListing = function(req, res) {
-  res.render('listings/individual', {
-    name: "Dummy Casa 1",
-    description: "A great first dummy casa with fantastic views.",
-    price: "100"
+  let path = "/api/listings";
+  request.get( {
+    url: server + path,
+  },
+    (err, response, body) => {
+      if (response.statusCode === 201) {
+        let listing = JSON.parse(body);
+        res.render('listings/individual', { listing: listing });
+      } else {
+        res.send("Something went wrong with the database.");
+      }
   });
 };
 
