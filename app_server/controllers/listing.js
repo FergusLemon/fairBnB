@@ -33,7 +33,7 @@ module.exports.createListing = function(req, res) {
 module.exports.getAllListings = function(req, res) {
   let path = "/api/listings";
   request.get( {
-    url: server + path,
+    url: server + path
   },
     (err, response, body) => {
       if (response.statusCode === 201) {
@@ -46,9 +46,10 @@ module.exports.getAllListings = function(req, res) {
 };
 
 module.exports.getListing = function(req, res) {
-  let path = "/api/listings";
+  let listingId = req.params.listing;
+  let path = "/api/listings/" + listingId;
   request.get( {
-    url: server + path,
+    url: server + path
   },
     (err, response, body) => {
       if (response.statusCode === 201) {

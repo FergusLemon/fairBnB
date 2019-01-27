@@ -116,7 +116,11 @@ describe('retrieving all listings', () => {
 describe('retrieving an individual listing', () => {
   let req;
   beforeEach(() => {
-    req = {};
+    req = {
+      params: {
+        listing: 1
+      }
+    };
   });
 
   it('makes a get request to the API wrapping the DB', sandboxed(function() {
@@ -152,7 +156,7 @@ describe('retrieving an individual listing', () => {
         this.renderCalledWith = arg;
       }
     };
-    let listing = {"name":"Test Casa","description":"Nice test casa.","price":100};
+    let listing = {"name":"Test Casa","description":"Nice test casa.","price":100,"id":1};
     this.stub(request, 'get').yields(null, { statusCode: 201 }, JSON.stringify(listing));
     ListingController.getListing(req, res);
     expect(res.sendCalledWith).to.contain('');

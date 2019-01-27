@@ -3,10 +3,10 @@ block nav
   a#view-listings-nav(href="/listings") View Listings
 
 block content
-  article(id=index)
-    h4(id="name-"+index)= "Name: " + name
-    p(id="description-"+index)= "Description: " + description
-    p(id="price-"+index)= "Price Per Night: " + price
+  article(id="listing")
+    h4(id="name")= "Name: " + listing.name
+    p(id="description")= "Description: " + listing.description
+    p(id="price")= "Price Per Night: " + listing.price
   form(action=":listing-id/booking-request/new", method="POST")
     input(id="booking-start-date", type="date")
     br
