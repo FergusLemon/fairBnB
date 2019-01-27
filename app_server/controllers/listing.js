@@ -37,7 +37,8 @@ module.exports.getAllListings = function(req, res) {
   },
     (err, response, body) => {
       if (response.statusCode === 201) {
-        res.render('listings/all', { listings: body });
+        let listings = JSON.parse(body);
+        res.render('listings/all', { listings: listings });
       } else {
         res.send("Something went wrong with the database.");
       }

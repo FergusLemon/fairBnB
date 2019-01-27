@@ -104,9 +104,11 @@ describe('retrieving all listings', () => {
         this.renderCalledWith = arg;
       }
     };
-    this.stub(request, 'get').yields(null, { statusCode: 201 }, { listings: { name: "Test Casa", description: "Nice test casa.", price: 100 } });
+    let listings = {"listings":{"name":"Test Casa","description":"Nice test casa.","price":100}};
+    this.stub(request, 'get').yields(null, { statusCode: 201 }, JSON.stringify(listings));
     ListingController.getAllListings(req, res);
     expect(res.sendCalledWith).to.contain('');
+    expect(res.sendCalledWith).to.not.contain('Something went wrong');
     expect(res.renderCalledWith).to.contain('listings/all');
     expect(res.renderCalledWith).to.not.contain('Something went wrong');
   }));
