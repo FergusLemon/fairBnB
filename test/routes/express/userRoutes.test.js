@@ -14,9 +14,13 @@ const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
 chai.use(sinonChai);
 
 describe('creating a user', () => {
+  let userDetails, req;
+  beforeEach(() => {
+    userDetails = Factory.validUserOne();
+    req = { body: userDetails };
+  });
+
   it('makes a post request to the API wrapping the DB', sandboxed(function() {
-    let userDetails = Factory.validUserOne();
-    let req = { body: userDetails };
     let res = {
       sendCalledWith: '',
       send: function(arg) {
@@ -28,8 +32,6 @@ describe('creating a user', () => {
     expect(request.post).to.have.been.calledOnce;
   }));
   it('responds with an error if it is passed a 403 status code', sandboxed(function() {
-    let userDetails = Factory.validUserOne();
-    let req = { body: userDetails };
     let res = {
       sendCalledWith: '',
       send: function(arg) {
@@ -41,8 +43,6 @@ describe('creating a user', () => {
     expect(res.sendCalledWith).to.contain('Something went wrong');
   }));
   it('does not send an error if it is passed a 201 status code', sandboxed(function() {
-    let userDetails = Factory.validUserOne();
-    let req = { body: userDetails };
     let res = {
       sendCalledWith: '',
       send: function(arg) {
@@ -53,10 +53,9 @@ describe('creating a user', () => {
         this.redirectCalledWith = arg;
       }
     };
-    this.stub(request, 'post').yields(null, { statusCode: 201 }, { username: "stubbed@stubmail.com" });
+    this.stub(request, 'post').yields(null, { statusCode: 201 }, { id: "stub" });
     UserController.createUser(req, res);
     expect(res.sendCalledWith).to.contain('');
-    expect(res.redirectCalledWith).to.contain('users/stubbed@stubmail.com');
     expect(res.redirectCalledWith).to.not.contain('Something went wrong');
   }));
 });

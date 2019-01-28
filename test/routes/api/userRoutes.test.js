@@ -1,5 +1,4 @@
 'use strict';
-
 const mongoose = require('mongoose');
 const sinon = require('sinon');
 const sinonTest = require('sinon-test');

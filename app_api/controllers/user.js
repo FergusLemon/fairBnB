@@ -1,7 +1,8 @@
 'use strict';
-
 const mongoose = require('mongoose');
-const User = require('../models/user');
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..', '..');
+const User = require(path.join(HOMEDIR, 'app_api', 'models', 'user'));
 
 let sendJsonResponse = function(res, status, content) {
   res.status(status);

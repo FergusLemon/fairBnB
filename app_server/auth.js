@@ -3,7 +3,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const User = require('../app_api/models/user');
 
-passport.use(new LocalStrategy(
+passport.use('local-signIn', new LocalStrategy(
   function(username, password, done) {
     User.findOne({ username: username }, async function(err, user) {
       if (err) { return done(err); }

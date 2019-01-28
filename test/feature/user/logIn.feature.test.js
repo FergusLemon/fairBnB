@@ -48,7 +48,7 @@ fixture `User Login`
       .typeText(username, 'newUser@newmail.com')
       .typeText(password, 'n3WP@ssword')
       .click('#sign-in')
-      .expect(Selector('#search-placeholder').exists).notOk()
+      .expect(Selector('#add-listing').exists).notOk()
       .expect(Selector('#error-message').innerText).eql("Incorrect username.");
   });
 
@@ -58,7 +58,7 @@ fixture `User Login`
       .typeText(username, validUsername)
       .typeText(password, validPassword)
       .click('#sign-in')
-      .expect(Selector('#search-placeholder').exists).ok();
+      .expect(Selector('#add-listing').exists).ok();
   });
 
   test('An existing user cannot sign in with the wrong password', async t => {
@@ -67,7 +67,7 @@ fixture `User Login`
       .typeText(username, validUsername)
       .typeText(password, "wrong password")
       .click('#sign-in')
-      .expect(Selector('#search-placeholder').exists).notOk()
+      .expect(Selector('#add-listing').exists).notOk()
       .expect(Selector('#error-message').innerText).eql("Incorrect password.");
   });
 
@@ -77,7 +77,7 @@ fixture `User Login`
       .typeText(username, "wrong@username.com")
       .typeText(password, validPassword)
       .click('#sign-in')
-      .expect(Selector('#search-placeholder').exists).notOk()
+      .expect(Selector('#add-listing').exists).notOk()
       .expect(Selector('#error-message').innerText).eql("Incorrect username.");
   });
 

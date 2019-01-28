@@ -1,12 +1,34 @@
 'use strict';
 import { Selector } from 'testcafe';
 import { createNewListing } from '../../helpers/testCafeHelpers';
+import { signUp } from '../../helpers/testCafeHelpers';
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..', '..', '..');
+const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
+const { environment } = require(path.join(HOMEDIR, 'config'));
+const mongoose = require('mongoose');
+
+if ( `${environment}` === "test" ) {
+  databaseHelper.setUpTestDatabase();
+}
 
 fixture `Listings Page`
   .page `http://localhost:3000/listings/new`
   .beforeEach( async t => {
+    await signUp(t)
+    await t
+      .click('#add-listing')
     await createNewListing(t)
-    });
+    await t
+      .click('#view-listings')
+    })
+  .afterEach(async t => {
+    databaseHelper.dropCollection('users');
+    databaseHelper.dropCollection('listings');
+  })
+  .after(async t => {
+    databaseHelper.closeConnection();
+  });
 
   test('There is a listing on the page', async t => {
     await t

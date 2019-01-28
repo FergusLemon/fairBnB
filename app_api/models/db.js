@@ -32,9 +32,9 @@ const gracefulShutDown = function(msg, callback) {
   });
 };
 
-process.once('SIGUSR2', function() {
+process.once('SIGHUP', function() {
   gracefulShutDown('nodemon restart', function() {
-    process.kill(process.pid, 'SIGUSR2');
+    process.kill(process.pid, 'SIGHUP');
   });
 });
 

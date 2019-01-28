@@ -1,6 +1,9 @@
 'use strict';
 const request = require('request');
-const { server } = require('./../../config');
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..', '..');
+const passport = require(path.join(HOMEDIR, 'app_server', 'auth'));
+const { server } = require(path.join(HOMEDIR, 'config'));
 
 module.exports.getSignUpForm = (req, res) => {
   res.render('users/new');
@@ -15,24 +18,21 @@ module.exports.createUser = (req, res) => {
     phoneNumber: req.body.phoneNumber
   };
   let path = "/api/users";
-
   request.post( {
     url: server + path,
     json: postData
   },
-    (err, response, body) => {
+    (err, response, user) => {
       if (response.statusCode === 201) {
-        res.redirect('users/' + body.username);
+        passport.authenticate('local-signIn')(req, res, () => {
+          let id = req.session.passport.user;
+          res.redirect('session/' + id);
+        });
       } else {
         res.send("Something went wrong with the database.");
       }
     }
   );
-};
-
-module.exports.getUserHomepage = (req, res) => {
-  let welcome = "Let's get started!";
-  res.render('users/overview', { welcomeMessage: welcome });
 };
 
 module.exports.getUserHomepage = (req, res) => {

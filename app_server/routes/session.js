@@ -1,12 +1,14 @@
 'use strict';
-let express = require('express');
-let router = express.Router();
-let sessionController = require('../controllers/session');
-let passport = require('../auth.js');
+const express = require('express');
+const router = express.Router();
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..', '..');
+const sessionController = require(path.join(HOMEDIR, 'app_server', 'controllers', 'session'));
+const passport = require(path.join(HOMEDIR, 'app_server', 'auth'));
 
 router.get('/new', sessionController.new);
 
-router.post('/', passport.authenticate('local', {
+router.post('/', passport.authenticate('local-signIn', {
     failureRedirect: 'session/new',
     failureFlash: true
   }), sessionController.authenticateUser);
