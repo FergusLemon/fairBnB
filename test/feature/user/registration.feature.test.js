@@ -8,11 +8,10 @@ const passwordField = Selector('#password');
 const firstNameField = Selector('#firstname');
 const lastNameField = Selector('#lastname');
 const phoneNumberField = Selector('#phoneNumber');
-const username = 'test@testmail.com';
-const password = 'P@$$w0rdH3aVy';
-const firstName = 'Test';
-const lastName = 'User';
-const phoneNumber = '07777 777 7777';
+const path = require('path');
+const HOMEDIR = path.join(__dirname, '..', '..', '..');
+const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
+const userOne = Factory.validUserOne();
 const message = "Let's get started!";
 
 fixture `New User Registration Test`
@@ -33,18 +32,18 @@ fixture `New User Registration Test`
   });
 
   test('A new user can fill out his or her details', async t => {
-    await fillOutNewUserForm(t)
+    await fillOutNewUserForm(userOne, t)
     await t
-      .expect(usernameField.value).eql(username)
-      .expect(passwordField.value).eql(password)
-      .expect(firstNameField.value).eql(firstName)
-      .expect(lastNameField.value).eql(lastName)
-      .expect(phoneNumberField.value).eql(phoneNumber);
+      .expect(usernameField.value).eql(userOne.username)
+      .expect(passwordField.value).eql(userOne.password)
+      .expect(firstNameField.value).eql(userOne.firstname)
+      .expect(lastNameField.value).eql(userOne.lastname)
+      .expect(phoneNumberField.value).eql(userOne.phoneNumber);
   });
 
 
   test('A new user can add a listing', async t => {
-    await fillOutNewUserForm(t)
+    await fillOutNewUserForm(userOne, t)
     await t
       .click('#register')
       .expect(Selector('#add-listing').exists).ok()

@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..', '..');
 const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
+const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
+const userOne = Factory.validUserOne();
 const { environment } = require(path.join(HOMEDIR, 'config'));
 
 if ( `${environment}` === "test" ) {
@@ -14,7 +16,7 @@ if ( `${environment}` === "test" ) {
 fixture `User Overview Page`
   .page `http://localhost:3000/users/new`
   .beforeEach(async t => {
-    await signUp(t)
+    await signUp(userOne, t)
     databaseHelper.dropCollection('users');
   })
   .after(async t => {

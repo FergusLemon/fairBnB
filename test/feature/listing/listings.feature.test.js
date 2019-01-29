@@ -7,6 +7,8 @@ const HOMEDIR = path.join(__dirname, '..', '..', '..');
 const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
 const { environment } = require(path.join(HOMEDIR, 'config'));
 const mongoose = require('mongoose');
+const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
+const userOne = Factory.validUserOne();
 const name = "Name: Casa Test";
 const description = "Description: A nice test casa.";
 const price = "Price Per Night: 100";
@@ -20,7 +22,7 @@ if ( `${environment}` === "test" ) {
 fixture `Listings Page`
   .page `http://localhost:3000/listings/new`
   .beforeEach( async t => {
-    await signUp(t)
+    await signUp(userOne, t)
     await t
       .click('#add-listing')
     await createNewListing(t)
@@ -62,37 +64,6 @@ fixture `Listings Page`
       .expect(Selector('#name').innerText).eql(name)
       .expect(Selector('#description').innerText).eql(description)
       .expect(Selector('#price').innerText).eql(price);
-  })
-
-  test('A user can make a booking request for the listing', async t => {
-    await t
-      .click('#name-0')
-      .expect(Selector('#booking-request').exists).ok();
-  })
-
-  test('The start and end date pickers should be empty by default', async t => {
-    await t
-      .click('#name-0')
-      .expect(Selector('#booking-start-date').value).eql("")
-      .expect(Selector('#booking-end-date').value).eql("");
-  })
-
-  test('The user should be able to choose a start and an end date', async t => {
-    await t
-    .click('#name-0')
-      .typeText('#booking-start-date', startDate)
-      .typeText('#booking-end-date', endDate)
-      .expect(Selector('#booking-start-date').value).eql(startDate)
-      .expect(Selector('#booking-end-date').value).eql(endDate);
-  })
-
-  test('The user is taken back to his or her profile page once a booking request is made', async t => {
-    await t
-    .click('#name-0')
-      .typeText('#booking-start-date', startDate)
-      .typeText('#booking-end-date', endDate)
-      .click('#booking-request')
-      .expect(Selector('#add-listing').exists).ok();
   })
 
   test("When signed in a user should not see 'sign in' or 'sign up' links in the nav bar", async t => {
