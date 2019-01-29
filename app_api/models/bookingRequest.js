@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const ObjectId = mongoose.Schema.Types.ObjectId;
 const bookingRequestSchema = new mongoose.Schema({
   listing: { type: ObjectId, required: true },
+  owner: { type: ObjectId, required: true },
   requestor: { type: ObjectId, required: true },
   requestStartDate: { type: Date, required: true },
   requestEndDate: { type: Date, required: true },

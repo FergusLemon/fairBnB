@@ -19,3 +19,14 @@ module.exports.createBookingRequest = (req, res) => {
     }
   });
 };
+
+module.exports.getAllInboundBookingRequests = (req, res) => {
+  let id = req.params.username;
+  BookingRequest.find({ owner: id }, (err, bookingRequests) => {
+    if (err) {
+      sendJsonResponse(res, 400, err);
+    } else {
+      sendJsonResponse(res, 201, bookingRequests);
+    }
+  });
+};
