@@ -7,7 +7,7 @@ block content
     h4(id="name")= "Name: " + listing.name
     p(id="description")= "Description: " + listing.description
     p(id="price")= "Price Per Night: " + listing.price
-  form(action=":listing-id/booking-request/new", method="POST")
+  form(action= listing._id + "/bookingRequest/new", method="POST")
     input(id="booking-start-date", type="date")
     br
     input(id="booking-end-date", type="date")
