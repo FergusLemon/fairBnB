@@ -13,6 +13,6 @@ router.get('/', listingController.getAllListings);
 
 router.get('/:listing', listingController.getListing);
 
-router.post('/:listing-id/booking-request/new', listingController.addBookingRequest);
+router.post('/:listingId/bookingRequest/new', listingController.addBookingRequest);
 
 module.exports = router;

@@ -40,16 +40,18 @@ module.exports.getUserHomepage = (req, res) => {
   res.render('users/overview', { welcomeMessage: welcome });
 };
 
-module.exports.getBookingRequests = (req, res) => {
-  res.render('users/bookingRequests', {
-    bookingRequests: [{
-      propertyName: 'Test Casa',
-      propertyId: '1',
-      requestorName: 'Test User',
-      requestorId: '101',
-      requestStartDate: '2019-12-25',
-      requestEndDate: '2019-12-31',
-      requestMadeDate: '2019-01-12'
-    }]
+module.exports.getAllInboundBookingRequests = (req, res) => {
+  let ownerId = req.params.username;
+  let path = "/api/bookingRequests/" + ownerId;
+  request.get({
+    url: server + path
+  },
+    (err, response, body) => {
+      if (response.statusCode === 201) {
+        let bookingRequests = JSON.parse(body);
+        res.render('users/bookingRequests', { bookingRequests: bookingRequests });
+      } else {
+        res.send("Something went wrong with the database.");
+      }
   });
 };

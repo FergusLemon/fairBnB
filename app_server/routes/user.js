@@ -12,6 +12,6 @@ router.post('/', userController.createUser);
 
 router.get('/:username', userController.getUserHomepage);
 
-router.get('/:user-id/booking-requests', userController.getBookingRequests);
+router.get('/:username/listings/bookingRequests', userController.getAllInboundBookingRequests);
 
 module.exports = router;
