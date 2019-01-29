@@ -39,6 +39,27 @@ describe('A booking request', () => {
       });
     });
   });
+  describe('Owner ID is required', () => {
+    describe('when not provided', () => {
+      it('is invalid', () => {
+        let validBookingRequest = new ValidObject(bookingRequestFactoryDetails);
+        let noOwner = validBookingRequest.removePath('owner');
+        let bookingRequest = new BookingRequest(noOwner);
+        bookingRequest.validate((err) => {
+          expect(err.errors.owner).to.exist;
+        });
+      });
+    });
+    describe('when provided', () => {
+      it('is valid', () => {
+        let bookingRequest = new BookingRequest(bookingRequestFactoryDetails);
+        bookingRequest.validate((err) => {
+          expect(err).to.equal(null);
+          expect(bookingRequest.owner).to.equal(bookingRequestFactoryDetails.owner);
+        });
+      });
+    });
+  });
   describe('Requestor ID is required', () => {
     describe('when not provided', () => {
       it('is invalid', () => {

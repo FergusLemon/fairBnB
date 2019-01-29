@@ -71,3 +71,50 @@ describe('when a booking request is not saved in the database', () => {
     expect(res.statusCalledWith).to.contain(400);
   }));
 });
+
+describe('when inbound booking requests are successfully retrieved', () => {
+  let bookingRequestDetails, bookingRequest, bookingRequests;
+  beforeEach(() => {
+    bookingRequestDetails = Factory.validBookingRequest();
+    bookingRequest = new BookingRequest(bookingRequestDetails);
+    bookingRequests = BookingRequest.find( { owner: bookingRequestDetails.owner } );
+  });
+  it('should respond with a 201 status code', sandboxed(function() {
+    let req = {
+      params: {
+        username: 1
+      }
+    };
+    let res = {
+      statusCalledWith: '',
+      status: function(arg) {
+        this.statusCalledWith += arg;
+      },
+      send: sinon.stub()
+    };
+    this.stub(BookingRequest, 'find').yields(null, bookingRequests);
+    BookingRequestController.getAllInboundBookingRequests(req, res);
+    expect(res.statusCalledWith).to.contain(201);
+  }));
+});
+describe('when inbound booking requests are not retrieved successfully', () => {
+  it('should respond with a 400 status code', sandboxed(function() {
+    let req = {
+      params: {
+        username: 1
+      }
+    };
+    let res = {
+      statusCalledWith: '',
+      status: function(arg) {
+        this.statusCalledWith += arg;
+      },
+      send: sinon.stub()
+    };
+    let err = this.stub();
+    this.stub(BookingRequest, 'find').yields(err);
+    BookingRequestController.getAllInboundBookingRequests(req, res);
+    expect(res.statusCalledWith).to.contain(400);
+  }));
+});
+

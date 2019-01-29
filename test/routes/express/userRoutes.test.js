@@ -59,3 +59,53 @@ describe('creating a user', () => {
     expect(res.redirectCalledWith).to.not.contain('Something went wrong');
   }));
 });
+describe('getting all inbound booking requests', () => {
+  let req;
+  beforeEach(() => {
+  req = {
+    params: {
+      owner: 1
+    }
+  };
+  });
+
+  it('makes a get request to the API wrapping the DB', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      }
+    };
+    this.stub(request, 'get');
+    UserController.getAllInboundBookingRequests(req, res);
+    expect(request.get).to.have.been.calledOnce;
+  }));
+  it('responds with an error if it is passed a 403 status code', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      }
+    };
+    this.stub(request, 'get').yields(null, { statusCode: 403 });
+    UserController.getAllInboundBookingRequests(req, res);
+    expect(res.sendCalledWith).to.contain('Something went wrong');
+  }));
+  it('does not send an error if it is passed a 201 status code', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      },
+      renderCalledWith: '',
+      render: function(arg) {
+        this.renderCalledWith = arg;
+      }
+    };
+    let bookingRequest = {"stub":"stub"};
+    this.stub(request, 'get').yields(null, { statusCode: 201 }, JSON.stringify(bookingRequest));
+    UserController.getAllInboundBookingRequests(req, res);
+    expect(res.sendCalledWith).to.contain('');
+    expect(res.sendCalledWith).to.not.contain('Something went wrong');
+  }));
+});
