@@ -29,7 +29,7 @@ fixture `Booking Requests`
       .navigateTo('http://localhost:3000')
     await signUp(userTwo, t)
     await t
-      .click('#view-listings')
+      .click('#view-listings-nav')
     })
   .afterEach(async t => {
     databaseHelper.dropCollection('users');

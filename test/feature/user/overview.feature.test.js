@@ -32,7 +32,7 @@ fixture `User Overview Page`
   test("Has an overview of options available to the user", async t => {
     await t
       .expect(Selector('#add-listing').innerText).eql("Add Listing")
-      .expect(Selector('#view-listings').innerText).eql("View Listings")
+      .expect(Selector('#view-listings').innerText).eql("Your Properties")
       .expect(Selector('#inbound-booking-requests').innerText).eql("Booking Requests On Your Properties");
   });
 
