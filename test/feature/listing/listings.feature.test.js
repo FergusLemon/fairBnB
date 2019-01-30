@@ -7,6 +7,13 @@ const HOMEDIR = path.join(__dirname, '..', '..', '..');
 const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
 const { environment } = require(path.join(HOMEDIR, 'config'));
 const mongoose = require('mongoose');
+const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
+const userOne = Factory.validUserOne();
+const name = "Name: Casa Test";
+const description = "Description: A nice test casa.";
+const price = "Price Per Night: 100";
+const startDate = "2019-12-25";
+const endDate = "2019-12-31";
 
 if ( `${environment}` === "test" ) {
   databaseHelper.setUpTestDatabase();
@@ -15,7 +22,7 @@ if ( `${environment}` === "test" ) {
 fixture `Listings Page`
   .page `http://localhost:3000/listings/new`
   .beforeEach( async t => {
-    await signUp(t)
+    await signUp(userOne, t)
     await t
       .click('#add-listing')
     await createNewListing(t)
@@ -36,13 +43,13 @@ fixture `Listings Page`
   });
 
   test('The listing is the one the user created', async t => {
-    const name = Selector('#name-0');
-    const description = Selector('#description-0');
-    const price = Selector('#price-0');
+    const nameElement = Selector('#name-0');
+    const descriptionElement = Selector('#description-0');
+    const priceElement = Selector('#price-0');
     await t
-      .expect(name.innerText).eql('Name: Casa Test')
-      .expect(description.innerText).eql('Description: A nice test casa.')
-      .expect(price.innerText).eql('Price Per Night: 100');
+      .expect(nameElement.innerText).eql(name)
+      .expect(descriptionElement.innerText).eql(description)
+      .expect(priceElement.innerText).eql(price);
   });
 
   test('When there other listings, the user can see those also', async t => {
@@ -53,33 +60,10 @@ fixture `Listings Page`
 
   test('A user can click on a listed property to see more information', async t => {
     await t
-      .click('#name-1')
-      .expect(Selector('#booking-request').exists).ok();
-  })
-
-  test('The start and end date pickers should be empty by default', async t => {
-    await t
-      .click('#name-1')
-      .expect(Selector('#booking-start-date').value).eql("")
-      .expect(Selector('#booking-end-date').value).eql("");
-  })
-
-  test('The user should be able to choose a start and an end date', async t => {
-    await t
-    .click('#name-1')
-      .typeText('#booking-start-date', "2019-12-25")
-      .typeText('#booking-end-date', "2019-12-31")
-      .expect(Selector('#booking-start-date').value).eql("2019-12-25")
-      .expect(Selector('#booking-end-date').value).eql("2019-12-31");
-  })
-
-  test('The user is taken back to his or her profile page once a booking request is made', async t => {
-    await t
-    .click('#name-1')
-      .typeText('#booking-start-date', "2019-12-25")
-      .typeText('#booking-end-date', "2019-12-31")
-      .click('#booking-request')
-      .expect(Selector('#add-listing').exists).ok();
+      .click('#name-0')
+      .expect(Selector('#name').innerText).eql(name)
+      .expect(Selector('#description').innerText).eql(description)
+      .expect(Selector('#price').innerText).eql(price);
   })
 
   test("When signed in a user should not see 'sign in' or 'sign up' links in the nav bar", async t => {

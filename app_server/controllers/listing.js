@@ -22,7 +22,7 @@ module.exports.createListing = function(req, res) {
   },
     (err, response, body) => {
       if (response.statusCode === 201) {
-        let id = body.owner
+        let id = body.owner;
         res.redirect('users/' + id);
       } else {
         res.send("Something went wrong with the database.");
@@ -33,7 +33,7 @@ module.exports.createListing = function(req, res) {
 module.exports.getAllListings = function(req, res) {
   let path = "/api/listings";
   request.get( {
-    url: server + path,
+    url: server + path
   },
     (err, response, body) => {
       if (response.statusCode === 201) {
@@ -46,13 +46,17 @@ module.exports.getAllListings = function(req, res) {
 };
 
 module.exports.getListing = function(req, res) {
-  res.render('listings/individual', {
-    name: "Dummy Casa 1",
-    description: "A great first dummy casa with fantastic views.",
-    price: "100"
+  let listingId = req.params.listing;
+  let path = "/api/listings/" + listingId;
+  request.get( {
+    url: server + path
+  },
+    (err, response, body) => {
+      if (response.statusCode === 201) {
+        let listing = JSON.parse(body);
+        res.render('listings/individual', { listing: listing });
+      } else {
+        res.send("Something went wrong with the database.");
+      }
   });
-};
-
-module.exports.addBookingRequest = function(req, res) {
-  res.render('users/overview');
 };

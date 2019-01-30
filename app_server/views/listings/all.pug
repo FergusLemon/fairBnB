@@ -4,7 +4,7 @@ block nav
 
 block content
   each listing, index in listings
-    a(id="listing-"+index, href="/listings/" + listing.name)
+    a(id="listing-"+index, href="/listings/" + listing._id)
       article(id=index)
         h4(id="name-"+index)= "Name: " + listing.name
         p(id="description-"+index)= "Description: " + listing.description

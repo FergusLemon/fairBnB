@@ -111,3 +111,50 @@ describe('when listings are not retrieved successfully', () => {
     expect(res.statusCalledWith).to.contain(400);
   }));
 });
+
+describe('when an individual listing is successfully retrieved', () => {
+  let listingDetails, listing, testListing, id;
+  beforeEach(() => {
+    listingDetails = Factory.validListing();
+    testListing = new Listing(listingDetails);
+    id = testListing.id;
+    listing = Listing.findById(id);
+  });
+  it('should respond with a 201 status code', sandboxed(function() {
+    let req = {
+      params: {
+        listingId: 1
+      }
+    };
+    let res = {
+      statusCalledWith: '',
+      status: function(arg) {
+        this.statusCalledWith += arg;
+      },
+      send: sinon.stub()
+    };
+    this.stub(Listing, 'findById').yields(null, listing);
+    ListingController.getListing(req, res);
+    expect(res.statusCalledWith).to.contain(201);
+  }));
+});
+describe('when an individual listing is not retrieved successfully', () => {
+  it('should respond with a 400 status code', sandboxed(function() {
+    let req = {
+      params: {
+        listingId: 1
+      }
+    };
+    let res = {
+      statusCalledWith: '',
+      status: function(arg) {
+        this.statusCalledWith += arg;
+      },
+      send: sinon.stub()
+    };
+    let err = this.stub();
+    this.stub(Listing, 'findById').yields(err);
+    ListingController.getListing(req, res);
+    expect(res.statusCalledWith).to.contain(400);
+  }));
+});

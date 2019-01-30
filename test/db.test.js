@@ -1,6 +1,8 @@
 'use strict';
 
-const expect = require('chai').expect;
+const chai = require('chai');
+const chaiAsPromised = require('chai-as-promised');
+const expect = chai.expect;
 const mongoose = require('mongoose');
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..');
@@ -10,6 +12,7 @@ const { environment } = require(path.join(HOMEDIR, 'config'));
 const User = require(path.join(HOMEDIR, 'app_api', 'models', 'user'));
 const firstUserDetails = Factory.validUserOne();
 const secondUserDetails = Factory.validUserTwo();
+chai.use(chaiAsPromised);
 
 if ( `${environment}` === "test" ) {
   databaseHelper.setUpTestDatabase();
@@ -94,4 +97,7 @@ describe("Comparing a user's password with the database record", () => {
     let promise = await result.comparePassword('random password');
     expect(promise).to.equal(false);
   });
+  it('should catch an error scenario', async () => {
+    await expect(result.comparePassword()).to.be.rejected;
+  })
 });

@@ -10,7 +10,7 @@ let sendJsonResponse = function(res, status, content) {
 };
 
 module.exports.createUser = (req, res) => {
-  var user = new User(req.body);
+  let user = new User(req.body);
   user.save((err, user) => {
     if (err) {
       sendJsonResponse(res, 400, err);

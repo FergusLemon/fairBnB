@@ -1,6 +1,8 @@
 'use strict';
 
 const mongoose = require('mongoose');
+const Listing = require('./listing');
+const listingSchema = Listing.schema;
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -9,18 +11,16 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
-  phoneNumber: { type: String }
+  phoneNumber: { type: String },
+  listings: [listingSchema]
 });
 
 userSchema.pre('save', function(next) {
   let user = this;
-
   bcrypt.genSalt(saltRounds, function(err, salt) {
     if (err) return next(err);
-
     bcrypt.hash(user.password, salt, function(err, hash) {
       if (err) return next(err);
-
       user.password = hash;
       next();
     });

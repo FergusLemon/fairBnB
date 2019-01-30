@@ -21,11 +21,22 @@ module.exports.createListing = (req, res) => {
 };
 
 module.exports.getAllListings = (req, res) => {
-  Listing.find({}, (err, result) => {
+  Listing.find({}, (err, listings) => {
     if (err) {
       sendJsonResponse(res, 400, err);
     } else {
-      sendJsonResponse(res, 201, result);
+      sendJsonResponse(res, 201, listings);
+    }
+  });
+};
+
+module.exports.getListing = (req, res) => {
+  let listingId = req.params.listingId;
+  Listing.findById(listingId, (err, listing) => {
+    if (err) {
+      sendJsonResponse(res, 400, err);
+    } else {
+      sendJsonResponse(res, 201, listing);
     }
   });
 };

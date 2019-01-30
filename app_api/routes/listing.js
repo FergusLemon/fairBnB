@@ -9,4 +9,6 @@ router.post('/', listingsController.createListing);
 
 router.get('/', listingsController.getAllListings);
 
+router.get('/:listingId', listingsController.getListing);
+
 module.exports = router;

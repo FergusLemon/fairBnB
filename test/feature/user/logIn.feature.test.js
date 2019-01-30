@@ -6,11 +6,11 @@ const HOMEDIR = path.join(__dirname, '..', '..', '..');
 const User = require(path.join(HOMEDIR, 'app_api', 'models', 'user'));
 const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
 const { environment } = require(path.join(HOMEDIR, 'config'));
-const validUsername = "test@testmail.com";
-const validPassword = "P@$$w0rdH3aVy";
+const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
+const userOne = Factory.validUserOne();
 const mongoose = require('mongoose');
-const username = Selector('#username');
-const password = Selector('#password');
+const usernameField = Selector('#username');
+const passwordField = Selector('#password');
 
 if ( `${environment}` === "test" ) {
   databaseHelper.setUpTestDatabase();
@@ -19,7 +19,7 @@ if ( `${environment}` === "test" ) {
 fixture `User Login`
   .page `http://localhost:3000`
   .beforeEach(async t => {
-    await signUp(t)
+    await signUp(userOne, t)
     await t.navigateTo('http://localhost:3000')
     console.log("Test User added to database.");
   })
@@ -38,15 +38,15 @@ fixture `User Login`
   test('There are empty username and password fields to fill in', async t => {
     await t
       .click('#sign-in')
-      .expect(username.innerText).eql("")
-      .expect(password.innerText).eql("");
+      .expect(usernameField.innerText).eql("")
+      .expect(passwordField.innerText).eql("");
   });
 
   test('A new user cannot log in without first signing up', async t => {
     await t
       .click('#sign-in')
-      .typeText(username, 'newUser@newmail.com')
-      .typeText(password, 'n3WP@ssword')
+      .typeText(usernameField, 'newUser@newmail.com')
+      .typeText(passwordField, 'n3WP@ssword')
       .click('#sign-in')
       .expect(Selector('#add-listing').exists).notOk()
       .expect(Selector('#error-message').innerText).eql("Incorrect username.");
@@ -55,8 +55,8 @@ fixture `User Login`
   test('An existing user can sign in', async t => {
     await t
       .click('#sign-in')
-      .typeText(username, validUsername)
-      .typeText(password, validPassword)
+      .typeText(usernameField, userOne.username)
+      .typeText(passwordField, userOne.password)
       .click('#sign-in')
       .expect(Selector('#add-listing').exists).ok();
   });
@@ -64,8 +64,8 @@ fixture `User Login`
   test('An existing user cannot sign in with the wrong password', async t => {
     await t
       .click('#sign-in')
-      .typeText(username, validUsername)
-      .typeText(password, "wrong password")
+      .typeText(usernameField, userOne.username)
+      .typeText(passwordField, "wrong password")
       .click('#sign-in')
       .expect(Selector('#add-listing').exists).notOk()
       .expect(Selector('#error-message').innerText).eql("Incorrect password.");
@@ -74,8 +74,8 @@ fixture `User Login`
   test('An existing user cannot sign in with the wrong username', async t => {
     await t
       .click('#sign-in')
-      .typeText(username, "wrong@username.com")
-      .typeText(password, validPassword)
+      .typeText(usernameField, "wrong@username.com")
+      .typeText(passwordField, userOne.password)
       .click('#sign-in')
       .expect(Selector('#add-listing').exists).notOk()
       .expect(Selector('#error-message').innerText).eql("Incorrect username.");

@@ -11,5 +11,6 @@ module.exports.authenticateUser = (req, res) => {
 };
 
 module.exports.overview = function(req, res) {
-  res.render('users/overview');
+  let id = req.params.username;
+  res.render('users/overview', { id: id });
 };
