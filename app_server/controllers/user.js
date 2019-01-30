@@ -41,7 +41,7 @@ module.exports.getUserHomepage = (req, res) => {
 };
 
 module.exports.getAllInboundBookingRequests = (req, res) => {
-  let ownerId = req.params.username;
+  let ownerId = req.session.passport.user;
   let path = "/api/bookingRequests/" + ownerId;
   request.get({
     url: server + path

@@ -22,7 +22,7 @@ module.exports.createListing = function(req, res) {
   },
     (err, response, body) => {
       if (response.statusCode === 201) {
-        let id = body.owner
+        let id = body.owner;
         res.redirect('users/' + id);
       } else {
         res.send("Something went wrong with the database.");
@@ -59,8 +59,4 @@ module.exports.getListing = function(req, res) {
         res.send("Something went wrong with the database.");
       }
   });
-};
-
-module.exports.addBookingRequest = function(req, res) {
-  res.render('users/overview');
 };

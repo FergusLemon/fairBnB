@@ -6,11 +6,12 @@ const { server } = require(path.join(HOMEDIR, 'config'));
 
 module.exports.createBookingRequest = function(req, res) {
   let postData = {
-    listing: req.body.listing,
+    listing: req.params.listingId,
+    owner: req.body.owner,
     requestor: req.session.passport.user,
-    requestStartDate: req.body.requestStartDate,
-    requestEndDate: req.body.requestEndDate,
-    requestMadeDate: req.body.requestMadeDate
+    requestStartDate: req.body.startDate,
+    requestEndDate: req.body.endDate,
+    requestMadeDate: Date.now()
   };
   let path = "/api/bookingRequests";
   request.post( {
@@ -19,8 +20,8 @@ module.exports.createBookingRequest = function(req, res) {
   },
     (err, response, body) => {
       if (response.statusCode === 201) {
-        let id = body.requestor
-        res.redirect('users/' + id);
+        let id = body.requestor;
+        res.redirect('http://localhost:3000/users/' + id);
       } else {
         res.send("Something went wrong with the database.");
       }
