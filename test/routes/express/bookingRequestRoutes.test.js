@@ -10,20 +10,25 @@ const expect = chai.expect;
 const request = require('request');
 const BookingRequestController = require(path.join(HOMEDIR, 'app_server', 'controllers', 'bookingRequest'));
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
+const ok = Factory.status('ok');
+const error = Factory.status('err');
+const errorMessage = Factory.message('err');
+const bookingRequestDetails = Factory.validBookingRequest();
+const stub = sinon.stub();
+const id = 1;
 chai.use(sinonChai);
 
 
 describe('creating a booking request', () => {
-  let bookingRequestDetails, req;
+  let req;
   beforeEach(() => {
-    bookingRequestDetails = Factory.validBookingRequest();
     req = {
       body: bookingRequestDetails,
       session: {
-        passport: { user: "stubbedID" }
+        passport: { user: id }
       },
       params: {
-        listing: "stubbedID"
+        listing: id
       }
     };
   });
@@ -45,9 +50,9 @@ describe('creating a booking request', () => {
         this.sendCalledWith = arg;
       }
     };
-    this.stub(request, 'post').yields(null, { statusCode: 403 });
+    this.stub(request, 'post').yields(null, { statusCode: error });
     BookingRequestController.createBookingRequest(req, res);
-    expect(res.sendCalledWith).to.contain('Something went wrong');
+    expect(res.sendCalledWith).to.contain(errorMessage);
   }));
   it('does not send an error if it is passed a 201 status code', sandboxed(function() {
     let res = {
@@ -60,10 +65,10 @@ describe('creating a booking request', () => {
         this.redirectCalledWith = arg;
       }
     };
-    this.stub(request, 'post').yields(null, { statusCode: 201 }, { requestor: "requestorId" });
+    this.stub(request, 'post').yields(null, { statusCode: ok }, { requestor: id });
     BookingRequestController.createBookingRequest(req, res);
     expect(res.sendCalledWith).to.contain('');
-    expect(res.sendCalledWith).to.not.contain('Something went wrong');
-    expect(res.redirectCalledWith).to.contain('users/requestorId');
+    expect(res.sendCalledWith).to.not.contain(errorMessage);
+    expect(res.redirectCalledWith).to.contain('users/' + id);
   }));
 });

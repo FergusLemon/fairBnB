@@ -11,16 +11,21 @@ const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..', '..');
 const ListingController = require(path.join(HOMEDIR, 'app_server', 'controllers', 'listing'));
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
+const ok = Factory.status('ok');
+const error = Factory.status('err');
+const errorMessage = Factory.message('err');
+const listingDetails = Factory.validListing();
+const stub = sinon.stub();
+const id = 1;
 chai.use(sinonChai);
 
 describe('creating a listing', () => {
-  let listingDetails, req;
+  let req;
   beforeEach(() => {
-    listingDetails = Factory.validListing();
     req = {
       body: listingDetails,
       session: {
-        passport: { user: "stubbedID" }
+        passport: { user: id }
       }
     };
   });
@@ -42,9 +47,9 @@ describe('creating a listing', () => {
         this.sendCalledWith = arg;
       }
     };
-    this.stub(request, 'post').yields(null, { statusCode: 403 });
+    this.stub(request, 'post').yields(null, { statusCode: error });
     ListingController.createListing(req, res);
-    expect(res.sendCalledWith).to.contain('Something went wrong');
+    expect(res.sendCalledWith).to.contain(errorMessage);
   }));
   it('does not send an error if it is passed a 201 status code', sandboxed(function() {
     let res = {
@@ -57,11 +62,11 @@ describe('creating a listing', () => {
         this.redirectCalledWith = arg;
       }
     };
-    this.stub(request, 'post').yields(null, { statusCode: 201 }, { owner: "stubbedOwnerID" });
+    this.stub(request, 'post').yields(null, { statusCode: ok }, { owner: id });
     ListingController.createListing(req, res);
     expect(res.sendCalledWith).to.contain('');
-    expect(res.redirectCalledWith).to.contain('users/stubbedOwnerID');
-    expect(res.redirectCalledWith).to.not.contain('Something went wrong');
+    expect(res.redirectCalledWith).to.contain('users/' + id);
+    expect(res.redirectCalledWith).to.not.contain(errorMessage);
   }));
 });
 
@@ -89,9 +94,9 @@ describe('retrieving all listings', () => {
         this.sendCalledWith = arg;
       }
     };
-    this.stub(request, 'get').yields(null, { statusCode: 403 });
+    this.stub(request, 'get').yields(null, { statusCode: error });
     ListingController.getAllListings(req, res);
-    expect(res.sendCalledWith).to.contain('Something went wrong');
+    expect(res.sendCalledWith).to.contain(errorMessage);
   }));
   it('does not send an error if it is passed a 201 status code', sandboxed(function() {
     let res = {
@@ -104,11 +109,11 @@ describe('retrieving all listings', () => {
         this.renderCalledWith = arg;
       }
     };
-    let listings = {"listings":{"name":"Test Casa","description":"Nice test casa.","price":100}};
-    this.stub(request, 'get').yields(null, { statusCode: 201 }, JSON.stringify(listings));
+    let listings = {};
+    this.stub(request, 'get').yields(null, { statusCode: ok }, JSON.stringify(listings));
     ListingController.getAllListings(req, res);
     expect(res.sendCalledWith).to.contain('');
-    expect(res.sendCalledWith).to.not.contain('Something went wrong');
+    expect(res.sendCalledWith).to.not.contain(errorMessage);
     expect(res.renderCalledWith).to.contain('listings/all');
   }));
 });
@@ -118,7 +123,7 @@ describe('retrieving an individual listing', () => {
   beforeEach(() => {
     req = {
       params: {
-        listing: 1
+        listing: id
       }
     };
   });
@@ -141,9 +146,9 @@ describe('retrieving an individual listing', () => {
         this.sendCalledWith = arg;
       }
     };
-    this.stub(request, 'get').yields(null, { statusCode: 403 });
+    this.stub(request, 'get').yields(null, { statusCode: error });
     ListingController.getListing(req, res);
-    expect(res.sendCalledWith).to.contain('Something went wrong');
+    expect(res.sendCalledWith).to.contain(errorMessage);
   }));
   it('does not send an error if it is passed a 201 status code', sandboxed(function() {
     let res = {
@@ -156,11 +161,11 @@ describe('retrieving an individual listing', () => {
         this.renderCalledWith = arg;
       }
     };
-    let listing = {"name":"Test Casa","description":"Nice test casa.","price":100,"id":1};
-    this.stub(request, 'get').yields(null, { statusCode: 201 }, JSON.stringify(listing));
+    let listing = {};
+    this.stub(request, 'get').yields(null, { statusCode: ok }, JSON.stringify(listing));
     ListingController.getListing(req, res);
     expect(res.sendCalledWith).to.contain('');
-    expect(res.sendCalledWith).to.not.contain('Something went wrong');
+    expect(res.sendCalledWith).to.not.contain(errorMessage);
     expect(res.renderCalledWith).to.contain('listings/individual');
   }));
 });

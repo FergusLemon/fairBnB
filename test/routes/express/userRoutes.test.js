@@ -14,12 +14,13 @@ const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
 const ok = Factory.status('ok');
 const error = Factory.status('err');
 const errorMessage = Factory.message('err');
+const userDetails = Factory.validUserOne();
+const stub = sinon.stub();
 chai.use(sinonChai);
 
 describe('creating a user', () => {
-  let userDetails, req;
+  let req;
   beforeEach(() => {
-    userDetails = Factory.validUserOne();
     req = { body: userDetails };
   });
 
@@ -63,13 +64,66 @@ describe('creating a user', () => {
   }));
 });
 
+describe("getting all of a user's listngs", () => {
+  let req;
+  beforeEach(() => {
+    req = {
+      session: {
+        passport: {
+          user: sinon.stub()
+        }
+      }
+    };
+  });
+
+  it('makes a get request to the API wrapping the DB', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      }
+    };
+    this.stub(request, 'get');
+    UserController.getUserListings(req, res);
+    expect(request.get).to.have.been.calledOnce;
+  }));
+  it('responds with an error if it is passed a 403 status code', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      }
+    };
+    this.stub(request, 'get').yields(null, { statusCode: error });
+    UserController.getUserListings(req, res);
+    expect(res.sendCalledWith).to.contain(errorMessage);
+  }));
+  it('does not send an error if it is passed a 201 status code', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      },
+      renderCalledWith: '',
+      render: function(arg) {
+        this.renderCalledWith = arg;
+      }
+    };
+    let listings = {};
+    this.stub(request, 'get').yields(null, { statusCode: ok }, JSON.stringify(listings));
+    UserController.getUserListings(req, res);
+    expect(res.sendCalledWith).to.contain('');
+    expect(res.sendCalledWith).to.not.contain(errorMessage);
+  }));
+});
+
 describe('getting all inbound booking requests', () => {
   let req;
   beforeEach(() => {
   req = {
     session: {
       passport: {
-        user: sinon.stub()
+        user: stub
       }
     }
   };

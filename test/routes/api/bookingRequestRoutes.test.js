@@ -12,15 +12,14 @@ const HOMEDIR = path.join(__dirname, '..', '..', '..');
 const BookingRequestController = require(path.join(HOMEDIR, 'app_api', 'controllers', 'bookingRequest'));
 const BookingRequest = require(path.join(HOMEDIR, 'app_api', 'models', 'bookingRequest'));
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
+const ok = Factory.status('ok');
+const error = Factory.status('api err');
+const bookingRequestDetails = Factory.validBookingRequest();
+const stub = sinon.stub();
+const id = 1;
 chai.use(sinonChai);
 
 describe('when a booking request is saved in the database', () => {
-  let bookingRequestDetails, bookingRequest;
-  beforeEach(() => {
-    bookingRequestDetails = Factory.validBookingRequest();
-    bookingRequest = new BookingRequest(bookingRequestDetails);
-  });
-
   it('should call save once', sandboxed(function() {
     let req = {
       body: bookingRequestDetails
@@ -45,11 +44,11 @@ describe('when a booking request is saved in the database', () => {
       status: function(arg) {
         this.statusCalledWith += arg;
       },
-      send: sinon.stub()
+      send: stub
     };
-    this.stub(BookingRequest.prototype, 'save').yields(null, bookingRequest);
+    this.stub(BookingRequest.prototype, 'save').yields(null, stub);
     BookingRequestController.createBookingRequest(req, res);
-    expect(res.statusCalledWith).to.contain(201);
+    expect(res.statusCalledWith).to.contain(ok);
   }));
 });
 
@@ -63,26 +62,20 @@ describe('when a booking request is not saved in the database', () => {
       status: function(arg) {
         this.statusCalledWith += arg;
       },
-      send: sinon.stub()
+      send: stub
     };
     let err = this.stub();
     this.stub(BookingRequest.prototype, 'save').yields(err);
     BookingRequestController.createBookingRequest(req, res);
-    expect(res.statusCalledWith).to.contain(400);
+    expect(res.statusCalledWith).to.contain(error);
   }));
 });
 
 describe('when inbound booking requests are successfully retrieved', () => {
-  let bookingRequestDetails, bookingRequest, bookingRequests;
-  beforeEach(() => {
-    bookingRequestDetails = Factory.validBookingRequest();
-    bookingRequest = new BookingRequest(bookingRequestDetails);
-    bookingRequests = BookingRequest.find( { owner: bookingRequestDetails.owner } );
-  });
   it('should respond with a 201 status code', sandboxed(function() {
     let req = {
       params: {
-        username: 1
+        userId: id
       }
     };
     let res = {
@@ -90,18 +83,18 @@ describe('when inbound booking requests are successfully retrieved', () => {
       status: function(arg) {
         this.statusCalledWith += arg;
       },
-      send: sinon.stub()
+      send: stub
     };
-    this.stub(BookingRequest, 'find').yields(null, bookingRequests);
+    this.stub(BookingRequest, 'find').yields(null, stub);
     BookingRequestController.getAllInboundBookingRequests(req, res);
-    expect(res.statusCalledWith).to.contain(201);
+    expect(res.statusCalledWith).to.contain(ok);
   }));
 });
 describe('when inbound booking requests are not retrieved successfully', () => {
   it('should respond with a 400 status code', sandboxed(function() {
     let req = {
       params: {
-        username: 1
+        userId: id
       }
     };
     let res = {
@@ -109,12 +102,11 @@ describe('when inbound booking requests are not retrieved successfully', () => {
       status: function(arg) {
         this.statusCalledWith += arg;
       },
-      send: sinon.stub()
+      send: stub
     };
     let err = this.stub();
     this.stub(BookingRequest, 'find').yields(err);
     BookingRequestController.getAllInboundBookingRequests(req, res);
-    expect(res.statusCalledWith).to.contain(400);
+    expect(res.statusCalledWith).to.contain(error);
   }));
 });
-
