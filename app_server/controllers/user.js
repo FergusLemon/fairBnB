@@ -9,6 +9,11 @@ module.exports.getSignUpForm = (req, res) => {
   res.render('users/new');
 };
 
+module.exports.getUserHomepage = (req, res) => {
+  let welcome = "Let's get started!";
+  res.render('users/overview', { welcomeMessage: welcome });
+};
+
 module.exports.createUser = (req, res) => {
   let postData = {
     username: req.body.username,
@@ -35,14 +40,25 @@ module.exports.createUser = (req, res) => {
   );
 };
 
-module.exports.getUserHomepage = (req, res) => {
-  let welcome = "Let's get started!";
-  res.render('users/overview', { welcomeMessage: welcome });
+module.exports.getUserListings = (req, res) => {
+  let userId = req.session.passport.user;
+  let path = "/api/users/" + userId + "/listings";
+  request.get({
+    url: server + path
+  },
+    (err, response, body) => {
+      if (response.statusCode === 201) {
+        let userListings = JSON.parse(body);
+        res.render('users/listings', { userListings: userListings });
+      } else {
+        res.send("Something went wrong with the database.");
+      }
+  });
 };
 
 module.exports.getAllInboundBookingRequests = (req, res) => {
-  let ownerId = req.session.passport.user;
-  let path = "/api/bookingRequests/" + ownerId;
+  let userId = req.session.passport.user;
+  let path = "/api/bookingRequests/" + userId;
   request.get({
     url: server + path
   },
