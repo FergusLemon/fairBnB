@@ -20,6 +20,17 @@ module.exports.createListing = (req, res) => {
   });
 };
 
+module.exports.getUserListings = (req, res) => {
+  let userId = req.params.userId;
+  Listing.find({ owner: userId }, (err, listings) => {
+    if (err) {
+      sendJsonResponse(res, 400, err);
+    } else {
+      sendJsonResponse(res, 201, listings);
+    }
+  });
+};
+
 module.exports.getAllListings = (req, res) => {
   Listing.find({}, (err, listings) => {
     if (err) {
