@@ -27,6 +27,7 @@ app.use(session({ cookie: { maxAge: 60000 },
                   secret: process.env.SESSION_SECRET,
                   resave: false,
                   saveUninitialized: false}));
+app.use(express.static('public'));
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'pug');
 
