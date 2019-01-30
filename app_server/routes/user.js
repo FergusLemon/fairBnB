@@ -10,8 +10,10 @@ router.get('/new', userController.getSignUpForm);
 
 router.post('/', userController.createUser);
 
-router.get('/:username', userController.getUserHomepage);
+router.get('/:userId', userController.getUserHomepage);
 
-router.get('/:username/listings/bookingRequests', userController.getAllInboundBookingRequests);
+router.get('/:userId/listings', userController.getUserListings);
+
+router.get('/:userId/listings/bookingRequests', userController.getAllInboundBookingRequests);
 
 module.exports = router;
