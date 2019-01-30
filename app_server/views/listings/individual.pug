@@ -7,9 +7,10 @@ block content
     h4(id="name")= "Name: " + listing.name
     p(id="description")= "Description: " + listing.description
     p(id="price")= "Price Per Night: " + listing.price
-  form(action= listing._id + "/bookingRequest/new", method="POST")
-    input(id="booking-start-date", type="date")
+  form(action=listing._id + "/bookingRequest/new", method="POST")
+    input(id="booking-start-date", type="date", name="startDate")
     br
-    input(id="booking-end-date", type="date")
+    input(id="booking-end-date", type="date", name="endDate")
+    input(id="owner", type="hidden", name="owner", value=listing.owner)
     br
     button#booking-request(type="submit") Send Booking Request
