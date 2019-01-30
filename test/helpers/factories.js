@@ -43,3 +43,11 @@ module.exports.validBookingRequest = () => {
     requestMadeDate: '2019-01-26'
   };
 };
+
+module.exports.status = (status) => {
+  return status === "ok" ? 201 : 403;
+};
+
+module.exports.message = (message) => {
+  return message === "err" ? "Something went wrong" : "All Okay";
+};

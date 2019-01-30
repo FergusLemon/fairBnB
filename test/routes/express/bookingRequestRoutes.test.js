@@ -21,6 +21,9 @@ describe('creating a booking request', () => {
       body: bookingRequestDetails,
       session: {
         passport: { user: "stubbedID" }
+      },
+      params: {
+        listing: "stubbedID"
       }
     };
   });

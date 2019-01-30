@@ -11,6 +11,9 @@ const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..', '..');
 const UserController = require(path.join(HOMEDIR, 'app_server', 'controllers', 'user'));
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
+const ok = Factory.status('ok');
+const error = Factory.status('err');
+const errorMessage = Factory.message('err');
 chai.use(sinonChai);
 
 describe('creating a user', () => {
@@ -38,9 +41,9 @@ describe('creating a user', () => {
         this.sendCalledWith = arg;
       }
     };
-    this.stub(request, 'post').yields(null, { statusCode: 403 });
+    this.stub(request, 'post').yields(null, { statusCode: error });
     UserController.createUser(req, res);
-    expect(res.sendCalledWith).to.contain('Something went wrong');
+    expect(res.sendCalledWith).to.contain(errorMessage);
   }));
   it('does not send an error if it is passed a 201 status code', sandboxed(function() {
     let res = {
@@ -53,18 +56,21 @@ describe('creating a user', () => {
         this.redirectCalledWith = arg;
       }
     };
-    this.stub(request, 'post').yields(null, { statusCode: 201 }, { id: "stub" });
+    this.stub(request, 'post').yields(null, { statusCode: ok }, { id: "stub" });
     UserController.createUser(req, res);
     expect(res.sendCalledWith).to.contain('');
-    expect(res.redirectCalledWith).to.not.contain('Something went wrong');
+    expect(res.redirectCalledWith).to.not.contain(errorMessage);
   }));
 });
+
 describe('getting all inbound booking requests', () => {
   let req;
   beforeEach(() => {
   req = {
-    params: {
-      owner: 1
+    session: {
+      passport: {
+        user: sinon.stub()
+      }
     }
   };
   });
@@ -87,9 +93,9 @@ describe('getting all inbound booking requests', () => {
         this.sendCalledWith = arg;
       }
     };
-    this.stub(request, 'get').yields(null, { statusCode: 403 });
+    this.stub(request, 'get').yields(null, { statusCode: error });
     UserController.getAllInboundBookingRequests(req, res);
-    expect(res.sendCalledWith).to.contain('Something went wrong');
+    expect(res.sendCalledWith).to.contain(errorMessage);
   }));
   it('does not send an error if it is passed a 201 status code', sandboxed(function() {
     let res = {
@@ -102,10 +108,10 @@ describe('getting all inbound booking requests', () => {
         this.renderCalledWith = arg;
       }
     };
-    let bookingRequest = {"stub":"stub"};
-    this.stub(request, 'get').yields(null, { statusCode: 201 }, JSON.stringify(bookingRequest));
+    let bookingRequest = {};
+    this.stub(request, 'get').yields(null, { statusCode: ok }, JSON.stringify(bookingRequest));
     UserController.getAllInboundBookingRequests(req, res);
     expect(res.sendCalledWith).to.contain('');
-    expect(res.sendCalledWith).to.not.contain('Something went wrong');
+    expect(res.sendCalledWith).to.not.contain(errorMessage);
   }));
 });
