@@ -45,7 +45,13 @@ module.exports.validBookingRequest = () => {
 };
 
 module.exports.status = (status) => {
-  return status === "ok" ? 201 : 403;
+  if ( status === "api err" ) {
+    return 400;
+  } else if ( status === "err" ) {
+      return 403;
+    } else {
+      return 201;
+    }
 };
 
 module.exports.message = (message) => {
