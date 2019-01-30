@@ -5,8 +5,14 @@ block nav
 block content
   p#message #{welcomeMessage}
   br
-  a#view-listings(href="/listings") View Listings
-  br
-  a#add-listing(href="/listings/new") Add Listing
-  br
-  a#inbound-booking-requests(href="/users/" + id + "/listings/bookingRequests") Booking Requests On Your Properties
+  section#user-listing-section
+    h1 Your Properties
+    br
+    a#view-listings(href="/users/" + id + "/listings") Your Properties
+    br
+    a#add-listing(href="/listings/new") Add Listing
+    br
+    a#inbound-booking-requests(href="/users/" + id + "/listings/bookingRequests") Booking Requests On Your Properties
+  section#user-trips-section
+    h1 Your Trips
+    a#outbound-booking-requests(href="/users/" + id + "/listings/bookingRequests") Booking Requests You've Made
