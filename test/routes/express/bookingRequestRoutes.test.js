@@ -24,6 +24,7 @@ describe('creating a booking request', () => {
   beforeEach(() => {
     req = {
       body: {
+        listingName: bookingRequestDetails.listingName,
         owner: bookingRequestDetails.owner,
         dates: bookingRequestDetails.requestStartDate + ' - ' + bookingRequestDetails.requestEndDate
       },

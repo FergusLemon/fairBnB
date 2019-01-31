@@ -9,6 +9,7 @@ module.exports.createBookingRequest = function(req, res) {
   let dateSplit = dateHelper.splitDate(req.body.dates);
   let postData = {
     listing: req.params.listingId,
+    listingName: req.body.listingName,
     owner: req.body.owner,
     requestor: req.session.passport.user,
     requestStartDate: dateSplit[0],

@@ -36,6 +36,7 @@ module.exports.validListing = () => {
 module.exports.validBookingRequest = () => {
   return {
     listing: listingID,
+    listingName: 'Casa Test',
     owner: ownerID,
     requestor: requestorID,
     requestStartDate: '2019-12-25',
