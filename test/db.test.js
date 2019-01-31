@@ -6,17 +6,12 @@ const expect = chai.expect;
 const mongoose = require('mongoose');
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..');
-const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
+const databaseHelper = require(path.join(HOMEDIR, 'app_api', 'models', 'db'));
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
-const { environment } = require(path.join(HOMEDIR, 'config'));
 const User = require(path.join(HOMEDIR, 'app_api', 'models', 'user'));
 const firstUserDetails = Factory.validUserOne();
 const secondUserDetails = Factory.validUserTwo();
 chai.use(chaiAsPromised);
-
-if ( `${environment}` === "test" ) {
-  databaseHelper.setUpTestDatabase();
-}
 
 beforeEach(() => {
   databaseHelper.dropCollection('users');
