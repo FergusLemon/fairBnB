@@ -11,6 +11,7 @@ const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..', '..');
 const UserController = require(path.join(HOMEDIR, 'app_server', 'controllers', 'user'));
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
+const dateHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dateHelpers'));
 const ok = Factory.status('ok');
 const error = Factory.status('err');
 const errorMessage = Factory.message('err');
@@ -163,6 +164,7 @@ describe('getting all inbound booking requests', () => {
       }
     };
     let bookingRequest = {};
+    this.stub(dateHelper);
     this.stub(request, 'get').yields(null, { statusCode: ok }, JSON.stringify(bookingRequest));
     UserController.getAllInboundBookingRequests(req, res);
     expect(res.sendCalledWith).to.contain('');

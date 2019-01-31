@@ -1,4 +1,5 @@
 'use strict';
+const moment = require('moment');
 
 // This solution was taken from a Stack Overflow answer available here:
 // https://stackoverflow.com/a/1056730
@@ -14,4 +15,17 @@ module.exports.format = function(date) {
 
 module.exports.splitDate = function(dateRange) {
   return dateRange.split(' - ');
+};
+
+module.exports.prettify = function(collections) {
+  collections.forEach( function(collection) {
+    for ( const key in collection ) {
+      let date = 'Date';
+      let value = collection[key];
+      if (key.includes(date)) {
+        collection[key] = moment(value).format('MMMM Do YYYY, h:mm:ss a');
+      }
+    }
+  });
+  return collections;
 };

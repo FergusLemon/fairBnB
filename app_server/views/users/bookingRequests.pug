@@ -5,4 +5,4 @@ block nav
 block content
   ul#inbound-booking-requests
   each request, index in bookingRequests
-    li(id="booking-request-" + index)= "Request for: " + request.listing + " received on: " + request.requestMadeDate
+    li(id="booking-request-" + index)= "Request for: " + request.listingName + " received on: " + request.requestMadeDate

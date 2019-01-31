@@ -3,6 +3,7 @@ const request = require('request');
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..');
 const passport = require(path.join(HOMEDIR, 'app_server', 'auth'));
+const dateHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dateHelpers'));
 const { server } = require(path.join(HOMEDIR, 'config'));
 
 module.exports.getSignUpForm = (req, res) => {
@@ -65,7 +66,8 @@ module.exports.getAllInboundBookingRequests = (req, res) => {
     (err, response, body) => {
       if (response.statusCode === 201) {
         let bookingRequests = JSON.parse(body);
-        res.render('users/bookingRequests', { bookingRequests: bookingRequests });
+        let prettifiedRequests = dateHelper.prettify(bookingRequests);
+        res.render('users/bookingRequests', { bookingRequests: prettifiedRequests });
       } else {
         res.send("Something went wrong with the database.");
       }
