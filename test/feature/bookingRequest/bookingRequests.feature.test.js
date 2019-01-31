@@ -12,8 +12,7 @@ const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
 const userOne = Factory.validUserOne();
 const userTwo = Factory.validUserTwo();
 const bookingRequest = Factory.validBookingRequest();
-const startDateField = Selector('#booking-start-date');
-const endDateField = Selector('#booking-end-date');
+const dateField = Selector('#date-range');
 
 fixture `Booking Requests`
   .page `http://localhost:3000/listings/new`
@@ -36,37 +35,30 @@ fixture `Booking Requests`
     databaseHelper.closeConnection();
   });
 
-  test('The user should be able to choose a start and an end date', async t => {
+  test('The user should be able to make a booking request', async t => {
     await t
       .click('#name-0')
-      .typeText(startDateField, bookingRequest.requestStartDate)
-      .typeText(endDateField, bookingRequest.requestEndDate);
-      let start = startDateField.value;
-      let end = endDateField.value;
-    await t
-      .expect(start).eql(bookingRequest.requestStartDate)
-      .expect(end).eql(bookingRequest.requestEndDate);
+      .selectText(dateField)
+      .typeText(dateField, '2019-02-01 - 2019-02-08')
+      .click('#name')
+      .expect(dateField.value).eql('2019-02-01 - 2019-02-08')
+      .click('#booking-request')
+      .expect(Selector('h1').exists).ok();
   })
 
-  test('The user is taken back to his or her profile page once a booking request is made', async t => {
+  test('A property should see booking requests on their property', async t => {
     await t
       .click('#name-0')
-      .typeText(startDateField, bookingRequest.requestStartDate)
-      .typeText(endDateField, bookingRequest.requestEndDate)
+      .selectText(dateField)
+      .typeText(dateField, '2019-02-01 - 2019-02-08')
+      .click('#name')
+      .expect(dateField.value).eql('2019-02-01 - 2019-02-08')
       .click('#booking-request')
-      .expect(Selector('#add-listing').exists).ok();
-  })
-
-  test('The booking request is sent to the property owner', async t => {
+      .expect(Selector('h1').exists).ok()
     await t
-      .click('#name-0')
-      .typeText(startDateField, bookingRequest.requestStartDate)
-      .typeText(endDateField, bookingRequest.requestEndDate)
-      .click('#booking-request')
-      .expect(Selector('#add-listing').exists).ok()
       .navigateTo('http://localhost:3000')
       .click('#sign-in')
-    await signIn(userOne, t);
+    await signIn(userOne, t)
     await t
       .click('#inbound-booking-requests')
       .expect(Selector('#booking-request-0').exists).ok();

@@ -11,3 +11,7 @@ module.exports.format = function(date) {
   let yyyy = date.getFullYear();
   return yyyy + "-" + (mm < 10 ? "0" + mm : mm) + "-" + (dd < 10 ? "0" + dd : dd);
 };
+
+module.exports.splitDate = function(dateRange) {
+  return dateRange.split(' - ');
+};

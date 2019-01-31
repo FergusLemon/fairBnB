@@ -3,14 +3,16 @@ const request = require('request');
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..');
 const { server } = require(path.join(HOMEDIR, 'config'));
+const dateHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dateHelpers'));
 
 module.exports.createBookingRequest = function(req, res) {
+  let dateSplit = dateHelper.splitDate(req.body.dates);
   let postData = {
     listing: req.params.listingId,
     owner: req.body.owner,
     requestor: req.session.passport.user,
-    requestStartDate: req.body.startDate,
-    requestEndDate: req.body.endDate,
+    requestStartDate: dateSplit[0],
+    requestEndDate: dateSplit[1],
     requestMadeDate: Date.now()
   };
   let path = "/api/bookingRequests";

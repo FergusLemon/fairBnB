@@ -23,7 +23,10 @@ describe('creating a booking request', () => {
   let req;
   beforeEach(() => {
     req = {
-      body: bookingRequestDetails,
+      body: {
+        owner: bookingRequestDetails.owner,
+        dates: bookingRequestDetails.requestStartDate + ' - ' + bookingRequestDetails.requestEndDate
+      },
       session: {
         passport: { user: id }
       },
