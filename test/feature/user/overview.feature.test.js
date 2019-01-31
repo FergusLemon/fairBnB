@@ -4,19 +4,16 @@ import { signUp } from '../../helpers/testCafeHelpers';
 const mongoose = require('mongoose');
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..', '..');
-const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
+const databaseHelper = require(path.join(HOMEDIR, 'app_api', 'models', 'db'));
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
 const userOne = Factory.validUserOne();
-const { environment } = require(path.join(HOMEDIR, 'config'));
-
-if ( `${environment}` === "test" ) {
-  let showTest = databaseHelper.setUpTestDatabase();
-}
 
 fixture `User Overview Page`
   .page `http://localhost:3000/users/new`
   .beforeEach(async t => {
     await signUp(userOne, t)
+  })
+  .afterEach(async t => {
     databaseHelper.dropCollection('users');
   })
   .after(async t => {
@@ -40,10 +37,4 @@ fixture `User Overview Page`
     await t
       .click('#view-listings')
       .expect(Selector('#name-0').exists).ok()
-  });
-
-  test("A user can see his or her booking requests", async t => {
-    await t
-      .click('#inbound-booking-requests')
-      .expect(Selector('#booking-request-0').exists).ok();
   });

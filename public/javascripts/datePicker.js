@@ -3,7 +3,7 @@ $(document).ready(function () {
   $('.datepicker').datepicker({
     assumeNearbyYear: true,
     endDate: "+365d",
-    format: "dd/mm/yyyy",
+    format: "yyyy-mm-dd",
     startDate: "0d",
     todayHighlight: true
   });

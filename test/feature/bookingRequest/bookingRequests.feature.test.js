@@ -6,17 +6,14 @@ import { signUp } from '../../helpers/testCafeHelpers';
 import { signIn } from '../../helpers/testCafeHelpers';
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..', '..');
-const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
-const { environment } = require(path.join(HOMEDIR, 'config'));
+const databaseHelper = require(path.join(HOMEDIR, 'app_api', 'models', 'db'));
 const mongoose = require('mongoose');
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
 const userOne = Factory.validUserOne();
 const userTwo = Factory.validUserTwo();
 const bookingRequest = Factory.validBookingRequest();
-
-if ( `${environment}` === "test" ) {
-  databaseHelper.setUpTestDatabase();
-}
+const startDateField = Selector('#booking-start-date');
+const endDateField = Selector('#booking-end-date');
 
 fixture `Booking Requests`
   .page `http://localhost:3000/listings/new`
@@ -39,33 +36,23 @@ fixture `Booking Requests`
     databaseHelper.closeConnection();
   });
 
-  test('A user can make a booking request for the listing', async t => {
-    await t
-      .click('#name-0')
-      .expect(Selector('#booking-request').exists).ok();
-  })
-
-  test('The start and end date pickers should be empty by default', async t => {
-    await t
-      .click('#name-0')
-      .expect(Selector('#booking-start-date').value).eql("")
-      .expect(Selector('#booking-end-date').value).eql("");
-  })
-
   test('The user should be able to choose a start and an end date', async t => {
     await t
       .click('#name-0')
-      .typeText('#booking-start-date', bookingRequest.requestStartDate)
-      .typeText('#booking-end-date', bookingRequest.requestEndDate)
-      .expect(Selector('#booking-start-date').value).eql(bookingRequest.requestStartDate)
-      .expect(Selector('#booking-end-date').value).eql(bookingRequest.requestEndDate);
+      .typeText(startDateField, bookingRequest.requestStartDate)
+      .typeText(endDateField, bookingRequest.requestEndDate);
+      let start = startDateField.value;
+      let end = endDateField.value;
+    await t
+      .expect(start).eql(bookingRequest.requestStartDate)
+      .expect(end).eql(bookingRequest.requestEndDate);
   })
 
   test('The user is taken back to his or her profile page once a booking request is made', async t => {
     await t
       .click('#name-0')
-      .typeText('#booking-start-date', bookingRequest.requestStartDate)
-      .typeText('#booking-end-date', bookingRequest.requestEndDate)
+      .typeText(startDateField, bookingRequest.requestStartDate)
+      .typeText(endDateField, bookingRequest.requestEndDate)
       .click('#booking-request')
       .expect(Selector('#add-listing').exists).ok();
   })
@@ -73,8 +60,8 @@ fixture `Booking Requests`
   test('The booking request is sent to the property owner', async t => {
     await t
       .click('#name-0')
-      .typeText('#booking-start-date', bookingRequest.requestStartDate)
-      .typeText('#booking-end-date', bookingRequest.requestEndDate)
+      .typeText(startDateField, bookingRequest.requestStartDate)
+      .typeText(endDateField, bookingRequest.requestEndDate)
       .click('#booking-request')
       .expect(Selector('#add-listing').exists).ok()
       .navigateTo('http://localhost:3000')

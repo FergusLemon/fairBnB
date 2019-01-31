@@ -1,11 +1,8 @@
+'use strict';
 const mongoose = require('mongoose');
-const { environment } = require('../../config');
-require('./user');
-let mongoDbUri;
 
-if ( `$environment` === "test" ) {
-  mongoDbUri = 'mongodb://localhost/TestFairBnB';
-} else {
+let mongoDbUri = 'mongodb://localhost/TestFairBnB';
+if (process.env.NODE_ENV === 'production') {
   mongoDbUri = 'mongodb://localhost/DevFairBnB';
 }
 
@@ -13,6 +10,18 @@ mongoose.connect(mongoDbUri, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error: '));
+
+module.exports.dropCollection = async (collection) => {
+  await mongoose.connection.dropCollection(collection, (err) => {
+    console.log(collection + " collection dropped successfully.");
+  })
+};
+
+module.exports.closeConnection = async () => {
+  await mongoose.connection.close((err) => {
+    console.log("Connection to database closed successfully.");
+  })
+};
 
 db.on('connected', function() {
   console.log("Mongoose conncected to " + mongoDbUri );
