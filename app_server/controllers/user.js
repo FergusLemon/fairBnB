@@ -67,6 +67,7 @@ module.exports.getAllInboundBookingRequests = (req, res) => {
       if (response.statusCode === 201) {
         let bookingRequests = JSON.parse(body);
         let prettifiedRequests = dateHelper.prettify(bookingRequests);
+        console.log(prettifiedRequests);
         res.render('users/bookingRequests', { bookingRequests: prettifiedRequests });
       } else {
         res.send("Something went wrong with the database.");

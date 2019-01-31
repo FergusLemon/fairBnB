@@ -3,6 +3,21 @@ block nav
   a#view-listings-nav(href="/listings") View Listings
 
 block content
-  ul#inbound-booking-requests
-  each request, index in bookingRequests
-    li(id="booking-request-" + index)= "Request for: " + request.listingName + " received on: " + request.requestMadeDate
+  table#inbound-booking-requests
+    tr
+      th Property Name
+      th Start Date
+      th End Date
+      th Received
+      th Approve
+      th Decline
+    each request, index in bookingRequests
+      tr(id="booking-request-" + index)
+        td= request.listingName
+        td= request.requestStartDate
+        td= request.requestEndDate
+        td= request.requestMadeDate
+        td
+          button(id="approve-request-" + index, class="button") Approve
+        td
+          button(id="decline-request-" + index, class="button") Decline

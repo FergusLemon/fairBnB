@@ -11,6 +11,8 @@ const phoneNumberField = Selector('#phoneNumber');
 const nameField = Selector('#name');
 const descriptionField = Selector('#description');
 const priceField = Selector('#price');
+const dateField = Selector('#date-range');
+const dateRange = '2019-02-01 - 2019-02-08';
 
 export async function fillOutNewUserForm(user, t) {
   await t
@@ -52,4 +54,35 @@ export async function createNewListing(t) {
   await fillOutNewListingForm(t)
   await t
     .click('#create-listing');
+}
+
+export async function bookingRequestSetUp(owner, requestor, t) {
+  await signUp(owner, t)
+  await t
+    .click('#add-listing')
+  await createNewListing(t)
+  await t
+    .navigateTo('http://localhost:3000')
+  await signUp(requestor, t)
+  await t
+    .click('#view-listings-nav');
+}
+
+export async function makeBookingRequest(t) {
+  await t
+    .click('#name-0')
+    .selectText(dateField)
+    .typeText(dateField, dateRange)
+    .click('#name')
+    .expect(dateField.value).eql(dateRange)
+    .click('#booking-request');
+}
+
+export async function signInNavigateToBookingRequests(user, t) {
+  await t
+    .navigateTo('http://localhost:3000')
+    .click('#sign-in')
+  await signIn(user, t)
+  await t
+  .click('#inbound-booking-requests');
 }

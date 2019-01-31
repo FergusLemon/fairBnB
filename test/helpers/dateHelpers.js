@@ -20,10 +20,13 @@ module.exports.splitDate = function(dateRange) {
 module.exports.prettify = function(collections) {
   collections.forEach( function(collection) {
     for ( const key in collection ) {
+      let made = 'Made';
       let date = 'Date';
       let value = collection[key];
-      if (key.includes(date)) {
-        collection[key] = moment(value).format('MMMM Do YYYY, h:mm:ss a');
+      if (key.includes(made)) {
+        collection[key] = moment(value).format('MMM Do YYYY, hh:mm');
+      } else if ( key.includes(date) ) {
+        collection[key] = moment(value).format('MMM Do YYYY');
       }
     }
   });
