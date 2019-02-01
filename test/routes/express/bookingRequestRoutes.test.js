@@ -82,10 +82,12 @@ describe('update a booking request', () => {
   beforeEach(() => {
     req = {
       body: {
-        listingId: bookingRequestDetails.listing,
         approved: true,
         declined: false
       },
+      params: {
+        bookingRequestId: id
+      }
     };
   });
   it('makes a put request to the API wrapping the DB', sandboxed(function() {
