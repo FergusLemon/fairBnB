@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..');
 const BookingRequest = require(path.join(HOMEDIR, 'app_api', 'models', 'bookingRequest'));
+const dateHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dateHelpers'));
 
 let sendJsonResponse = function(res, status, content) {
   res.status(status);
@@ -46,10 +47,16 @@ module.exports.updateBookingRequest = (req, res) => {
 };
 
 module.exports.getAllMatchingRequests = (req, res) => {
-  console.log("hello this is good");
-  console.log(req);
-  let id = req.params.listingId;
-  BookingRequest.find({ listing: id }, (err, bookingRequests) => {
+  let listingId = req.params.listingId;
+  let start = dateHelper.iso(req.query.start);
+  let end = dateHelper.iso(req.query.end);
+  BookingRequest.find({
+    $and : [
+      { listing: listingId },
+      { $or : [ { requestStartDate: { $gte: start, $lte: end } } ] },
+      { $or : [ { requestEndDate: { $lte: end, $gte: start } } ] }
+    ]
+  }, (err, bookingRequests) => {
     if (err) {
       sendJsonResponse(res, 400, err);
     } else {

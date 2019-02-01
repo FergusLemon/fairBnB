@@ -32,3 +32,7 @@ module.exports.prettify = function(collections) {
   });
   return collections;
 };
+
+module.exports.iso = function(date) {
+  return moment(date, "MMM Do YYYY").toISOString();
+};

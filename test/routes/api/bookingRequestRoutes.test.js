@@ -17,6 +17,7 @@ const error = Factory.status('api err');
 const bookingRequestDetails = Factory.validBookingRequest();
 const stub = sinon.stub();
 const id = 1;
+const date = '01 Mar 2019';
 chai.use(sinonChai);
 
 describe('when a booking request is saved in the database', () => {
@@ -157,6 +158,10 @@ describe('when booking requests are successfully retrieved', () => {
     let req = {
       params: {
         listingId: id
+      },
+      query: {
+        start: date,
+        end: date
       }
     };
     let res = {
@@ -177,6 +182,10 @@ describe('when booking requests are not retrieved successfully', () => {
     let req = {
       params: {
         listingId: id
+      },
+      query: {
+        start: date,
+        end: date
       }
     };
     let res = {

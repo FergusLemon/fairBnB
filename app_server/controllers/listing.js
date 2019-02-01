@@ -62,7 +62,6 @@ module.exports.getListing = function(req, res) {
 };
 
 module.exports.getAllMatchingRequests = function(req, res) {
-  console.log(req);
   let listingId = req.params.listingId;
   let path = "/api/listings/" + listingId + "/bookingRequests";
   request.get( {
