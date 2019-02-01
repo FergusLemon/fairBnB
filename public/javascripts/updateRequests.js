@@ -1,5 +1,13 @@
 'use strict';
 $(document).ready(function () {
+  $(".button").each(function() {
+    let status = $(this).attr('Data'),
+        statusObj = JSON.parse(status);
+    if ( statusObj.status !== 'Pending approval.' ) {
+      $(this).prop('disabled', true);
+    }
+  });
+
   $("[name='approve']").click(function(event){
     const $button = $(this),
           bookingRequest = $button.attr('data'),
