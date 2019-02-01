@@ -32,9 +32,13 @@ module.exports.createBookingRequest = function(req, res) {
 };
 
 module.exports.updateBookingRequest = function(req, res) {
+  let bookingRequestId = req.params.bookingRequestId
   let putData = {
+    id: bookingRequestId,
+    approved: req.body.approved,
+    declined: req.body.declined
   };
-  let path = "/api/bookingRequests";
+  let path = "/api/bookingRequests/" + bookingRequestId;
   request.put( {
     url: server + path,
     json: putData

@@ -1,7 +1,5 @@
 extends ../layout.pug
 block header
-  script(type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js")
-  script(type="text/javascript" src="/javascripts/updateRequests.js")
 
 block nav
   a#view-listings-nav(href="/listings") View Listings
@@ -22,6 +20,9 @@ block content
         td= request.requestEndDate
         td= request.requestMadeDate
         td
-          button(id="approve-request-" + index, class="button", name="approve") Approve
+          button(id="approve-request-" + index, class="button", name="approve", data=request) Approve
         td
-          button(id="decline-request-" + index, class="button", name="decline") Decline
+          button(id="decline-request-" + index, class="button", name="decline", data=request) Decline
+
+  script(type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js")
+  script(type="text/javascript" src="/javascripts/updateRequests.js")

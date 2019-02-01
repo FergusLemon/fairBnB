@@ -17,6 +17,6 @@ router.get('/:userId/listings', userController.getUserListings);
 
 router.get('/:userId/listings/bookingRequests', userController.getAllInboundBookingRequests);
 
-router.post('/:userId/listings/:listingId/bookingRequests/:bookingRequestId', bookingRequestController.updateBookingRequest);
+router.put('/:userId/listings/:listingId/bookingRequests/:bookingRequestId', bookingRequestController.updateBookingRequest);
 
 module.exports = router;

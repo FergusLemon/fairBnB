@@ -30,3 +30,16 @@ module.exports.getAllInboundBookingRequests = (req, res) => {
     }
   });
 };
+
+module.exports.updateBookingRequest = (req, res) => {
+  let id = req.params.id;
+  let approved = req.params.approved;
+  let declined = req.params.declined;
+  BookingRequest.findByIdAndUpdate(id, { approved: approved, declined: declined }, (err, bookingRequest) => {
+    if (err) {
+      sendJsonResponse(res, 400, err);
+    } else {
+      sendJsonResponse(res, 201, bookingRequest);
+    }
+  });
+};
