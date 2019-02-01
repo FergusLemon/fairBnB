@@ -30,3 +30,21 @@ module.exports.createBookingRequest = function(req, res) {
       }
   });
 };
+
+module.exports.updateBookingRequest = function(req, res) {
+  let putData = {
+  };
+  let path = "/api/bookingRequests";
+  request.put( {
+    url: server + path,
+    json: putData
+  },
+    (err, response, body) => {
+      if (response.statusCode === 201) {
+        console.log(res);
+      } else {
+        console.log(err);
+        res.send("Something went wrong with the database.");
+      }
+  });
+};

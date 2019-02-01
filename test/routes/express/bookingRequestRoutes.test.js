@@ -76,3 +76,54 @@ describe('creating a booking request', () => {
     expect(res.redirectCalledWith).to.contain('users/' + id);
   }));
 });
+
+describe('update a booking request', () => {
+  let req;
+  beforeEach(() => {
+    req = {
+      body: {
+        listingId: bookingRequestDetails.listing,
+        approved: true,
+        declined: false
+      },
+    };
+  });
+  it('makes a put request to the API wrapping the DB', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      }
+    };
+    this.stub(request, 'put');
+    BookingRequestController.updateBookingRequest(req, res);
+    expect(request.put).to.have.been.calledOnce;
+  }));
+  it('responds with an error if it is passed a 403 status code back from the API', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      }
+    };
+    this.stub(request, 'put').yields(null, { statusCode: error });
+    BookingRequestController.updateBookingRequest(req, res);
+    expect(res.sendCalledWith).to.contain(errorMessage);
+  }));
+  it('does not send an error if it is passed a 201 status code', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      },
+      redirectCalledWith: '',
+      redirect: function(arg) {
+        this.redirectCalledWith = arg;
+      }
+    };
+    this.stub(request, 'put').yields(null, { statusCode: ok }, { requestor: id });
+    BookingRequestController.updateBookingRequest(req, res);
+    expect(res.sendCalledWith).to.contain('');
+    expect(res.sendCalledWith).to.not.contain(errorMessage);
+  }));
+});

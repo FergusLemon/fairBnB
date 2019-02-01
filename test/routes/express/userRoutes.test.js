@@ -1,5 +1,4 @@
 'use strict';
-
 const sinon = require('sinon');
 const sinonTest = require('sinon-test');
 const sandboxed = sinonTest(sinon);
