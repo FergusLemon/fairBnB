@@ -16,4 +16,6 @@ router.get('/:listing', listingController.getListing);
 
 router.post('/:listingId/bookingRequest/new', bookingRequestController.createBookingRequest);
 
+router.get('/:listingId/bookingRequests', listingController.getAllMatchingRequests);
+
 module.exports = router;

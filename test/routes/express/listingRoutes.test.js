@@ -169,3 +169,49 @@ describe('retrieving an individual listing', () => {
     expect(res.renderCalledWith).to.contain('listings/individual');
   }));
 });
+
+describe('retrieve all booking requests for an individual listing', () => {
+  let req;
+  beforeEach(() => {
+    req = {
+      params: {
+        listingId: id
+      }
+    };
+  });
+  it('makes a get request to the API wrapping the DB', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      }
+    };
+    this.stub(request, 'get');
+    ListingController.getAllMatchingRequests(req, res);
+    expect(request.get).to.have.been.calledOnce;
+  }));
+  it('responds with an error if it is passed a 403 status code back from the API', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      }
+    };
+    this.stub(request, 'get').yields(null, { statusCode: error });
+    ListingController.getAllMatchingRequests(req, res);
+    expect(res.sendCalledWith).to.contain(errorMessage);
+  }));
+  it('does not send an error if it is passed a 201 status code', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      },
+    };
+    let body = JSON.stringify({ success: true });
+    this.stub(request, 'get').yields(null, { statusCode: ok }, body);
+    ListingController.getAllMatchingRequests(req, res);
+    expect(res.sendCalledWith).to.contain(body);
+    expect(res.sendCalledWith).to.not.contain(errorMessage);
+  }));
+});

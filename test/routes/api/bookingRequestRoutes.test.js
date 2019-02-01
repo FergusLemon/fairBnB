@@ -151,3 +151,44 @@ describe('when a booking request is not updated successfully', () => {
     expect(res.statusCalledWith).to.contain(error);
   }));
 });
+
+describe('when booking requests are successfully retrieved', () => {
+  it('should respond with a 201 status code', sandboxed(function() {
+    let req = {
+      params: {
+        listingId: id
+      }
+    };
+    let res = {
+      statusCalledWith: '',
+      status: function(arg) {
+        this.statusCalledWith += arg;
+      },
+      send: stub
+    };
+    this.stub(BookingRequest, 'find').yields(null, {});
+    BookingRequestController.getAllMatchingRequests(req, res);
+    expect(res.statusCalledWith).to.contain(ok);
+  }));
+});
+
+describe('when booking requests are not retrieved successfully', () => {
+  it('should respond with a 400 status code', sandboxed(function() {
+    let req = {
+      params: {
+        listingId: id
+      }
+    };
+    let res = {
+      statusCalledWith: '',
+      status: function(arg) {
+        this.statusCalledWith += arg;
+      },
+      send: stub
+    };
+    let err = this.stub();
+    this.stub(BookingRequest, 'find').yields(err);
+    BookingRequestController.getAllMatchingRequests(req, res);
+    expect(res.statusCalledWith).to.contain(error);
+  }));
+});

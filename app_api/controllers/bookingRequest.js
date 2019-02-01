@@ -44,3 +44,16 @@ module.exports.updateBookingRequest = (req, res) => {
     }
   });
 };
+
+module.exports.getAllMatchingRequests = (req, res) => {
+  console.log("hello this is good");
+  console.log(req);
+  let id = req.params.listingId;
+  BookingRequest.find({ listing: id }, (err, bookingRequests) => {
+    if (err) {
+      sendJsonResponse(res, 400, err);
+    } else {
+      sendJsonResponse(res, 201, bookingRequests);
+    }
+  });
+};
