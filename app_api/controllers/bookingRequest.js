@@ -32,14 +32,15 @@ module.exports.getAllInboundBookingRequests = (req, res) => {
 };
 
 module.exports.updateBookingRequest = (req, res) => {
-  let id = req.params.id;
-  let approved = req.params.approved;
-  let declined = req.params.declined;
-  BookingRequest.findByIdAndUpdate(id, { approved: approved, declined: declined }, (err, bookingRequest) => {
+  let id = req.body.id;
+  let approved = req.body.approved;
+  let declined = req.body.declined;
+  let status = req.body.status;
+  BookingRequest.findByIdAndUpdate(id, { approved: approved, declined: declined, status: status }, { new: true }, (err, bookingRequest) => {
     if (err) {
       sendJsonResponse(res, 400, err);
     } else {
-      sendJsonResponse(res, 201, bookingRequest);
+      sendJsonResponse(res, 201, { success: true });
     }
   });
 };

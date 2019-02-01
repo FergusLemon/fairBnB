@@ -118,14 +118,11 @@ describe('update a booking request', () => {
       send: function(arg) {
         this.sendCalledWith = arg;
       },
-      redirectCalledWith: '',
-      redirect: function(arg) {
-        this.redirectCalledWith = arg;
-      }
     };
-    this.stub(request, 'put').yields(null, { statusCode: ok }, { requestor: id });
+    let body = JSON.stringify({ success: true });
+    this.stub(request, 'put').yields(null, { statusCode: ok }, body);
     BookingRequestController.updateBookingRequest(req, res);
-    expect(res.sendCalledWith).to.contain('');
+    expect(res.sendCalledWith).to.contain(body);
     expect(res.sendCalledWith).to.not.contain(errorMessage);
   }));
 });

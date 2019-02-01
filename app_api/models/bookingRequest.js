@@ -12,7 +12,7 @@ const bookingRequestSchema = new mongoose.Schema({
   requestMadeDate: { type: Date, required: true},
   approved: { type: Boolean, default: false },
   denied: { type: Boolean, default: false },
-  status: { type: String, default: 'Pending approval from property owner.' }
+  status: { type: String, default: 'Pending approval.' }
 });
 
 module.exports = mongoose.model('BookingRequest', bookingRequestSchema);

@@ -32,11 +32,12 @@ module.exports.createBookingRequest = function(req, res) {
 };
 
 module.exports.updateBookingRequest = function(req, res) {
-  let bookingRequestId = req.params.bookingRequestId
+  let bookingRequestId = req.params.bookingRequestId;
   let putData = {
     id: bookingRequestId,
     approved: req.body.approved,
-    declined: req.body.declined
+    declined: req.body.declined,
+    status: req.body.status
   };
   let path = "/api/bookingRequests/" + bookingRequestId;
   request.put( {
@@ -45,9 +46,8 @@ module.exports.updateBookingRequest = function(req, res) {
   },
     (err, response, body) => {
       if (response.statusCode === 201) {
-        console.log(res);
+        res.send(body);
       } else {
-        console.log(err);
         res.send("Something went wrong with the database.");
       }
   });

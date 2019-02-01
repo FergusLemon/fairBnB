@@ -114,7 +114,7 @@ describe('when inbound booking requests are not retrieved successfully', () => {
 describe('when a booking request is successfully updated', () => {
   it('should respond with a 201 status code', sandboxed(function() {
     let req = {
-      params: {
+      body: {
         id: id
       }
     };
@@ -125,7 +125,7 @@ describe('when a booking request is successfully updated', () => {
       },
       send: stub
     };
-    this.stub(BookingRequest, 'findByIdAndUpdate').yields(null, stub);
+    this.stub(BookingRequest, 'findByIdAndUpdate').yields(null, {});
     BookingRequestController.updateBookingRequest(req, res);
     expect(res.statusCalledWith).to.contain(ok);
   }));
@@ -134,7 +134,7 @@ describe('when a booking request is successfully updated', () => {
 describe('when a booking request is not updated successfully', () => {
   it('should respond with a 400 status code', sandboxed(function() {
     let req = {
-      params: {
+      body: {
         id: id
       }
     };

@@ -6,11 +6,11 @@ module.exports.new = function(req, res) {
 };
 
 module.exports.authenticateUser = (req, res) => {
-  let username = req.body.username;
-  res.redirect('/session/' + username);
+  let userId = req.session.passport.user;
+  res.redirect('/session/' + userId);
 };
 
 module.exports.overview = function(req, res) {
-  let id = req.params.username;
+  let id = req.params.userId;
   res.render('users/overview', { id: id });
 };

@@ -1,27 +1,31 @@
 'use strict';
 $(document).ready(function () {
   $("[name='approve']").click(function(event){
+    const $button = $(this),
+          bookingRequest = $button.attr('data'),
+          bookingRequestJSObject = JSON.parse(bookingRequest),
+          userId = bookingRequestJSObject.owner,
+          listingId = bookingRequestJSObject.listing,
+          requestId = bookingRequestJSObject._id;
     event.preventDefault();
-    const bookingRequest = $(this).attr('data');
-    const bookingRequestJSObject = JSON.parse(bookingRequest);
-    const userId = bookingRequestJSObject.owner;
-    const listingId = bookingRequestJSObject.listing;
-    const requestId = bookingRequestJSObject._id;
     $.ajax({
       type: 'PUT',
       url: '/users/' + userId + '/listings/' + listingId + '/bookingRequests/' + requestId,
       data: {
         approved: true,
-        declined: false
+        declined: false,
+        status: 'Approved'
       },
-      dataType: 'json'
-      }).done(function(res, err) {
-        if (res) {
-          console.log("success");
-        } else {
-          console.log(err);
+      dataType: 'json',
+      success: function(res) {
+        if(res.success) {
+          location.reload();
         }
-      });
-    alert( "Handler for .click() called." );
+      },
+      error: function(err) {
+        console.log(err);
+        button.prop('disabled', false);
+      }
+    });
   });
 });

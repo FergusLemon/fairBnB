@@ -11,6 +11,7 @@ block content
       th Start Date
       th End Date
       th Received
+      th Status
       th Approve
       th Decline
     each request, index in bookingRequests
@@ -19,6 +20,7 @@ block content
         td= request.requestStartDate
         td= request.requestEndDate
         td= request.requestMadeDate
+        td= request.status
         td
           button(id="approve-request-" + index, class="button", name="approve", data=request) Approve
         td
