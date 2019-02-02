@@ -15,8 +15,8 @@ $((function () {
           bookingRequest = JSON.parse(bookingRequestData);
     event.preventDefault();
     approveBookingRequest(bookingRequest);
-    location.reload();
     checkForOtherBookingRequests(bookingRequest);
+    location.reload();
   });
 }));
 
@@ -57,7 +57,8 @@ function checkForOtherBookingRequests(bookingRequest) {
     dataType: 'json',
     success: function(res) {
       if(res.success && res.bookingRequests) {
-        declineBookingRequests(res.bookingRequests);
+        let bookingRequests = res.bookingRequests;
+        declineBookingRequests(bookingRequests);
       } else {
         console.log(res);
       }
@@ -69,22 +70,25 @@ function checkForOtherBookingRequests(bookingRequest) {
 }
 
 function declineBookingRequests(bookingRequests) {
-  const listingId = bookingRequest.listing;
-  $.ajax({
-    type: 'PUT',
-    url: '/listings/' + listingId + '/bookingRequests',
-    data: {
-      approved: false,
-      declined: true,
-      status: 'Declined'
-    },
-    dataType: 'json',
-    success: function(res) {
-      if(res.success) {
+  for ( let bookingRequest of bookingRequests ) {
+    let bookingRequestId = bookingRequest._id;
+    $.ajax({
+      type: 'PUT',
+      url: '/bookingRequests/' + bookingRequestId,
+      data: {
+        approved: false,
+        declined: true,
+        status: 'Declined'
+      },
+      dataType: 'json',
+      success: function(res) {
+        if(res.success) {
+          console.log(res);
+        }
+      },
+      error: function(err) {
+        console.log(err);
       }
-    },
-    error: function(err) {
-      console.log(err);
-    }
-  });
+    });
+  }
 }

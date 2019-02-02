@@ -8,6 +8,7 @@ const server = require('./app_server/routes/index');
 const user = require('./app_server/routes/user');
 const listing = require('./app_server/routes/listing');
 const userSession = require('./app_server/routes/session');
+const bookingRequest = require('./app_server/routes/bookingRequest');
 const api = require('./app_api/routes/index');
 const apiUser = require('./app_api/routes/user');
 const apiListing = require('./app_api/routes/listing');
@@ -32,12 +33,13 @@ app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'pug');
 
 app.use('/', server);
+app.use('/users', user);
+app.use('/listings', listing);
+app.use('/bookingRequests', bookingRequest);
+app.use('/session', userSession);
 app.use('/api', api);
 app.use('/api/users', apiUser);
 app.use('/api/listings', apiListing);
 app.use('/api/bookingRequests', apiBookingRequest);
-app.use('/users', user);
-app.use('/listings', listing);
-app.use('/session', userSession);
 
 module.exports = app;

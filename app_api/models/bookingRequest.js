@@ -11,7 +11,7 @@ const bookingRequestSchema = new mongoose.Schema({
   requestEndDate: { type: Date, required: true },
   requestMadeDate: { type: Date, required: true},
   approved: { type: Boolean, default: false },
-  denied: { type: Boolean, default: false },
+  declined: { type: Boolean, default: false },
   status: { type: String, default: 'Pending approval.' }
 });
 

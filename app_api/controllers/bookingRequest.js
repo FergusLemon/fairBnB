@@ -7,9 +7,6 @@ const dateHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dateHelpers'))
 
 let sendJsonResponse = function(res, status, content) {
   res.status(status);
-  console.log(".............................");
-  console.log(content);
-  console.log(".............................");
   res.send(content);
 };
 
@@ -40,7 +37,11 @@ module.exports.updateBookingRequest = (req, res) => {
   let approved = req.body.approved;
   let declined = req.body.declined;
   let status = req.body.status;
-  BookingRequest.findByIdAndUpdate(id, { approved: approved, declined: declined, status: status }, { new: true }, (err, bookingRequest) => {
+  BookingRequest.findByIdAndUpdate(id, {
+    approved: approved,
+    declined: declined,
+    status: status },
+    { new: true }, (err, bookingRequest) => {
     if (err) {
       sendJsonResponse(res, 400, err);
     } else {
