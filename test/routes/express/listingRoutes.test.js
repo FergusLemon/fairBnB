@@ -169,4 +169,3 @@ describe('retrieving an individual listing', () => {
     expect(res.renderCalledWith).to.contain('listings/individual');
   }));
 });
-

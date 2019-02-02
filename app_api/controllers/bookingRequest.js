@@ -7,6 +7,9 @@ const dateHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dateHelpers'))
 
 let sendJsonResponse = function(res, status, content) {
   res.status(status);
+  console.log(".............................");
+  console.log(content);
+  console.log(".............................");
   res.send(content);
 };
 
@@ -49,15 +52,17 @@ module.exports.updateBookingRequest = (req, res) => {
 module.exports.getAllMatchingRequests = (req, res) => {
   let listingId = req.params.listingId;
   let start = dateHelper.iso(req.query.start);
+  let status = false;
   let end = dateHelper.iso(req.query.end);
   BookingRequest.find({
       listing: listingId,
+      approved: status,
       $or : [ { requestStartDate: { $gte: start, $lte: end } }, { requestEndDate: { $lte: end, $gte: start } } ]
   }, (err, bookingRequests) => {
     if (err) {
       sendJsonResponse(res, 400, err);
     } else {
-      sendJsonResponse(res, 201, bookingRequests);
+      sendJsonResponse(res, 201, { success: true, bookingRequests: bookingRequests });
     }
   });
 };

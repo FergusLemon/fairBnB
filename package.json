@@ -6,6 +6,9 @@
   "directories": {
     "lib": "lib"
   },
+  "nyc": {
+    "exclude": "./app_server/auth.js"
+  },
   "scripts": {
     "start": "nodemon --exec babel-node bin/www",
     "test": "./node_modules/.bin/mocha --reporter spec ./test/*.js; ./node_modules/.bin/mocha --reporter spec ./test/routes/*/*.js",
