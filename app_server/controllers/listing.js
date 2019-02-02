@@ -31,6 +31,11 @@ module.exports.createListing = function(req, res) {
 };
 
 module.exports.getAllListings = function(req, res) {
+  console.log("..................");
+  console.log("Server: getAllListings");
+  console.log(req.session);
+  console.log("Server: getAllListings");
+  console.log("..................");
   let path = "/api/listings";
   request.get( {
     url: server + path
@@ -46,7 +51,12 @@ module.exports.getAllListings = function(req, res) {
 };
 
 module.exports.getListing = function(req, res) {
-  let listingId = req.params.listing;
+  console.log("..................");
+  console.log("Server: getListing");
+  console.log(req.session);
+  console.log("Server: getListing");
+  console.log("..................");
+  let listingId = req.params.listingId;
   let path = "/api/listings/" + listingId;
   request.get( {
     url: server + path

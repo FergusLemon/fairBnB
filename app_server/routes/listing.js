@@ -12,7 +12,7 @@ router.post('/', listingController.createListing);
 
 router.get('/', listingController.getAllListings);
 
-router.get('/:listing', listingController.getListing);
+router.get('/:listingId', listingController.getListing);
 
 router.post('/:listingId/bookingRequest/new', bookingRequestController.createBookingRequest);
 

@@ -11,8 +11,8 @@ module.exports.getSignUpForm = (req, res) => {
 };
 
 module.exports.getUserHomepage = (req, res) => {
-  let welcome = "Let's get started!";
-  res.render('users/overview', { welcomeMessage: welcome });
+  let userId = req.session.passport.user;
+  res.render('users/overview', { userId: userId });
 };
 
 module.exports.createUser = (req, res) => {

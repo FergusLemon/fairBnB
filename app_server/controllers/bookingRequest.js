@@ -6,6 +6,12 @@ const { server } = require(path.join(HOMEDIR, 'config'));
 const dateHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dateHelpers'));
 
 module.exports.createBookingRequest = function(req, res) {
+  console.log("..................");
+  console.log("Server: createBookingRequest");
+  console.log(req);
+  console.log(req.session);
+  console.log("Server: createBookingRequest");
+  console.log("..................");
   let dateSplit = dateHelper.splitDate(req.body.dates);
   let postData = {
     listing: req.params.listingId,
