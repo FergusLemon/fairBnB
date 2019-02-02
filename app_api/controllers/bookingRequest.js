@@ -51,11 +51,8 @@ module.exports.getAllMatchingRequests = (req, res) => {
   let start = dateHelper.iso(req.query.start);
   let end = dateHelper.iso(req.query.end);
   BookingRequest.find({
-    $and : [
-      { listing: listingId },
-      { $or : [ { requestStartDate: { $gte: start, $lte: end } } ] },
-      { $or : [ { requestEndDate: { $lte: end, $gte: start } } ] }
-    ]
+      listing: listingId,
+      $or : [ { requestStartDate: { $gte: start, $lte: end } }, { requestEndDate: { $lte: end, $gte: start } } ]
   }, (err, bookingRequests) => {
     if (err) {
       sendJsonResponse(res, 400, err);

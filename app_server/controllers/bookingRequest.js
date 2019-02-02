@@ -52,3 +52,20 @@ module.exports.updateBookingRequest = function(req, res) {
       }
   });
 };
+
+module.exports.getAllMatchingRequests = function(req, res) {
+  let listingId = req.params.listingId;
+  let query = req.query;
+  let path = "/api/listings/" + listingId + "/bookingRequests";
+  request.get( {
+    url: server + path,
+    qs: query
+  },
+    (err, response, body) => {
+      if (response.statusCode === 201) {
+        res.send(body);
+      } else {
+        res.send("Something went wrong with the database.");
+      }
+  });
+};

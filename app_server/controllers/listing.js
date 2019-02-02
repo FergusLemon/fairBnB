@@ -60,18 +60,3 @@ module.exports.getListing = function(req, res) {
       }
   });
 };
-
-module.exports.getAllMatchingRequests = function(req, res) {
-  let listingId = req.params.listingId;
-  let path = "/api/listings/" + listingId + "/bookingRequests";
-  request.get( {
-    url: server + path,
-  },
-    (err, response, body) => {
-      if (response.statusCode === 201) {
-        res.send(body);
-      } else {
-        res.send("Something went wrong with the database.");
-      }
-  });
-};
