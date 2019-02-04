@@ -15,8 +15,6 @@ $((function () {
           bookingRequest = JSON.parse(bookingRequestData);
     event.preventDefault();
     approveBookingRequest(bookingRequest);
-    checkForOtherBookingRequests(bookingRequest);
-    location.reload();
   });
 }));
 
@@ -56,11 +54,12 @@ function checkForOtherBookingRequests(bookingRequest) {
     },
     dataType: 'json',
     success: function(res) {
-      if(res.success && res.bookingRequests) {
+      if (res.success && res.bookingRequests.length) {
         let bookingRequests = res.bookingRequests;
         declineBookingRequests(bookingRequests);
-      } else {
-        console.log(res);
+      } else if (res.success) {
+        alert("should hit here");
+        location.reload();
       }
     },
     error: function(err) {
@@ -83,7 +82,7 @@ function declineBookingRequests(bookingRequests) {
       dataType: 'json',
       success: function(res) {
         if(res.success) {
-          console.log(res);
+          location.reload();
         }
       },
       error: function(err) {
