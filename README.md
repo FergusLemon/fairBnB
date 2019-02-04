@@ -3,6 +3,9 @@
 ### Build Status & Coverage
 [![Build Status](https://travis-ci.org/FergusLemon/fairBnB.svg?branch=master)](https://travis-ci.org/FergusLemon/fairBnB)
 [![Coverage Status](https://coveralls.io/repos/github/FergusLemon/fairBnB/badge.svg)](https://coveralls.io/github/FergusLemon/fairBnB)
+<a href="https://github.com/DevExpress/testcafe">
+    <img alt="Tested with TestCafe" src="https://img.shields.io/badge/tested%20with-TestCafe-2fa4cf.svg">
+</a>
 
 Travis CI was chosen for continuous integration testing on this project.
 
