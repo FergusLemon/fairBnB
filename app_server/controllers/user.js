@@ -57,17 +57,24 @@ module.exports.getUserListings = (req, res) => {
   });
 };
 
-module.exports.getAllInboundBookingRequests = (req, res) => {
+module.exports.getAllBookingRequests = (req, res) => {
+  let query;
+  if (req.route.path === '/:userId/listings/bookingRequests') {
+    query = { direction: "inbound" };
+  } else {
+    query = { direction: "outbound" };
+  }
   let userId = req.session.passport.user;
   let path = "/api/bookingRequests/" + userId;
   request.get({
-    url: server + path
+    url: server + path,
+    qs: query
   },
     (err, response, body) => {
       if (response.statusCode === 201) {
         let bookingRequests = JSON.parse(body);
         let prettifiedRequests = dateHelper.prettify(bookingRequests);
-        res.render('users/bookingRequests', { bookingRequests: prettifiedRequests });
+        res.render('users/bookingRequests', { bookingRequests: prettifiedRequests, query: query });
       } else {
         res.send("Something went wrong with the database.");
       }

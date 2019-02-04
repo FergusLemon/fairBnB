@@ -15,7 +15,9 @@ router.get('/:userId', userController.getUserHomepage);
 
 router.get('/:userId/listings', userController.getUserListings);
 
-router.get('/:userId/listings/bookingRequests', userController.getAllInboundBookingRequests);
+router.get('/:userId/listings/bookingRequests', userController.getAllBookingRequests);
+
+router.get(/\w+\/bookingRequests/, userController.getAllBookingRequests);
 
 router.put('/:userId/listings/:listingId/bookingRequests/:bookingRequestId', bookingRequestController.updateBookingRequest);
 

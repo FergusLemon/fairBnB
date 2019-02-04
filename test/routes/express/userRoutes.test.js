@@ -125,6 +125,9 @@ describe('getting all inbound booking requests', () => {
       passport: {
         user: stub
       }
+    },
+    route: {
+      path: stub
     }
   };
   });
@@ -137,7 +140,7 @@ describe('getting all inbound booking requests', () => {
       }
     };
     this.stub(request, 'get');
-    UserController.getAllInboundBookingRequests(req, res);
+    UserController.getAllBookingRequests(req, res);
     expect(request.get).to.have.been.calledOnce;
   }));
   it('responds with an error if it is passed a 403 status code', sandboxed(function() {
@@ -148,7 +151,7 @@ describe('getting all inbound booking requests', () => {
       }
     };
     this.stub(request, 'get').yields(null, { statusCode: error });
-    UserController.getAllInboundBookingRequests(req, res);
+    UserController.getAllBookingRequests(req, res);
     expect(res.sendCalledWith).to.contain(errorMessage);
   }));
   it('does not send an error if it is passed a 201 status code', sandboxed(function() {
@@ -165,7 +168,7 @@ describe('getting all inbound booking requests', () => {
     let bookingRequest = {};
     this.stub(dateHelper);
     this.stub(request, 'get').yields(null, { statusCode: ok }, JSON.stringify(bookingRequest));
-    UserController.getAllInboundBookingRequests(req, res);
+    UserController.getAllBookingRequests(req, res);
     expect(res.sendCalledWith).to.contain('');
     expect(res.sendCalledWith).to.not.contain(errorMessage);
   }));

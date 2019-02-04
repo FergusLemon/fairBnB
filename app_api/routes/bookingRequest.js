@@ -6,7 +6,7 @@ const bookingRequestsController = require('../controllers/bookingRequest');
 
 router.post('/', bookingRequestsController.createBookingRequest);
 
-router.get('/:ownerId', bookingRequestsController.getAllInboundBookingRequests);
+router.get('/:userId', bookingRequestsController.getAllBookingRequests);
 
 router.put('/:bookingRequestId', bookingRequestsController.updateBookingRequest);
 

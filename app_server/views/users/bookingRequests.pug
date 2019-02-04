@@ -6,14 +6,16 @@ block nav
 
 block content
   table#inbound-booking-requests
+    - var inbound = query.direction === 'inbound' ? true : false
     tr
       th Property Name
       th Start Date
       th End Date
       th Received
       th Status
-      th Approve
-      th Decline
+      if inbound
+        th Approve
+        th Decline
     each request, index in bookingRequests
       tr(id="booking-request-" + index)
         td= request.listingName
@@ -21,10 +23,11 @@ block content
         td= request.requestEndDate
         td= request.requestMadeDate
         td= request.status
-        td
-          button(id="approve-request-" + index, class="button", name="approve", data=request) Approve
-        td
-          button(id="decline-request-" + index, class="button", name="decline", data=request) Decline
+        if inbound
+          td
+            button(id="approve-request-" + index, class="button", name="approve", data=request) Approve
+          td
+            button(id="decline-request-" + index, class="button", name="decline", data=request) Decline
 
   script(type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js")
   script(type="text/javascript" src="/javascripts/updateRequests.js")
