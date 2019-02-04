@@ -20,6 +20,9 @@ Travis CI was chosen for continuous integration testing on this project.
             
 ##### Database 
    - MongoDB with Mongoose as the ORM.
+   
+#### Other
+   - Dan Grossman's date range picker was used to allow user's to select a date range for a booking request on a property and also to block out dates for which the property was unavailable.  It comes with good documentation and I found it very easy to work with and integrate.  It is [avaialble here](https://github.com/dangrossman/daterangepicker), give it a star if you like it.
 
 ### Testing
 ##### Tools
