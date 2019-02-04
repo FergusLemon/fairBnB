@@ -1,4 +1,10 @@
 extends ../layout.pug
+block header
+  script(type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js")
+  script(type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js")
+  script(type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js")
+  link(rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css")
+  script(type="text/javascript" src="/javascripts/datePicker.js")
 block nav
   a#view-listings-nav(href="/listings") View Listings
 
@@ -8,9 +14,9 @@ block content
     p(id="description")= "Description: " + listing.description
     p(id="price")= "Price Per Night: " + listing.price
   form(action=listing._id + "/bookingRequest/new", method="POST")
-    input(id="booking-start-date", type="date", name="startDate")
+    input(id="date-range" name="dates")
     br
-    input(id="booking-end-date", type="date", name="endDate")
-    input(id="owner", type="hidden", name="owner", value=listing.owner)
+    input(id="owner" type="hidden" name="owner" value=listing.owner)
+    input(id="listingName" type="hidden" name="listingName" value=listing.name)
     br
     button#booking-request(type="submit") Send Booking Request

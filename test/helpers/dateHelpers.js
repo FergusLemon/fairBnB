@@ -1,4 +1,5 @@
 'use strict';
+const moment = require('moment');
 
 // This solution was taken from a Stack Overflow answer available here:
 // https://stackoverflow.com/a/1056730
@@ -10,4 +11,28 @@ module.exports.format = function(date) {
   let mm = date.getMonth() + 1;
   let yyyy = date.getFullYear();
   return yyyy + "-" + (mm < 10 ? "0" + mm : mm) + "-" + (dd < 10 ? "0" + dd : dd);
+};
+
+module.exports.splitDate = function(dateRange) {
+  return dateRange.split(' - ');
+};
+
+module.exports.prettify = function(collections) {
+  collections.forEach( function(collection) {
+    for ( const key in collection ) {
+      let made = 'Made';
+      let date = 'Date';
+      let value = collection[key];
+      if (key.includes(made)) {
+        collection[key] = moment(value).format('MMM Do YYYY, hh:mm');
+      } else if ( key.includes(date) ) {
+        collection[key] = moment(value).format('MMM Do YYYY');
+      }
+    }
+  });
+  return collections;
+};
+
+module.exports.iso = function(date) {
+  return moment(date, "MMM Do YYYY").toISOString();
 };

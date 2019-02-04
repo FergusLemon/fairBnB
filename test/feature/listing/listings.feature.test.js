@@ -4,8 +4,7 @@ import { createNewListing } from '../../helpers/testCafeHelpers';
 import { signUp } from '../../helpers/testCafeHelpers';
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..', '..');
-const databaseHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dbSetupHelper'));
-const { environment } = require(path.join(HOMEDIR, 'config'));
+const databaseHelper = require(path.join(HOMEDIR, 'app_api', 'models', 'db'));
 const mongoose = require('mongoose');
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
 const userOne = Factory.validUserOne();
@@ -14,10 +13,6 @@ const description = "Description: A nice test casa.";
 const price = "Price Per Night: 100";
 const startDate = "2019-12-25";
 const endDate = "2019-12-31";
-
-if ( `${environment}` === "test" ) {
-  databaseHelper.setUpTestDatabase();
-}
 
 fixture `Listings Page`
   .page `http://localhost:3000/listings/new`

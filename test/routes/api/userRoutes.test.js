@@ -12,15 +12,13 @@ const HOMEDIR = path.join(__dirname, '..', '..', '..');
 const UserController = require(path.join(HOMEDIR, 'app_api', 'controllers', 'user'));
 const User = require(path.join(HOMEDIR, 'app_api', 'models', 'user'));
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
+const userDetails = Factory.validUserOne();
+const ok = Factory.status('ok');
+const error = Factory.status('api err');
+const stub = sinon.stub();
 chai.use(sinonChai);
 
 describe('when a user is saved in the database', () => {
-  let userDetails, user;
-  beforeEach(() => {
-    userDetails = Factory.validUserOne();
-    user = new User(userDetails);
-  });
-
   it('should call save once', sandboxed(function() {
     let req = {
       body: userDetails
@@ -45,11 +43,11 @@ describe('when a user is saved in the database', () => {
       status: function(arg) {
         this.statusCalledWith += arg;
       },
-      json: sinon.stub()
+      json: stub
     };
-    this.stub(User.prototype, 'save').yields(null, user);
+    this.stub(User.prototype, 'save').yields(null, stub);
     UserController.createUser(req, res);
-    expect(res.statusCalledWith).to.contain(201);
+    expect(res.statusCalledWith).to.contain(ok);
   }));
 });
 
@@ -63,11 +61,11 @@ describe('when a user is not saved in the database', () => {
       status: function(arg) {
         this.statusCalledWith += arg;
       },
-      json: sinon.stub()
+      json: stub
     };
     let err = this.stub();
     this.stub(User.prototype, 'save').yields(err);
     UserController.createUser(req, res);
-    expect(res.statusCalledWith).to.contain(400);
+    expect(res.statusCalledWith).to.contain(error);
   }));
 });

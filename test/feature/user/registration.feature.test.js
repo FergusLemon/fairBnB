@@ -12,10 +12,17 @@ const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..', '..');
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
 const userOne = Factory.validUserOne();
+const databaseHelper = require(path.join(HOMEDIR, 'app_api', 'models', 'db'));
 const message = "Let's get started!";
 
 fixture `New User Registration Test`
-  .page `http://localhost:3000/users/new`;
+  .page `http://localhost:3000/users/new`
+  .afterEach(async t => {
+    databaseHelper.dropCollection('users');
+  })
+  .after(async t => {
+    databaseHelper.closeConnection();
+  });
 
   test('Has a page title', async t => {
     await t

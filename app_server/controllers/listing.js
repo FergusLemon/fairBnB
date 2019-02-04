@@ -46,7 +46,7 @@ module.exports.getAllListings = function(req, res) {
 };
 
 module.exports.getListing = function(req, res) {
-  let listingId = req.params.listing;
+  let listingId = req.params.listingId;
   let path = "/api/listings/" + listingId;
   request.get( {
     url: server + path

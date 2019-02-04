@@ -8,4 +8,6 @@ router.post('/', bookingRequestsController.createBookingRequest);
 
 router.get('/:ownerId', bookingRequestsController.getAllInboundBookingRequests);
 
+router.put('/:bookingRequestId', bookingRequestsController.updateBookingRequest);
+
 module.exports = router;

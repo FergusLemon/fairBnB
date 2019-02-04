@@ -3,10 +3,16 @@ const request = require('request');
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..');
 const passport = require(path.join(HOMEDIR, 'app_server', 'auth'));
+const dateHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dateHelpers'));
 const { server } = require(path.join(HOMEDIR, 'config'));
 
 module.exports.getSignUpForm = (req, res) => {
   res.render('users/new');
+};
+
+module.exports.getUserHomepage = (req, res) => {
+  let userId = req.session.passport.user;
+  res.render('users/overview', { userId: userId });
 };
 
 module.exports.createUser = (req, res) => {
@@ -35,21 +41,33 @@ module.exports.createUser = (req, res) => {
   );
 };
 
-module.exports.getUserHomepage = (req, res) => {
-  let welcome = "Let's get started!";
-  res.render('users/overview', { welcomeMessage: welcome });
+module.exports.getUserListings = (req, res) => {
+  let userId = req.session.passport.user;
+  let path = "/api/users/" + userId + "/listings";
+  request.get({
+    url: server + path
+  },
+    (err, response, body) => {
+      if (response.statusCode === 201) {
+        let userListings = JSON.parse(body);
+        res.render('users/listings', { userListings: userListings });
+      } else {
+        res.send("Something went wrong with the database.");
+      }
+  });
 };
 
 module.exports.getAllInboundBookingRequests = (req, res) => {
-  let ownerId = req.session.passport.user;
-  let path = "/api/bookingRequests/" + ownerId;
+  let userId = req.session.passport.user;
+  let path = "/api/bookingRequests/" + userId;
   request.get({
     url: server + path
   },
     (err, response, body) => {
       if (response.statusCode === 201) {
         let bookingRequests = JSON.parse(body);
-        res.render('users/bookingRequests', { bookingRequests: bookingRequests });
+        let prettifiedRequests = dateHelper.prettify(bookingRequests);
+        res.render('users/bookingRequests', { bookingRequests: prettifiedRequests });
       } else {
         res.send("Something went wrong with the database.");
       }

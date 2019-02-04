@@ -13,6 +13,6 @@ router.post('/', passport.authenticate('local-signIn', {
     failureFlash: true
   }), sessionController.authenticateUser);
 
-router.get('/:username', sessionController.overview);
+router.get('/:userId', sessionController.overview);
 
 module.exports = router;

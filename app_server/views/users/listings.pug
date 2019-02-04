@@ -1,0 +1,11 @@
+extends ../layout.pug
+block nav
+  a#view-listings-nav(href="/listings") View Listings
+
+block content
+  each listing, index in userListings
+    a(id="listing-"+index, href="/listings/" + listing._id)
+      article(id=index)
+        h4(id="name-"+index)= "Name: " + listing.name
+        p(id="description-"+index)= "Description: " + listing.description
+        p(id="price-"+index)= "Price Per Night: " + listing.price
