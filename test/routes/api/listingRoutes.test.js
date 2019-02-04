@@ -184,3 +184,52 @@ describe('when an individual listing is not retrieved successfully', () => {
     expect(res.statusCalledWith).to.contain(error);
   }));
 });
+
+describe('when a listing is successfully updated', () => {
+  it('should respond with a 201 status code', sandboxed(function() {
+    let req = {
+      body: {
+        start: stub,
+        end: stub
+      },
+      params: {
+        listingId: id
+      }
+    };
+    let res = {
+      statusCalledWith: '',
+      status: function(arg) {
+        this.statusCalledWith += arg;
+      },
+      send: stub
+    };
+    this.stub(Listing, 'findByIdAndUpdate').yields(null, {});
+    ListingController.updateListing(req, res);
+    expect(res.statusCalledWith).to.contain(ok);
+  }));
+});
+
+describe('when a listing is not updated successfully', () => {
+  it('should respond with a 400 status code', sandboxed(function() {
+    let req = {
+      body: {
+        start: stub,
+        end: stub
+      },
+      params: {
+        listingId: id
+      }
+    };
+    let res = {
+      statusCalledWith: '',
+      status: function(arg) {
+        this.statusCalledWith += arg;
+      },
+      send: stub
+    };
+    let err = this.stub();
+    this.stub(Listing, 'findByIdAndUpdate').yields(err);
+    ListingController.updateListing(req, res);
+    expect(res.statusCalledWith).to.contain(error);
+  }));
+});

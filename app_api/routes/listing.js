@@ -12,6 +12,8 @@ router.get('/', listingsController.getAllListings);
 
 router.get('/:listingId', listingsController.getListing);
 
+router.put('/:listingId', listingsController.updateListing);
+
 router.get('/:listingId/bookingRequests', bookingRequestController.getAllMatchingRequests);
 
 module.exports = router;

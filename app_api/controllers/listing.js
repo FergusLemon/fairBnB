@@ -51,3 +51,18 @@ module.exports.getListing = (req, res) => {
     }
   });
 };
+
+module.exports.updateListing = (req, res) => {
+  let id = req.params.id;
+  let start = req.body.start;
+  let end = req.body.end;
+  Listing.findByIdAndUpdate(id, {
+    bookedDates: {}
+  }, { new: true }, (err, listing) => {
+    if (err) {
+      sendJsonResponse(res, 400, err);
+    } else {
+      sendJsonResponse(res, 201, { success: true });
+    }
+  });
+};
