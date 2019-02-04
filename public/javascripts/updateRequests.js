@@ -4,7 +4,7 @@ $((function () {
   $(".button").each(function() {
     let status = $(this).attr('Data'),
         statusObj = JSON.parse(status);
-    if ( statusObj.status !== 'Pending approval.' ) {
+    if ( statusObj.status !== 'Pending' ) {
       $(this).prop('disabled', true);
     }
   });
@@ -58,7 +58,6 @@ function checkForOtherBookingRequests(bookingRequest) {
         let bookingRequests = res.bookingRequests;
         declineBookingRequests(bookingRequests);
       } else if (res.success) {
-        alert("should hit here");
         location.reload();
       }
     },
