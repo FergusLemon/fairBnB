@@ -77,6 +77,9 @@ describe('when inbound booking requests are successfully retrieved', () => {
     let req = {
       params: {
         userId: id
+      },
+      query: {
+        direction: stub
       }
     };
     let res = {
@@ -87,7 +90,7 @@ describe('when inbound booking requests are successfully retrieved', () => {
       send: stub
     };
     this.stub(BookingRequest, 'find').yields(null, stub);
-    BookingRequestController.getAllInboundBookingRequests(req, res);
+    BookingRequestController.getAllBookingRequests(req, res);
     expect(res.statusCalledWith).to.contain(ok);
   }));
 });
@@ -96,6 +99,9 @@ describe('when inbound booking requests are not retrieved successfully', () => {
     let req = {
       params: {
         userId: id
+      },
+      query: {
+        direction: stub
       }
     };
     let res = {
@@ -107,7 +113,7 @@ describe('when inbound booking requests are not retrieved successfully', () => {
     };
     let err = this.stub();
     this.stub(BookingRequest, 'find').yields(err);
-    BookingRequestController.getAllInboundBookingRequests(req, res);
+    BookingRequestController.getAllBookingRequests(req, res);
     expect(res.statusCalledWith).to.contain(error);
   }));
 });

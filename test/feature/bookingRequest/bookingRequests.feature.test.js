@@ -31,6 +31,13 @@ fixture `Booking Requests`
       .expect(Selector('h1').exists).ok();
   })
 
+  test('The user should be able to see booking requests they have made', async t => {
+    await makeBookingRequest(t)
+    await t
+      .click('#outbound-booking-requests')
+      .expect(Selector('#booking-request-0').exists).ok();
+  })
+
   test('A property owner should see booking requests on their property', async t => {
     await makeBookingRequest(t)
     await signInNavigateToBookingRequests(userOne, t)
