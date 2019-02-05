@@ -15,6 +15,7 @@ $((function () {
           bookingRequest = JSON.parse(bookingRequestData);
     event.preventDefault();
     approveBookingRequest(bookingRequest);
+    addDatesToListing(bookingRequest);
   });
 }));
 
@@ -89,4 +90,25 @@ function declineBookingRequests(bookingRequests) {
       }
     });
   }
+}
+
+function addDatesToListing(bookingRequest) {
+  let listingId = bookingRequest.listing;
+  $.ajax({
+    type: 'PUT',
+    url: '/listings/' + listingId,
+    data: {
+      start: bookingRequest.requestStartDate,
+      end: bookingRequest.requestEndDate
+    },
+    dataType: 'json',
+    success: function(res) {
+      if(res.success) {
+        location.reload();
+      }
+    },
+    error: function(err) {
+      console.log(err);
+    }
+  });
 }
