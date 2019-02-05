@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..');
 const Listing = require(path.join(HOMEDIR, 'app_api', 'models', 'listing'));
+const dateHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dateHelpers'));
 
 let sendJsonResponse = function(res, status, content) {
   res.status(status);
@@ -53,11 +54,16 @@ module.exports.getListing = (req, res) => {
 };
 
 module.exports.updateListing = (req, res) => {
-  let id = req.params.id;
+  let id = req.params.listingId;
   let start = req.body.start;
   let end = req.body.end;
+  let dates = dateHelper.datesInARange(start, end);
   Listing.findByIdAndUpdate(id, {
-    bookedDates: {}
+    $push: {
+      datesUnavailable: {
+        $each: dates
+      }
+    }
   }, { new: true }, (err, listing) => {
     if (err) {
       sendJsonResponse(res, 400, err);
