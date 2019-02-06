@@ -19,18 +19,26 @@ function getUnavailableDates(listingId, callback) {
 
 function blockDates(result) {
   let unavailableDates = result.datesUnavailable,
-      today = moment();
+      today = moment(),
+      start = calculateStart(today);
+  function isInvalidDate(date) {
+    let formattedDate = date.format('YYYY-MM-DD'),
+        formattedToday = today.format('YYYY-MM-DD');
+    return (unavailableDates.includes(formattedDate) || formattedDate < formattedToday);
+  }
+  function calculateStart(date) {
+    while (isInvalidDate(date)) {
+      date = date.add(1, 'd');
+    }
+    return date;
+  }
   $('input[name="dates"]').daterangepicker({
-    "startDate": today,
-    "endDate": today,
+    "startDate": start,
+    "endDate": start,
     "locale": {
         "format": "YYYY-MM-DD",
         "separator": " - "
       },
-      "isInvalidDate": function(date) {
-        let formattedDate = date.format('YYYY-MM-DD');
-        let formattedToday = today.format('YYYY-MM-DD');
-        return (unavailableDates.includes(formattedDate) || formattedDate < formattedToday);
-      }
+      "isInvalidDate": isInvalidDate
   });
 }
