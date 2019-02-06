@@ -1,17 +1,32 @@
 'use strict';
 $(document).ready(function () {
-  console.log(window.location.pathname);
+  let pathname = window.location.pathname,
+      listingIdMatch = pathname.match(/\w+$/),
+      listingId = listingIdMatch[0];
+  getUnavailableDates(listingId, returnResult);
+});
+
+function getUnavailableDates(listingId, callback) {
+  $.ajax({
+    type: 'GET',
+    url: '/api/listings/' + listingId,
+    success: callback,
+    error: function(err) {
+      console.log(err);
+    }
+  });
+}
+
+function returnResult(result) {
+  let unavailableDates = result.datesUnavailable;
   $('input[name="dates"]').daterangepicker({
     "locale": {
         "format": "YYYY-MM-DD",
         "separator": " - "
       },
       "isInvalidDate": function(date) {
-        let unavailableDates = ['2019-02-21'];
-        console.log(date.format('YYYY-MM-DD'));
         let formattedDate = date.format('YYYY-MM-DD');
-        console.log(unavailableDates.includes(formattedDate));
         return unavailableDates.includes(formattedDate);
       }
   });
-});
+}
