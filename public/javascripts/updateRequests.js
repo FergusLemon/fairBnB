@@ -15,7 +15,14 @@ $((function () {
           bookingRequest = JSON.parse(bookingRequestData);
     event.preventDefault();
     approveBookingRequest(bookingRequest);
-    addDatesToListing(bookingRequest);
+  });
+
+  $("[name='decline']").click(function(event){
+    const $button = $(this),
+          bookingRequestData = $button.attr('data'),
+          bookingRequest = JSON.parse(bookingRequestData);
+    event.preventDefault();
+    declineBookingRequests([bookingRequest]);
   });
 }));
 
@@ -33,8 +40,9 @@ function approveBookingRequest(bookingRequest) {
     },
     dataType: 'json',
     success: function(res) {
+      console.log(res);
       if(res.success) {
-        checkForOtherBookingRequests(bookingRequest);
+        addDatesToListing(bookingRequest);
       }
     },
     error: function(err) {
@@ -104,7 +112,7 @@ function addDatesToListing(bookingRequest) {
     dataType: 'json',
     success: function(res) {
       if(res.success) {
-        location.reload();
+        checkForOtherBookingRequests(bookingRequest);
       }
     },
     error: function(err) {
