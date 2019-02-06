@@ -3,7 +3,7 @@ $(document).ready(function () {
   let pathname = window.location.pathname,
       listingIdMatch = pathname.match(/\w+$/),
       listingId = listingIdMatch[0];
-  getUnavailableDates(listingId, returnResult);
+  getUnavailableDates(listingId, blockDates);
 });
 
 function getUnavailableDates(listingId, callback) {
@@ -17,9 +17,11 @@ function getUnavailableDates(listingId, callback) {
   });
 }
 
-function returnResult(result) {
+function blockDates(result) {
   let unavailableDates = result.datesUnavailable;
   $('input[name="dates"]').daterangepicker({
+    "startDate": moment(),
+    "endDate": moment(),
     "locale": {
         "format": "YYYY-MM-DD",
         "separator": " - "

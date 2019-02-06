@@ -2,9 +2,9 @@
 
 $((function () {
   $(".button").each(function() {
-    let status = $(this).attr('Data'),
-        statusObj = JSON.parse(status);
-    if ( statusObj.status !== 'Pending' ) {
+    let bookingRequestData = $(this).attr('data'),
+        bookingRequest = JSON.parse(bookingRequestData);
+    if ( bookingRequest.status !== 'Pending' ) {
       $(this).prop('disabled', true);
     }
   });
