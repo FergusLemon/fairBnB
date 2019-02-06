@@ -36,3 +36,27 @@ module.exports.prettify = function(collections) {
 module.exports.iso = function(date) {
   return moment(date, "MMM Do YYYY").toISOString();
 };
+
+module.exports.datesInARange = function(start, end) {
+  let firstDay = convertToDashedFormat(start);
+  let lastDay = convertToDashedFormat(end);
+  let dates = [],
+      count = 1,
+      day = convertToDashedFormat(incrementDay(firstDay, count));
+  dates.push(firstDay);
+  while (day < lastDay) {
+    dates.push(day);
+    count++;
+    day = convertToDashedFormat(incrementDay(firstDay, count));
+  }
+  dates.push(lastDay);
+  return dates;
+};
+
+function convertToDashedFormat(date) {
+  return moment(date, 'MMM Do YYYY').format('YYYY-MM-DD');
+}
+
+function incrementDay(date, count) {
+  return moment(date).add(count, 'd');
+}

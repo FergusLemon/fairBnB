@@ -14,6 +14,8 @@ router.get('/', listingController.getAllListings);
 
 router.get('/:listingId', listingController.getListing);
 
+router.put('/:listingId', listingController.updateListing);
+
 router.post('/:listingId/bookingRequest/new', bookingRequestController.createBookingRequest);
 
 router.get('/:listingId/bookingRequests', bookingRequestController.getAllMatchingRequests);

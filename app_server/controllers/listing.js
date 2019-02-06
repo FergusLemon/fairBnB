@@ -60,3 +60,23 @@ module.exports.getListing = function(req, res) {
       }
   });
 };
+
+module.exports.updateListing = function(req, res) {
+  let listingId = req.params.listingId;
+  let putData = {
+    start: req.body.start,
+    end: req.body.end
+  };
+  let path = "/api/listings/" + listingId;
+  request.put( {
+    url: server + path,
+    json: putData
+  },
+    (err, response, body) => {
+      if (response.statusCode === 201) {
+        res.send(body);
+      } else {
+        res.send("Something went wrong with the database.");
+      }
+  });
+};

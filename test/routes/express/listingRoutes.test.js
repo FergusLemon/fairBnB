@@ -169,3 +169,58 @@ describe('retrieving an individual listing', () => {
     expect(res.renderCalledWith).to.contain('listings/individual');
   }));
 });
+
+describe('updating an individual listing', () => {
+  let req;
+  beforeEach(() => {
+    req = {
+      body: {
+        start: stub,
+        end: stub
+      },
+      params: {
+        listingId: id
+      }
+    };
+  });
+
+  it('makes a put request to the API wrapping the DB', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      }
+    };
+    this.stub(request, 'put');
+    ListingController.updateListing(req, res);
+    expect(request.put).to.have.been.calledOnce;
+  }));
+  it('responds with an error if it is passed a 403 status code back from the API', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      }
+    };
+    this.stub(request, 'put').yields(null, { statusCode: error });
+    ListingController.updateListing(req, res);
+    expect(res.sendCalledWith).to.contain(errorMessage);
+  }));
+  it('does not send an error if it is passed a 201 status code', sandboxed(function() {
+    let res = {
+      sendCalledWith: '',
+      send: function(arg) {
+        this.sendCalledWith = arg;
+      },
+      renderCalledWith: '',
+      render: function(arg) {
+        this.renderCalledWith = arg;
+      }
+    };
+    let body = JSON.stringify({ success: true });
+    this.stub(request, 'put').yields(null, { statusCode: ok }, body);
+    ListingController.updateListing(req, res);
+    expect(res.sendCalledWith).to.contain('');
+    expect(res.sendCalledWith).to.not.contain(errorMessage);
+  }));
+});
