@@ -4,7 +4,7 @@ block nav
   a#view-listings-nav(href="/listings") View Listings
 
 block content
-  form#new-listing(action="/listings", method="POST")
+  form#new-listing(action="/listings", method="POST", enctype="multipart/form-data")
     label(for="name") Name
     br
     input#name(type="text", name="name")
@@ -15,6 +15,11 @@ block content
     br
     label(for="description") Describe Your Property
     br
-    textarea#description(form="new-listing", name="description")
+    textarea#description(name="description")
+    br
+    label(for="Image") Add A Photo
+    br
+    input#image(type="file", name="image")
+    br
     br
     button#create-listing(type="submit") Create Listing
