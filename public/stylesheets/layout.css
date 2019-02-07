@@ -63,11 +63,20 @@ button {
   font-size: 14px;
   border-radius: 4px;
   background-color: #605B56;
-  color: white;
+  color: #ffffff;
   transition-duration: 0.4s;
 }
 
 button:hover {
   background-color: #ffffff;
   color: #605B56;
+}
+
+#error-message {
+  font-family: 'Noto Sans', sans-serif;
+  color: #ffffff;
+  position: absolute;
+  top: 70%;
+  left: 43%;
+  transform: translate(-50%, -50%);
 }
