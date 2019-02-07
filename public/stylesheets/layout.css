@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  background: url("/images/layout.jpeg") repeat-x left top;
+  background-size: 50%;
+}
+
+nav {
+  margin: 0;
+  height: 45px;
+  background-color: #000034;
+  font-family: 'Nunito', sans-serif;
+}
+
+nav a {
+  font-size: 16px;
+  float: right;
+  margin: 15px;
+  padding-right: 10px;
+}
+
+a:link, a:visited {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+#welcome {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 18px;
+  color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

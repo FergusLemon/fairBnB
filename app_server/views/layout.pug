@@ -2,15 +2,14 @@ doctype html
 html
   head
     title FairBnB
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Noto+Sans|Nunito")
+    link(rel="stylesheet", type="text/css", href="/stylesheets/layout.css")
     block header
   body
     header
     block nav
       nav
-       a#view-listings-nav(href="/listings") View Listings
-       a#sign-in(href="/session/new") Sign In
-       a#sign-up(href="/users/new") Sign Up
+       a#sign-in(href="/session/new") SIGN IN
+       a#sign-up(href="/users/new") SIGN UP
     block content
-    br
-    footer
-      p#footer Copyright &copy2019
+      div#welcome Find your dream place
