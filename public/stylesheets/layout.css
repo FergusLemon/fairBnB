@@ -34,7 +34,7 @@ a:link, a:visited {
 }
 
 fieldset {
-  width: 350px;
+  width: 315px;
   border: 1px solid #605B56;
   border-radius: 10px;
 }
@@ -46,7 +46,7 @@ legend {
 
 input {
   width: 300px;
-  font-size: 100%;
+  font-size: 90%;
   color: #ffffff;
   background-color: #000034;
   border: 1px solid #605B56;
