@@ -3,17 +3,32 @@ const request = require('request');
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..');
 const { server } = require(path.join(HOMEDIR, 'config'));
+const { stockImageUrl } = require(path.join(HOMEDIR, 'config'));
+const { stockImageId } = require(path.join(HOMEDIR, 'config'));
 
 module.exports.new = function(req, res) {
   res.render('listings/new');
 };
 
 module.exports.createListing = function(req, res) {
+  let url, id;
+  if (req.file) {
+    url = req.file.url;
+    id = req.file.public_id;
+    } else {
+      url = stockImageUrl;
+      id = stockImageId;
+    }
+  let image = {
+    url: url,
+    id: id
+  };
   let postData = {
     name: req.body.name,
     description: req.body.description,
     price: req.body.price,
-    owner: req.session.passport.user
+    owner: req.session.passport.user,
+    image: image
   };
   let path = "/api/listings";
   request.post( {

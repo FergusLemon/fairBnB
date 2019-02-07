@@ -9,6 +9,7 @@ const listingSchema = new mongoose.Schema({
   description: { type: String, required: true },
   price: { type: Number, required: true },
   owner: { type: ObjectId, required: true },
+  image: mongoose.Schema.Types.Mixed,
   bookingRequests: [bookingRequestSchema],
   datesUnavailable: { type: Array, default: []}
 });

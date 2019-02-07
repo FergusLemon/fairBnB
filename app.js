@@ -18,6 +18,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const flash = require('connect-flash');
 const session = require('express-session');
 const { secret } = require('./config');
+
 require('./app_api/models/db');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -25,7 +26,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 app.use(session({ cookie: { maxAge: 60000 },
-                  secret: process.env.SESSION_SECRET,
+                  secret: secret,
                   resave: false,
                   saveUninitialized: false}));
 app.use(express.static('public'));

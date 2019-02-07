@@ -11,6 +11,7 @@ block nav
 block content
   article(id="listing")
     h4(id="name")= "Name: " + listing.name
+    img(id="image", src=listing.image.url, alt="A photo of the property")
     p(id="description")= "Description: " + listing.description
     p(id="price")= "Price Per Night: " + listing.price
   form(action=listing._id + "/bookingRequest/new", method="POST")

@@ -23,6 +23,10 @@ let req = {
     start: stub,
     end: stub
   },
+  file: {
+    url: stub,
+    public_id: id
+  },
   params: {
     listingId: id
   },
