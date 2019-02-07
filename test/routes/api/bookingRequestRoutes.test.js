@@ -14,39 +14,40 @@ const BookingRequest = require(path.join(HOMEDIR, 'app_api', 'models', 'bookingR
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
 const ok = Factory.status('ok');
 const error = Factory.status('api err');
-const bookingRequestDetails = Factory.validBookingRequest();
 const stub = sinon.stub();
 const id = 1;
 const date = '01 Mar 2019';
 chai.use(sinonChai);
+let req = {
+  body: {
+    id: id
+  },
+  params: {
+    listingId: id
+  },
+  query: {
+    start: date,
+    end: date,
+    direction: stub
+  }
+};
+let res = {
+  statusCalledWith: '',
+  status: function(arg) {
+    this.statusCalledWith += arg;
+  },
+  send: stub
+};
+let err = stub;
 
 describe('when a booking request is saved in the database', () => {
   it('should call save once', sandboxed(function() {
-    let req = {
-      body: bookingRequestDetails
-    };
-    let res = {
-      statusCalledWith: '',
-      status: function(arg) {
-        this.statusCalledWith = arg;
-      }
-    };
     this.stub(BookingRequest.prototype, 'save');
     BookingRequestController.createBookingRequest(req, res);
     expect(BookingRequest.prototype.save.callCount).to.equal(1);
     expect(BookingRequest.prototype.save.callCount).to.not.equal(2);
   }));
   it('should respond with a 201 status code', sandboxed(function() {
-    let req = {
-      body: bookingRequestDetails
-    };
-    let res = {
-      statusCalledWith: '',
-      status: function(arg) {
-        this.statusCalledWith += arg;
-      },
-      send: stub
-    };
     this.stub(BookingRequest.prototype, 'save').yields(null, stub);
     BookingRequestController.createBookingRequest(req, res);
     expect(res.statusCalledWith).to.contain(ok);
@@ -55,155 +56,59 @@ describe('when a booking request is saved in the database', () => {
 
 describe('when a booking request is not saved in the database', () => {
   it('should respond with a 400 status code', sandboxed(function() {
-    let req = {
-      body: {}
-    };
-    let res = {
-      statusCalledWith: '',
-      status: function(arg) {
-        this.statusCalledWith += arg;
-      },
-      send: stub
-    };
-    let err = this.stub();
     this.stub(BookingRequest.prototype, 'save').yields(err);
     BookingRequestController.createBookingRequest(req, res);
     expect(res.statusCalledWith).to.contain(error);
   }));
 });
 
-describe('when inbound booking requests are successfully retrieved', () => {
-  it('should respond with a 201 status code', sandboxed(function() {
-    let req = {
-      params: {
-        userId: id
-      },
-      query: {
-        direction: stub
-      }
-    };
-    let res = {
-      statusCalledWith: '',
-      status: function(arg) {
-        this.statusCalledWith += arg;
-      },
-      send: stub
-    };
-    this.stub(BookingRequest, 'find').yields(null, stub);
-    BookingRequestController.getAllBookingRequests(req, res);
-    expect(res.statusCalledWith).to.contain(ok);
-  }));
-});
-describe('when inbound booking requests are not retrieved successfully', () => {
-  it('should respond with a 400 status code', sandboxed(function() {
-    let req = {
-      params: {
-        userId: id
-      },
-      query: {
-        direction: stub
-      }
-    };
-    let res = {
-      statusCalledWith: '',
-      status: function(arg) {
-        this.statusCalledWith += arg;
-      },
-      send: stub
-    };
-    let err = this.stub();
-    this.stub(BookingRequest, 'find').yields(err);
-    BookingRequestController.getAllBookingRequests(req, res);
-    expect(res.statusCalledWith).to.contain(error);
-  }));
+describe('retrieving booking requests', () => {
+  describe('when inbound booking requests are successfully retrieved', () => {
+    it('should respond with a 201 status code', sandboxed(function() {
+      this.stub(BookingRequest, 'find').yields(null, stub);
+      BookingRequestController.getAllBookingRequests(req, res);
+      expect(res.statusCalledWith).to.contain(ok);
+    }));
+  });
+  describe('when inbound booking requests are not retrieved successfully', () => {
+    it('should respond with a 400 status code', sandboxed(function() {
+      this.stub(BookingRequest, 'find').yields(err);
+      BookingRequestController.getAllBookingRequests(req, res);
+      expect(res.statusCalledWith).to.contain(error);
+    }));
+  });
 });
 
-describe('when a booking request is successfully updated', () => {
-  it('should respond with a 201 status code', sandboxed(function() {
-    let req = {
-      body: {
-        id: id
-      }
-    };
-    let res = {
-      statusCalledWith: '',
-      status: function(arg) {
-        this.statusCalledWith += arg;
-      },
-      send: stub
-    };
-    this.stub(BookingRequest, 'findByIdAndUpdate').yields(null, {});
-    BookingRequestController.updateBookingRequest(req, res);
-    expect(res.statusCalledWith).to.contain(ok);
-  }));
+describe('updating a booking request', () => {
+  describe('when a booking request is successfully updated', () => {
+    it('should respond with a 201 status code', sandboxed(function() {
+      this.stub(BookingRequest, 'findByIdAndUpdate').yields(null, {});
+      BookingRequestController.updateBookingRequest(req, res);
+      expect(res.statusCalledWith).to.contain(ok);
+    }));
+  });
+  describe('when a booking request is not updated successfully', () => {
+    it('should respond with a 400 status code', sandboxed(function() {
+      this.stub(BookingRequest, 'findByIdAndUpdate').yields(err);
+      BookingRequestController.updateBookingRequest(req, res);
+      expect(res.statusCalledWith).to.contain(error);
+    }));
+  });
 });
 
-describe('when a booking request is not updated successfully', () => {
-  it('should respond with a 400 status code', sandboxed(function() {
-    let req = {
-      body: {
-        id: id
-      }
-    };
-    let res = {
-      statusCalledWith: '',
-      status: function(arg) {
-        this.statusCalledWith += arg;
-      },
-      send: stub
-    };
-    let err = this.stub();
-    this.stub(BookingRequest, 'findByIdAndUpdate').yields(err);
-    BookingRequestController.updateBookingRequest(req, res);
-    expect(res.statusCalledWith).to.contain(error);
-  }));
-});
-
-describe('when booking requests are successfully retrieved', () => {
-  it('should respond with a 201 status code', sandboxed(function() {
-    let req = {
-      params: {
-        listingId: id
-      },
-      query: {
-        start: date,
-        end: date
-      }
-    };
-    let res = {
-      statusCalledWith: '',
-      status: function(arg) {
-        this.statusCalledWith += arg;
-      },
-      send: stub
-    };
-    this.stub(BookingRequest, 'find').yields(null, {});
-    BookingRequestController.getAllMatchingRequests(req, res);
-    expect(res.statusCalledWith).to.contain(ok);
-  }));
-});
-
-describe('when booking requests are not retrieved successfully', () => {
-  it('should respond with a 400 status code', sandboxed(function() {
-    let req = {
-      params: {
-        listingId: id
-      },
-      query: {
-        start: date,
-        end: date
-      }
-    };
-    let res = {
-      statusCalledWith: '',
-      status: function(arg) {
-        this.statusCalledWith += arg;
-      },
-      send: stub
-    };
-    let err = this.stub();
-    this.stub(BookingRequest, 'find').yields(err);
-    BookingRequestController.getAllMatchingRequests(req, res);
-    expect(res.statusCalledWith).to.contain(error);
-  }));
+describe('retrieving matching booking requests', () => {
+  describe('when booking requests are successfully retrieved', () => {
+    it('should respond with a 201 status code', sandboxed(function() {
+      this.stub(BookingRequest, 'find').yields(null, {});
+      BookingRequestController.getAllMatchingRequests(req, res);
+      expect(res.statusCalledWith).to.contain(ok);
+    }));
+  });
+  describe('when booking requests are not retrieved successfully', () => {
+    it('should respond with a 400 status code', sandboxed(function() {
+      this.stub(BookingRequest, 'find').yields(err);
+      BookingRequestController.getAllMatchingRequests(req, res);
+      expect(res.statusCalledWith).to.contain(error);
+    }));
+  });
 });

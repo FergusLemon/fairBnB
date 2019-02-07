@@ -18,158 +18,103 @@ const userDetails = Factory.validUserOne();
 const stub = sinon.stub();
 chai.use(sinonChai);
 
-describe('creating a user', () => {
-  let req;
-  beforeEach(() => {
-    req = { body: userDetails };
-  });
+let req = {
+  body: userDetails,
+  session: {
+    passport: {
+      user: stub
+    }
+  },
+  route: {
+    path: stub
+  }
+};
+let res = {
+  sendCalledWith: '',
+  send: function(arg) {
+    this.sendCalledWith = arg;
+  },
+  renderCalledWith: '',
+  render: function(arg) {
+    this.renderCalledWith = arg;
+  },
+  redirectCalledWith: '',
+  redirect: function(arg) {
+    this.redirectCalledWith = arg;
+  }
+};
 
-  it('makes a post request to the API wrapping the DB', sandboxed(function() {
-    let res = {
-      sendCalledWith: '',
-      send: function(arg) {
-        this.sendCalledWith = arg;
-      }
-    };
+describe('creating a user', () => {
+  it('makes a post request to the api wrapping the db', sandboxed(function() {
     this.stub(request, 'post');
     UserController.createUser(req, res);
     expect(request.post).to.have.been.calledOnce;
   }));
-  it('responds with an error if it is passed a 403 status code', sandboxed(function() {
-    let res = {
-      sendCalledWith: '',
-      send: function(arg) {
-        this.sendCalledWith = arg;
-      }
-    };
-    this.stub(request, 'post').yields(null, { statusCode: error });
-    UserController.createUser(req, res);
-    expect(res.sendCalledWith).to.contain(errorMessage);
-  }));
-  it('does not send an error if it is passed a 201 status code', sandboxed(function() {
-    let res = {
-      sendCalledWith: '',
-      send: function(arg) {
-        this.sendCalledWith = arg;
-      },
-      redirectCalledWith: '',
-      redirect: function(arg) {
-        this.redirectCalledWith = arg;
-      }
-    };
-    this.stub(request, 'post').yields(null, { statusCode: ok }, { id: "stub" });
-    UserController.createUser(req, res);
-    expect(res.sendCalledWith).to.contain('');
-    expect(res.redirectCalledWith).to.not.contain(errorMessage);
-  }));
+  describe('when successful', () => {
+    it('does not send an error if it is passed a 201 status code', sandboxed(function() {
+      this.stub(request, 'post').yields(null, { statusCode: ok }, { id: "stub" });
+      UserController.createUser(req, res);
+      expect(res.sendCalledWith).to.contain('');
+      expect(res.redirectCalledWith).to.not.contain(errorMessage);
+    }));
+  });
+  describe('when unsuccessful', () => {
+    it('responds with an error if it is passed a 403 status code', sandboxed(function() {
+      this.stub(request, 'post').yields(null, { statusCode: error });
+      UserController.createUser(req, res);
+      expect(res.sendCalledWith).to.contain(errorMessage);
+      res.sendCalledWith = '';
+    }));
+  });
 });
 
 describe("getting all of a user's listngs", () => {
-  let req;
-  beforeEach(() => {
-    req = {
-      session: {
-        passport: {
-          user: sinon.stub()
-        }
-      }
-    };
-  });
-
   it('makes a get request to the API wrapping the DB', sandboxed(function() {
-    let res = {
-      sendCalledWith: '',
-      send: function(arg) {
-        this.sendCalledWith = arg;
-      }
-    };
     this.stub(request, 'get');
     UserController.getUserListings(req, res);
     expect(request.get).to.have.been.calledOnce;
   }));
-  it('responds with an error if it is passed a 403 status code', sandboxed(function() {
-    let res = {
-      sendCalledWith: '',
-      send: function(arg) {
-        this.sendCalledWith = arg;
-      }
-    };
-    this.stub(request, 'get').yields(null, { statusCode: error });
-    UserController.getUserListings(req, res);
-    expect(res.sendCalledWith).to.contain(errorMessage);
-  }));
-  it('does not send an error if it is passed a 201 status code', sandboxed(function() {
-    let res = {
-      sendCalledWith: '',
-      send: function(arg) {
-        this.sendCalledWith = arg;
-      },
-      renderCalledWith: '',
-      render: function(arg) {
-        this.renderCalledWith = arg;
-      }
-    };
-    let listings = {};
-    this.stub(request, 'get').yields(null, { statusCode: ok }, JSON.stringify(listings));
-    UserController.getUserListings(req, res);
-    expect(res.sendCalledWith).to.contain('');
-    expect(res.sendCalledWith).to.not.contain(errorMessage);
-  }));
+  describe('when successful', () => {
+    it('does not send an error if it is passed a 201 status code', sandboxed(function() {
+      let listings = {};
+      this.stub(request, 'get').yields(null, { statusCode: ok }, JSON.stringify(listings));
+      UserController.getUserListings(req, res);
+      expect(res.sendCalledWith).to.contain('');
+      expect(res.sendCalledWith).to.not.contain(errorMessage);
+    }));
+  });
+  describe('when unsuccessful', () => {
+    it('responds with an error if it is passed a 403 status code', sandboxed(function() {
+      this.stub(request, 'get').yields(null, { statusCode: error });
+      UserController.getUserListings(req, res);
+      expect(res.sendCalledWith).to.contain(errorMessage);
+      res.sendCalledWith = '';
+    }));
+  });
 });
 
 describe('getting all inbound booking requests', () => {
-  let req;
-  beforeEach(() => {
-  req = {
-    session: {
-      passport: {
-        user: stub
-      }
-    },
-    route: {
-      path: stub
-    }
-  };
-  });
-
   it('makes a get request to the API wrapping the DB', sandboxed(function() {
-    let res = {
-      sendCalledWith: '',
-      send: function(arg) {
-        this.sendCalledWith = arg;
-      }
-    };
     this.stub(request, 'get');
     UserController.getAllBookingRequests(req, res);
     expect(request.get).to.have.been.calledOnce;
   }));
-  it('responds with an error if it is passed a 403 status code', sandboxed(function() {
-    let res = {
-      sendCalledWith: '',
-      send: function(arg) {
-        this.sendCalledWith = arg;
-      }
-    };
-    this.stub(request, 'get').yields(null, { statusCode: error });
-    UserController.getAllBookingRequests(req, res);
-    expect(res.sendCalledWith).to.contain(errorMessage);
-  }));
-  it('does not send an error if it is passed a 201 status code', sandboxed(function() {
-    let res = {
-      sendCalledWith: '',
-      send: function(arg) {
-        this.sendCalledWith = arg;
-      },
-      renderCalledWith: '',
-      render: function(arg) {
-        this.renderCalledWith = arg;
-      }
-    };
-    let bookingRequest = {};
-    this.stub(dateHelper);
-    this.stub(request, 'get').yields(null, { statusCode: ok }, JSON.stringify(bookingRequest));
-    UserController.getAllBookingRequests(req, res);
-    expect(res.sendCalledWith).to.contain('');
-    expect(res.sendCalledWith).to.not.contain(errorMessage);
-  }));
+  describe('when successful', () => {
+    it('does not send an error if it is passed a 201 status code', sandboxed(function() {
+      let bookingRequest = {};
+      this.stub(dateHelper);
+      this.stub(request, 'get').yields(null, { statusCode: ok }, JSON.stringify(bookingRequest));
+      UserController.getAllBookingRequests(req, res);
+      expect(res.sendCalledWith).to.contain('');
+      expect(res.sendCalledWith).to.not.contain(errorMessage);
+    }));
+  });
+  describe('when unsuccessful', () => {
+    it('responds with an error if it is passed a 403 status code', sandboxed(function() {
+      this.stub(request, 'get').yields(null, { statusCode: error });
+      UserController.getAllBookingRequests(req, res);
+      expect(res.sendCalledWith).to.contain(errorMessage);
+      res.sendCalledWith = '';
+    }));
+  });
 });

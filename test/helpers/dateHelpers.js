@@ -58,5 +58,5 @@ function convertToDashedFormat(date) {
 }
 
 function incrementDay(date, count) {
-  return moment(date).add(count, 'd');
+  return moment(date, 'YYYY-MM-DD').add(count, 'd');
 }
