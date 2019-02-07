@@ -23,7 +23,7 @@ a:link, a:visited {
   text-decoration: none;
 }
 
-#welcome {
+#welcome, fieldset {
   font-family: 'Noto Sans', sans-serif;
   font-size: 18px;
   color: #ffffff;
@@ -31,4 +31,43 @@ a:link, a:visited {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+fieldset {
+  width: 350px;
+  border: 1px solid #605B56;
+  border-radius: 10px;
+}
+
+legend {
+  padding 10px 20px;
+  text-align: left;
+}
+
+input {
+  width: 300px;
+  font-size: 100%;
+  color: #ffffff;
+  background-color: #000034;
+  border: 1px solid #605B56;
+  border-radius: 5px;
+  padding: 5px;
+  display: block;
+}
+
+label {
+  font-size: 14px;
+}
+
+button {
+  font-size: 14px;
+  border-radius: 4px;
+  background-color: #605B56;
+  color: white;
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: #ffffff;
+  color: #605B56;
 }
