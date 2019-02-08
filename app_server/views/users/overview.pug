@@ -1,18 +1,36 @@
 extends ../layout.pug
+block header
+  head
+    link(rel="stylesheet", type="text/css", href="/stylesheets/profile.css")
+    link(rel="stylesheet", href="https://use.fontawesome.com/releases/v5.7.1/css/all.css",
+integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr", crossorigin="anonymous")
+
 block nav
-  a#view-listings-nav(href="/listings") View Listings
+  nav
+    a#sign-out-nav(href="/") SIGN OUT
+    a#view-listings-nav(href="/listings") View Listings
 
 block content
-  p#message #{welcomeMessage}
-  br
-  section#user-listing-section
+  section(class="user-properties" class="split" class="left")
     h1 Your Properties
-    br
-    a#view-listings(href="/users/" + userId + "/listings") Your Properties
-    br
-    a#add-listing(href="/listings/new") Add Listing
-    br
-    a#inbound-booking-requests(href="/users/" + userId + "/listings/bookingRequests") Booking Requests On Your Properties
-  section#user-trips-section
-    h1 Your Trips
-    a#outbound-booking-requests(href="/users/" + userId + "/bookingRequests") Booking Requests You've Made
+    a#view-listings(href="/users/" + userId + "/listings")
+      div
+        i(class="fas fa-igloo")
+        h3 Your Properties
+    a#add-listing(href="/listings/new")
+      div
+        i(class="fas fa-plus")
+        h3 Add A Property
+    a#inbound-booking-requests(href="/users/" + userId + "/listings/bookingRequests")
+      div
+        i(class="fas fa-tags")
+        h3 Booking Requests
+  section(class="user-trips" class="split" class="right")
+    h1#right-heading Your Trips
+    a#outbound-booking-requests(href="/users/" + userId + "/bookingRequests")
+      div(class="right-div")
+        i(class="fas fa-user-tag")
+        h3 Your Booking Requests
+
+block footer
+  footer
