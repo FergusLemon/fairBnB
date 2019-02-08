@@ -2,6 +2,7 @@ body {
   margin: 0;
   background: url("/images/layout.jpeg") repeat-x left top;
   background-size: 50%;
+  overscroll-behavior: none;
 }
 
 nav {
@@ -11,6 +12,7 @@ nav {
   background-color: #000034;
   font-family: 'Nunito', sans-serif;
   position: fixed;
+  top: 0px;
   z-index: 10;
 }
 
@@ -89,4 +91,15 @@ button:hover {
   top: 70%;
   left: 43%;
   transform: translate(-50%, -50%);
+}
+
+footer {
+  margin: 0;
+  height: 45px;
+  width: 100%;
+  background-color: #000034;
+  font-family: 'Nunito', sans-serif;
+  position: fixed;
+  z-index: 10;
+  bottom: 0px;
 }
