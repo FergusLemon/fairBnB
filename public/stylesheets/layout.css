@@ -7,8 +7,11 @@ body {
 nav {
   margin: 0;
   height: 45px;
+  width: 100%;
   background-color: #000034;
   font-family: 'Nunito', sans-serif;
+  position: fixed;
+  z-index: 10;
 }
 
 nav a {
@@ -51,7 +54,7 @@ legend {
   text-align: left;
 }
 
-input {
+input, textarea {
   width: 300px;
   font-size: 14px;
   color: #ffffff;
@@ -69,14 +72,14 @@ label {
 button {
   font-size: 14px;
   border-radius: 4px;
-  background-color: #605B56;
-  color: #ffffff;
+  background-color: #ffffff;
+  color: #605B56;
   transition-duration: 0.4s;
 }
 
 button:hover {
-  background-color: #ffffff;
-  color: #605B56;
+  background-color: #605B56;
+  color: #ffffff;
 }
 
 #error-message {
