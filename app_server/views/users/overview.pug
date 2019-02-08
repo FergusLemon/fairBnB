@@ -14,21 +14,21 @@ block content
   section(class="user-properties" class="split" class="left")
     h1 Your Properties
     a#view-listings(href="/users/" + userId + "/listings")
-      div
+      div(class="mini-container")
         i(class="fas fa-igloo")
         h3 Your Properties
     a#add-listing(href="/listings/new")
-      div
+      div(class="mini-container")
         i(class="fas fa-plus")
         h3 Add A Property
     a#inbound-booking-requests(href="/users/" + userId + "/listings/bookingRequests")
-      div
+      div(class="mini-container")
         i(class="fas fa-tags")
         h3 Booking Requests
   section(class="user-trips" class="split" class="right")
     h1#right-heading Your Trips
     a#outbound-booking-requests(href="/users/" + userId + "/bookingRequests")
-      div(class="right-div")
+      div(class="right-div", class="mini-container")
         i(class="fas fa-user-tag")
         h3 Your Booking Requests
 

@@ -1,11 +1,19 @@
 extends ../layout.pug
+block header
+  head
+    link(rel="stylesheet", type="text/css", href="/stylesheets/listings.css")
+
 block nav
-  a#view-listings-nav(href="/listings") View Listings
+  nav
+    a#sign-out-nav(href="/") SIGN OUT
+    a#view-listings-nav(href="/listings") View Listings
 
 block content
-  each listing, index in listings
-    a(id="listing-"+index, href="/listings/" + listing._id)
-      article(id=index)
-        h4(id="name-"+index)= "Name: " + listing.name
-        p(id="description-"+index)= "Description: " + listing.description
-        p(id="price-"+index)= "Price Per Night: " + listing.price
+  div(class="container")
+    each listing, index in listings
+      a(id="listing-"+index, href="/listings/" + listing._id)
+        article(class="column", id=index)
+          img(id="image-"+index, class="image", src=listing.image.url, alt="A photo of the property")
+          h4(id="name-"+index)= "Name: " + listing.name
+          p(id="description-"+index)= "Description: " + listing.description
+          p(id="price-"+index)= "Price Per Night: " + listing.price
