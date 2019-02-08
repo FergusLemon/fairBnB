@@ -35,6 +35,20 @@ body {
   margin: 50px 20px;
 }
 
+.individual-listing {
+  margin: 50px 20px;
+}
+
+label {
+  font-family: 'Nunito', sans-serif;
+  font-size: 24px;
+  color: #605B56;
+}
+h4, p {
+  font-family: 'Noto Sans', sans-serif;
+  color: #000000;
+}
+
 #date-range {
   width: 175px;
 }
