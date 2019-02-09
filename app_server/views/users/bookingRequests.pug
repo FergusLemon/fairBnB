@@ -1,8 +1,12 @@
 extends ../layout.pug
 block header
+  head
+    link(rel="stylesheet", type="text/css", href="/stylesheets/bookings.css")
 
 block nav
-  a#view-listings-nav(href="/listings") View Listings
+  nav
+    a#sign-out-nav(href="/") Sign Out
+    a#view-listings-nav(href="/listings") View Listings
 
 block content
   table#inbound-booking-requests
@@ -11,7 +15,10 @@ block content
       th Property Name
       th Start Date
       th End Date
-      th Received
+      if inbound
+        th Received
+      else
+        th Sent
       th Status
       if inbound
         th Approve
