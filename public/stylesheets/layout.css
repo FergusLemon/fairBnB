@@ -79,9 +79,16 @@ button {
   transition-duration: 0.4s;
 }
 
-button:hover {
+button:hover:enabled {
   background-color: #605B56;
   color: #ffffff;
+}
+
+button:disabled {
+  background-color: #f9ae42;
+  color: #ffffff;
+  opacity: 0.4;
+  cursor: not-allowed;
 }
 
 #error-message {
