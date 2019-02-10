@@ -1,7 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var ctrlMain = require('../controllers/main');
+var mainController = require('../controllers/main');
 
-router.get('/', ctrlMain.index);
+router.get('/', mainController.index);
+
+router.get('/signout', mainController.signOut);
 
 module.exports = router;
