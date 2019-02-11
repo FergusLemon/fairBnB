@@ -4,6 +4,8 @@
 
 A web application built according to the client specifications listed below to mimic a very basic Air BnB type website. Users can sign up, browse properties, add properties of their own for others to view, send booking requests to owners for dates when the property is available to rent. This project was completed as part of the Makers Academy course and the motivation for building it was to get experience writing Javascript as well as using different technologies such as Node, Express and Mongo DB and different testing frameworks and tools such as Mocha, Sinon and TestCafe. Open issues and thoughts on how to improve the project have been outlined in the Issues section.
 
+![FairBnB Front End screenshots](/public/images/fairbnb.jpg)
+
 ### Client Specifications
 
 #### Headline specifications
