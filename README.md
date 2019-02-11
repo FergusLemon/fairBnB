@@ -24,9 +24,9 @@ Travis CI was chosen for continuous integration testing on this project.
 ##### Database 
    - MongoDB with Mongoose as the ORM.
    
-#### Other
-   - Dan Grossman's date range picker was used to allow user's to select a date range for a booking request on a property and also to block out dates for which the property was unavailable.  It comes with good documentation and I found it very easy to work with and integrate.  It is [avaialble here](https://github.com/dangrossman/daterangepicker), give it a star if you like it.
-   - Cloudinary was used as a cloud service for storing images uploaded by the user (an image of their property).  After looking at various options (restricting users to small images and storing directly in Mongo or larger images using GridFS) the simplicity of the Cloudinary solution won over.  [This superb blog post](https://medium.freecodecamp.org/how-to-allow-users-to-upload-images-with-node-express-mongoose-and-cloudinary-84cefbdff1d9) by Glyn Lewington is all you need to get up and running and no time. When a user doesn't upload an image a stock image is used, the photo I chose was taken by [Sarah Trummer](https://www.pexels.com/@sarah-trummer-155385?utm_content=attributionCopyText&utm_medium=referral&utm_source=pexels) and available for use on the [Pexels website](https://www.pexels.com/photo/microphotography-of-orange-and-blue-house-miniature-on-brown-snail-s-back-955793/?utm_content=attributionCopyText&utm_medium=referral&utm_source=pexels).
+##### Other
+   - Dan Grossman's date range picker was used to allow user's to select a date range for a booking request on a property and also to block out dates for which the property was unavailable.  It comes with good documentation and I found it easy to work with and integrate.  It is [avaialble here](https://github.com/dangrossman/daterangepicker), give it a star if you like it.
+   - Cloudinary was used as a cloud service for storing images uploaded by the user (an image of their property).  After looking at various options (restricting users to small images and storing directly in Mongo or larger images using GridFS) the simplicity of the Cloudinary solution won over.  [This superb blog post](https://medium.freecodecamp.org/how-to-allow-users-to-upload-images-with-node-express-mongoose-and-cloudinary-84cefbdff1d9) by Glyn Lewington is all you need to get up and running in no time. When a user doesn't upload an image a stock image is used, the photo I chose was taken by [Sarah Trummer](https://www.pexels.com/@sarah-trummer-155385?utm_content=attributionCopyText&utm_medium=referral&utm_source=pexels) and available for use on the [Pexels website](https://www.pexels.com/photo/microphotography-of-orange-and-blue-house-miniature-on-brown-snail-s-back-955793/?utm_content=attributionCopyText&utm_medium=referral&utm_source=pexels).
 
 ### Testing
 ##### Tools
@@ -64,4 +64,3 @@ Travis CI was chosen for continuous integration testing on this project.
    - A user requests to book their space;
    - Their request to book a space is confirmed; and
    - Their request to book a space is denied.
-10. A 'chat' functionality once a space has been booked, allowing users whose space-booking request has been confirmed to chat with the user that owns that space.
