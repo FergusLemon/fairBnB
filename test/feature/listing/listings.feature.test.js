@@ -1,5 +1,6 @@
 'use strict';
 import { Selector } from 'testcafe';
+import { clickAddListing } from '../../helpers/testCafeHelpers';
 import { createNewListing } from '../../helpers/testCafeHelpers';
 import { signUp } from '../../helpers/testCafeHelpers';
 const path = require('path');
@@ -8,9 +9,9 @@ const databaseHelper = require(path.join(HOMEDIR, 'app_api', 'models', 'db'));
 const mongoose = require('mongoose');
 const Factory = require(path.join(HOMEDIR, 'test', 'helpers', 'factories'));
 const userOne = Factory.validUserOne();
-const name = "Name: Casa Test";
-const description = "Description: A nice test casa.";
-const price = "Price Per Night: 100";
+const name = "Casa Test";
+const description = "A nice test casa.";
+const price = "100";
 const startDate = "2019-12-25";
 const endDate = "2019-12-31";
 
@@ -18,11 +19,10 @@ fixture `Listings Page`
   .page `http://localhost:3000/listings/new`
   .beforeEach( async t => {
     await signUp(userOne, t)
-    await t
-      .click('#add-listing')
+    await clickAddListing(t)
     await createNewListing(t)
     await t
-      .click('#view-listings')
+      .click('#view-listings-nav')
     })
   .afterEach(async t => {
     databaseHelper.dropCollection('users');

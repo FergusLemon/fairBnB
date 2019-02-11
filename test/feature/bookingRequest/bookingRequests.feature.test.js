@@ -1,8 +1,11 @@
 'use strict';
 import { Selector } from 'testcafe';
+import { signIn } from '../../helpers/testCafeHelpers';
 import { bookingRequestSetUp } from '../../helpers/testCafeHelpers';
 import { makeBookingRequest } from '../../helpers/testCafeHelpers';
 import { signInNavigateToBookingRequests } from '../../helpers/testCafeHelpers';
+import { clickOutboundBookingRequests } from '../../helpers/testCafeHelpers';
+import { clickInboundBookingRequests } from '../../helpers/testCafeHelpers';
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..', '..');
 const databaseHelper = require(path.join(HOMEDIR, 'app_api', 'models', 'db'));
@@ -33,21 +36,29 @@ fixture `Booking Requests`
 
   test('The user should be able to see booking requests they have made', async t => {
     await makeBookingRequest(t)
+    await clickOutboundBookingRequests(t)
     await t
-      .click('#outbound-booking-requests')
       .expect(Selector('#booking-request-0').exists).ok();
   })
 
   test('A property owner should see booking requests on their property', async t => {
     await makeBookingRequest(t)
-    await signInNavigateToBookingRequests(userOne, t)
+    await t
+      .navigateTo('http://localhost:3000')
+      .click('#sign-in')
+    await signIn(userOne, t)
+    await clickInboundBookingRequests(t)
     await t
       .expect(Selector('#booking-request-0').exists).ok();
   })
 
   test('A property owner can approve or decline a booking request', async t => {
     await makeBookingRequest(t)
-    await signInNavigateToBookingRequests(userOne, t)
+    await t
+      .navigateTo('http://localhost:3000')
+      .click('#sign-in')
+    await signIn(userOne, t)
+    await clickInboundBookingRequests(t)
     await t
       .expect(Selector('#approve-request-0').exists).ok()
       .expect(Selector('#decline-request-0').exists).ok();

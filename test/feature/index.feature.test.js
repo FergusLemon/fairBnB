@@ -11,7 +11,7 @@ fixture `Homepage Test`
 
   test('Has a sign up link', async t => {
     await t
-      .expect(Selector('#sign-up').innerText).eql("SIGN UP");
+      .expect(Selector('#sign-up').innerText).eql("Sign Up");
   });
 
   test('Sign up links takes a user to the new user registration page', async t => {

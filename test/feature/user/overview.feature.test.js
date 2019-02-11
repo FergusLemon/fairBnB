@@ -28,13 +28,13 @@ fixture `User Overview Page`
 
   test("Has an overview of options available to the user", async t => {
     await t
-      .expect(Selector('#add-listing').innerText).eql("Add Listing")
+      .expect(Selector('#add-listing').innerText).eql("Add A Property")
       .expect(Selector('#view-listings').innerText).eql("Your Properties")
-      .expect(Selector('#inbound-booking-requests').innerText).eql("Booking Requests On Your Properties");
+      .expect(Selector('#inbound-booking-requests').innerText).eql("Booking Requests");
   });
 
   test("A user can see listings when they click on the 'view listings link'", async t => {
     await t
-      .click('#view-listings')
+      .click('#view-listings-nav')
       .expect(Selector('#name-0').exists).ok()
   });
