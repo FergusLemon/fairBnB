@@ -1,25 +1,27 @@
 extends ../layout.pug
+block header
+  head
+    link(rel="stylesheet", type="text/css", href="/stylesheets/newListing.css")
 
 block nav
-  a#view-listings-nav(href="/listings") View Listings
+  nav
+    a#sign-out-nav(href="/signout") Sign Out
+    a#view-listings-nav(href="/listings") View Listings
 
 block content
   form#new-listing(action="/listings", method="POST", enctype="multipart/form-data")
-    label(for="name") Name
-    br
+    label(for="name") Property Name
     input#name(type="text", name="name")
-    br
-    label(for="price") Price Per Night
-    br
-    input#price(type="number", name="price")
-    br
     label(for="description") Describe Your Property
-    br
     textarea#description(name="description")
-    br
-    label(for="Image") Add A Photo
-    br
-    input#image(type="file", name="image")
-    br
+    label(for="price") Price Per Night
+    input#price(type="number", name="price")
+    label Add A Photo
+    label(for="image", class="photo-button") Choose photo
+    p#filename No photo chosen
+    input#image(type="file", class="hidden", name="image")
     br
     button#create-listing(type="submit") Create Listing
+
+
+  script(type="text/javascript" src="/javascripts/filenameGrabber.js")

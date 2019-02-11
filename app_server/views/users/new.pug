@@ -1,23 +1,25 @@
 extends ../layout.pug
+block header
+  head
+    link(rel="stylesheet", type="text/css", href="/stylesheets/index.css")
 
 block nav
-  a#sign-in(href="/session/new") Sign In
+  nav
+    a#sign-in(href="/session/new") Sign In
 
 block content
   form(action="/users", method="POST")
-    label(for="username") Username
-    input#username(type="email", name="username")
-    br
-    label(for="password") Password
-    input#password(type="password", name="password")
-    br
-    label(for="firstname") First Name
-    input#firstname(type="text", name="firstname")
-    br
-    label(for="lastname") Last name
-    input#lastname(type="text", name="lastname")
-    br
-    label(for="phoneNumber") Phone Number
-    input#phoneNumber(type="text", name="phoneNumber")
-    br
-    button#register(type="submit") Register
+    fieldset
+      legend Come On In
+      label(for="username") Username
+      input#username(type="email", name="username")
+      label(for="password") Password
+      input#password(type="password", name="password")
+      label(for="firstname") First Name
+      input#firstname(type="text", name="firstname")
+      label(for="lastname") Last name
+      input#lastname(type="text", name="lastname")
+      label(for="phoneNumber") Phone Number
+      input#phoneNumber(type="text", name="phoneNumber")
+      br
+      button#register(type="submit") Register

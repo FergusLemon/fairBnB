@@ -1,0 +1,112 @@
+body {
+  margin: 0;
+  background: url("/images/layout.jpeg") repeat-x left top;
+  background-size: 50%;
+  overscroll-behavior: none;
+}
+
+nav {
+  margin: 0;
+  height: 45px;
+  width: 100%;
+  background-color: #000034;
+  font-family: 'Nunito', sans-serif;
+  position: fixed;
+  top: 0px;
+  z-index: 10;
+}
+
+nav a {
+  font-size: 16px;
+  float: right;
+  margin: 15px;
+  padding-right: 10px;
+}
+
+h1 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 36px;
+  color: #ffffff;
+}
+
+a:link, a:visited {
+  color: #ffffff;
+  text-decoration: none;
+}
+
+#welcome, fieldset {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 18px;
+  color: #ffffff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+fieldset {
+  font-size: 24px;
+  width: 315px;
+  border: 1px solid #605B56;
+  border-radius: 10px;
+}
+
+legend {
+  padding 10px 20px;
+  text-align: left;
+}
+
+input, textarea {
+  width: 300px;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #000034;
+  border: 1px solid #605B56;
+  border-radius: 5px;
+  padding: 5px;
+  display: block;
+}
+
+label {
+  font-size: 14px;
+}
+
+button {
+  font-size: 14px;
+  border-radius: 4px;
+  background-color: #ffffff;
+  color: #605B56;
+  transition-duration: 0.4s;
+}
+
+button:hover:enabled {
+  background-color: #605B56;
+  color: #ffffff;
+}
+
+button:disabled {
+  background-color: #f9ae42;
+  color: #ffffff;
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+#error-message {
+  font-family: 'Noto Sans', sans-serif;
+  color: #ffffff;
+  position: absolute;
+  top: 70%;
+  left: 43%;
+  transform: translate(-50%, -50%);
+}
+
+footer {
+  margin: 0;
+  height: 45px;
+  width: 100%;
+  background-color: #000034;
+  font-family: 'Nunito', sans-serif;
+  position: fixed;
+  z-index: 10;
+  bottom: 0px;
+}

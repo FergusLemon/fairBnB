@@ -1,5 +1,6 @@
 'use strict';
 import { Selector } from 'testcafe';
+import assert from 'assert';
 const path = require('path');
 const HOMEDIR = path.join(__dirname, '..', '..');
 
@@ -58,8 +59,7 @@ export async function createNewListing(t) {
 
 export async function bookingRequestSetUp(owner, requestor, t) {
   await signUp(owner, t)
-  await t
-    .click('#add-listing')
+  await clickAddListing(t)
   await createNewListing(t)
   await t
     .navigateTo('http://localhost:3000')
@@ -74,7 +74,6 @@ export async function makeBookingRequest(t) {
     .selectText(dateField)
     .typeText(dateField, dateRange)
     .click('#name')
-    .expect(dateField.value).eql(dateRange)
     .click('#booking-request');
 }
 
@@ -83,6 +82,35 @@ export async function signInNavigateToBookingRequests(user, t) {
     .navigateTo('http://localhost:3000')
     .click('#sign-in')
   await signIn(user, t)
+  await clickInboundBookingRequests(t)
+}
+
+export async function clickInboundBookingRequests(t) {
+  const section = await Selector('.user-properties');
   await t
-  .click('#inbound-booking-requests');
+    .hover(section)
+    .click(section, {
+      offsetX: 65,
+      offsetY: 335
+    })
+}
+
+export async function clickAddListing(t) {
+  const section = await Selector('.user-properties');
+  await t
+    .hover(section)
+    .click(section, {
+      offsetX: 65,
+      offsetY: 235
+    })
+}
+
+export async function clickOutboundBookingRequests(t) {
+  const section = await Selector('.user-trips');
+  await t
+    .hover(section)
+    .click(section, {
+      offsetX: 130,
+      offsetY: 180
+    })
 }

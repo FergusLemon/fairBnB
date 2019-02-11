@@ -1,0 +1,54 @@
+body {
+  background: #4a90e2;
+}
+
+.container {
+  height: 90%;
+  width: 90%;
+  margin: 50px 20px;
+  padding-right: 10px;
+  padding-left: 10px;
+  overflow: scroll;
+}
+
+.column {
+  width: 29.3%;
+  margin: 2%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  float: left;
+}
+
+.column>* {
+  padding-left: 20px;
+}
+
+.image {
+  width: 250px;
+  height:250px;
+}
+
+.property-image {
+  width: 400px;
+  height: 400px;
+  float: left;
+  margin: 50px 20px;
+}
+
+.individual-listing {
+  margin: 50px 20px;
+}
+
+label {
+  font-family: 'Nunito', sans-serif;
+  font-size: 24px;
+  color: #605B56;
+}
+h4, p {
+  font-family: 'Noto Sans', sans-serif;
+  color: #000000;
+}
+
+#date-range {
+  width: 175px;
+}

@@ -1,0 +1,60 @@
+.split {
+  height: 100%;
+  width: 50%;
+  position: fixed;
+  top: 0;
+  padding-top: 40px;
+  padding-left: 50px;
+  z-index: 1;
+}
+
+.left {
+  background: #4a90e2;
+  left: 0px;
+}
+
+.right {
+  background: #ffffff;
+  right: 0px;
+}
+
+.right > h1 {
+  color: #605B56;
+}
+
+.right > a {
+  color: #605B56;
+}
+
+.mini-container {
+  position: relative;
+  height: 65px;
+  width: 400px;
+  border: 1px solid #F4FAFF;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+.right-div {
+  border: 1px solid #605B56;
+}
+
+div > h3 {
+  position: absolute;
+  bottom: 0px;
+  padding-left: 10px;
+  margin-bottom: 2px;
+}
+
+i {
+  font-size: 50px;
+  position: absolute;
+  left: 335px;
+  bottom: 0px;
+  padding-right: 10px;
+  margin-bottom: 2px;
+}
+
+.fa-plus {
+  left: 340px;
+}

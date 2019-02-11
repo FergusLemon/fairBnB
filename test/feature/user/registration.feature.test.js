@@ -53,8 +53,14 @@ fixture `New User Registration Test`
     await fillOutNewUserForm(userOne, t)
     await t
       .click('#register')
-      .expect(Selector('#add-listing').exists).ok()
-      .click('#add-listing')
+      .expect(Selector('#add-listing').exists).ok();
+    const section = await Selector('.user-properties');
+    await t
+      .hover(section)
+      .click(section, {
+        offsetX: 65,
+        offsetY: 235
+      })
     await createNewListing(t)
     await t
       .expect(Selector('#view-listings').exists).ok();
