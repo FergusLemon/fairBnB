@@ -1,5 +1,21 @@
 # FairBnB
 
+### Overview
+
+A web application built according to the client specifications listed below to mimic a very basic Air BnB type website. Users can sign up, browse properties, add properties of their own for others to view, send booking requests to owners for dates when the property is available to rent. This project was completed as part of the Makers Academy course and the motivation for building it was to get experience writing Javascript as well as using different technologies such as Node, Express and Mongo DB and different testing frameworks and tools such as Mocha, Sinon and TestCafe. Open issues and thoughts on how to improve the project have been outlined in the Issues section.
+
+### Client Specifications
+
+#### Headline specifications
+
+1. Any signed-up user can list a new space.
+2. Users can list multiple spaces.
+3. Users should be able to name their space, provide a short description of the space, and a price per night.
+4. Users should be able to offer a range of dates where their space is available.
+5. Any signed-up user can request to hire any space for one night, and this should be approved by the user that owns that space.
+6. Nights for which a space has already been booked should not be available for users to book.
+7. Until a user has confirmed a booking request, that space can still be booked for that night.
+
 ### Build Status & Coverage
 [![Build Status](https://travis-ci.org/FergusLemon/fairBnB.svg?branch=master)](https://travis-ci.org/FergusLemon/fairBnB)
 [![Coverage Status](https://coveralls.io/repos/github/FergusLemon/fairBnB/badge.svg)](https://coveralls.io/github/FergusLemon/fairBnB)
@@ -25,8 +41,8 @@ Travis CI was chosen for continuous integration testing on this project.
    - MongoDB with Mongoose as the ORM.
    
 ##### Other
-   - Dan Grossman's date range picker was used to allow user's to select a date range for a booking request on a property and also to block out dates for which the property was unavailable.  It comes with good documentation and I found it easy to work with and integrate.  It is [avaialble here](https://github.com/dangrossman/daterangepicker), give it a star if you like it.
-   - Cloudinary was used as a cloud service for storing images uploaded by the user (an image of their property).  After looking at various options (restricting users to small images and storing directly in Mongo or larger images using GridFS) the simplicity of the Cloudinary solution won over.  [This superb blog post](https://medium.freecodecamp.org/how-to-allow-users-to-upload-images-with-node-express-mongoose-and-cloudinary-84cefbdff1d9) by Glyn Lewington is all you need to get up and running in no time. When a user doesn't upload an image a stock image is used, the photo I chose was taken by [Sarah Trummer](https://www.pexels.com/@sarah-trummer-155385?utm_content=attributionCopyText&utm_medium=referral&utm_source=pexels) and available for use on the [Pexels website](https://www.pexels.com/photo/microphotography-of-orange-and-blue-house-miniature-on-brown-snail-s-back-955793/?utm_content=attributionCopyText&utm_medium=referral&utm_source=pexels).
+   - Dan Grossman's date range picker was used to allow user's to select a date range for a booking request on a property and also to block out dates for which the property was unavailable.  It comes with good documentation and it was easy to work with and integrate.  It is [avaialble here](https://github.com/dangrossman/daterangepicker), give it a star if you like it.
+   - Cloudinary was used as a cloud service for storing images uploaded by the user (an image of their property).  After looking at various options (restricting users to small images and storing directly in Mongo or larger images using GridFS) the simplicity of the Cloudinary solution won over.  [This superb blog post](https://medium.freecodecamp.org/how-to-allow-users-to-upload-images-with-node-express-mongoose-and-cloudinary-84cefbdff1d9) by Glyn Lewington is all you need to get up and running in no time. When a user doesn't upload an image a stock image is used, the photo chosen was taken by [Sarah Trummer](https://www.pexels.com/@sarah-trummer-155385?utm_content=attributionCopyText&utm_medium=referral&utm_source=pexels) and available for use on the [Pexels website](https://www.pexels.com/photo/microphotography-of-orange-and-blue-house-miniature-on-brown-snail-s-back-955793/?utm_content=attributionCopyText&utm_medium=referral&utm_source=pexels).
 
 ### Testing
 ##### Tools
@@ -35,32 +51,3 @@ Travis CI was chosen for continuous integration testing on this project.
   - Postman for testing routes and API calls, on top of unit tests.
   - Istanbul/NYC for code coverage.
   - Travis CI for continous integration testing.
-
-
-### Client Specifications
-
-#### Headline specifications
-
-1. Any signed-up user can list a new space.
-2. Users can list multiple spaces.
-3. Users should be able to name their space, provide a short description of the space, and a price per night.
-4. Users should be able to offer a range of dates where their space is available.
-5. Any signed-up user can request to hire any space for one night, and this should be approved by the user that owns that space.
-6. Nights for which a space has already been booked should not be available for users to book.
-7. Until a user has confirmed a booking request, that space can still be booked for that night.
-
-#### Nice-to-haves
-
-8. Users should receive an email whenever one of the following happens:
-   - They sign up;
-   - They create a space;
-   - They update a space;
-   - A user requests to book their space;
-   - They confirm a request;
-   - They request to book a space;
-   - Their request to book a space is confirmed; and
-   - Their request to book a space is denied.
-9. Users should receive a text message to a provided number whenever one of the following happens:
-   - A user requests to book their space;
-   - Their request to book a space is confirmed; and
-   - Their request to book a space is denied.
