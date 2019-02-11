@@ -25,9 +25,23 @@ A web application built according to the client specifications listed below to m
 
 Travis CI was chosen for continuous integration testing on this project.
 
+### Installation
+
+- [ ] **Step 1** - Clone this repository by copying the link available at the top of this webpage in the green button labelled 'Clone or Download'. 
+- [ ] **Step 2** - Open up a Terminal window (Mac OS) and run `git clone <link>` where `<link>` is what you copied in the previous step.
+```
+>> git clone https://github.com/FergusLemon/fairbnb.git
+```
+- [ ] **Step 3** - `cd` into the cloned directory.
+- [ ] **Step 4** - Run the command `npm start` which will start a server listening on port 3000 and get a test database connection set up.  Open up your favourite browser and go to `http://localhost:3000`.  From there you can play with the functionality of the application.  Please note that the app has only been tested with respect to Google Chrome.
+
+### Tests
+Unit tests can be located in the `test` directory and can be run from the `fairBnB` directory using the command `npm test`. Feature tests can be found in the `test/feature` directory and can be run from the same home directory as the unit tests using the command `npm run featureTest`.  Open issues on this project include improving the code coverage, extending feature tests to Firefox, following up with the TestCafe team with a query on selecting non-visible elements without the need to use the size of the element and its position relative to the viewport and finally improve testing of AJAX calls.
+
 ### Technologies Used
 ##### Languages
    - Javascript
+   - CSS
 
 ##### Back-end
    - NodeJs as the runtime environment and software platform to build the app and start up a web-server.
@@ -35,7 +49,7 @@ Travis CI was chosen for continuous integration testing on this project.
    
 ##### Front-end
    - Pug for HTML templating.
-   - jQuery for some AJAX calls.
+   - jQuery for AJAX calls.
             
 ##### Database 
    - MongoDB with Mongoose as the ORM.
@@ -51,3 +65,8 @@ Travis CI was chosen for continuous integration testing on this project.
   - Postman for testing routes and API calls, on top of unit tests.
   - Istanbul/NYC for code coverage.
   - Travis CI for continous integration testing.
+
+### License
+MIT (c) 2019 Fergus Lemon
+
+See `MIT.LICENSE` for more detail.
