@@ -10,6 +10,11 @@ module.exports.getSignUpForm = (req, res) => {
   res.render('users/new');
 };
 
+module.exports.getSignInForm = function(req, res) {
+  let loginError = req.flash('error');
+  res.render('users/login', { message: loginError });
+};
+
 module.exports.getUserHomepage = (req, res) => {
   let userId = req.session.passport.user;
   res.render('users/overview', { userId: userId });
@@ -32,7 +37,7 @@ module.exports.createUser = (req, res) => {
       if (response.statusCode === 201) {
         passport.authenticate('local-signIn')(req, res, () => {
           let id = req.session.passport.user;
-          res.redirect('session/' + id);
+          res.redirect('users/' + id);
         });
       } else {
         res.send("Something went wrong with the database.");

@@ -9,6 +9,8 @@ const passport = require(path.join(HOMEDIR, 'app_server', 'auth'));
 
 router.get('/new', userController.getSignUpForm);
 
+router.get('/', userController.getSignInForm);
+
 router.post('/', userController.createUser);
 
 router.get('/:userId', userController.getUserHomepage);
