@@ -14,6 +14,6 @@ block content
       a(id="listing-"+index, href="/listings/" + listing._id)
         article(class="column", id=index)
           img(id="image-"+index, class="image", src=listing.image.url, alt="A photo of the property")
-          h4(id="name-"+index)= "Name: " + listing.name
-          p(id="description-"+index)= "Description: " + listing.description
-          p(id="price-"+index)= "Price Per Night: " + listing.price
+          h4(id="name-"+index)= listing.name
+          p(id="description-"+index)= listing.description
+          p(id="price-"+index)= listing.price
