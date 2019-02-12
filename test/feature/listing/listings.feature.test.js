@@ -64,5 +64,5 @@ fixture `Listings Page`
   test("When signed in a user should not see 'sign in' or 'sign up' links in the nav bar", async t => {
     await t
       .expect(Selector('#sign-in').exists).notOk()
-      .expect(Selector('#sign-out').exists).notOk();
+      .expect(Selector('#sign-up').exists).notOk();
   })

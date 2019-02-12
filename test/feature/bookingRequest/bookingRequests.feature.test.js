@@ -44,7 +44,7 @@ fixture `Booking Requests`
   test('A property owner should see booking requests on their property', async t => {
     await makeBookingRequest(t)
     await t
-      .navigateTo('http://localhost:3000')
+      .click('#sign-out')
       .click('#sign-in')
     await signIn(userOne, t)
     await clickInboundBookingRequests(t)
@@ -55,7 +55,7 @@ fixture `Booking Requests`
   test('A property owner can approve or decline a booking request', async t => {
     await makeBookingRequest(t)
     await t
-      .navigateTo('http://localhost:3000')
+      .click('#sign-out')
       .click('#sign-in')
     await signIn(userOne, t)
     await clickInboundBookingRequests(t)
