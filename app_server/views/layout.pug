@@ -9,8 +9,12 @@ html
     header
     block nav
       nav
-       a#sign-in(href="/users") Sign In
-       a#sign-up(href="/users/new") Sign Up
+       if loggedIn
+        a#sign-out(href="/signout") Sign Out
+        a#view-listings-nav(href="/listings") View Listings
+       else
+        a#sign-in(href="/users") Sign In
+        a#sign-up(href="/users/new") Sign Up
     block content
       div#welcome Find your dream place
   footer
