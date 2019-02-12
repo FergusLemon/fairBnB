@@ -15,7 +15,8 @@ fixture `User Login`
   .page `http://localhost:3000`
   .beforeEach(async t => {
     await signUp(userOne, t)
-    await t.navigateTo('http://localhost:3000')
+    await t
+      .click('#sign-out');
     console.log("Test User added to database.");
   })
   .afterEach(async t => {

@@ -3,11 +3,6 @@ block header
   head
     link(rel="stylesheet", type="text/css", href="/stylesheets/listings.css")
 
-block nav
-  nav
-    a#sign-out-nav(href="/signout") Sign Out
-    a#view-listings-nav(href="/listings") View Listings
-
 block content
   div(class="container")
     each listing, index in userListings

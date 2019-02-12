@@ -32,6 +32,13 @@ app.use(express.static('public'));
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'pug');
 
+app.use(function(req, res, next) {
+  if (req.session.passport !== undefined) {
+    res.locals.loggedIn = true;
+  }
+  next();
+});
+
 app.use('/', server);
 app.use('/users', user);
 app.use('/listings', listing);
@@ -40,5 +47,6 @@ app.use('/api', api);
 app.use('/api/users', apiUser);
 app.use('/api/listings', apiListing);
 app.use('/api/bookingRequests', apiBookingRequest);
+
 
 module.exports = app;

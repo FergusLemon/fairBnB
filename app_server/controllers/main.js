@@ -8,6 +8,7 @@ module.exports.authenticateUser = (req, res) => {
 };
 
 module.exports.signOut = (req, res) => {
-  req.logout();
-  res.redirect('/');
+  req.session.destroy((err) => {
+    res.redirect('/');
+  })
 };
