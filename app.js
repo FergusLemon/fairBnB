@@ -35,6 +35,7 @@ app.set('view engine', 'pug');
 app.use(function(req, res, next) {
   if (req.session.passport !== undefined) {
     res.locals.loggedIn = true;
+    res.locals.userId = req.session.passport.user;
   }
   next();
 });

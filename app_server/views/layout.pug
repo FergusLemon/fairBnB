@@ -12,6 +12,7 @@ html
        if loggedIn
         a#sign-out(href="/signout") Sign Out
         a#view-listings-nav(href="/listings") View Listings
+        a#your-home(href="/users/" + userId) Your Home
        else
         a#sign-in(href="/users") Sign In
         a#sign-up(href="/users/new") Sign Up
