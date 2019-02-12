@@ -1,4 +1,4 @@
-window.onload = function() {
+window.addEventListener("load", function(event) {
   let imageFile = document.getElementById("image");
   let toDisplay = document.getElementById("filename");
   imageFile.onchange = function() {
@@ -7,4 +7,4 @@ window.onload = function() {
     let trimmedFilename = rawFilename.match(regex);
     toDisplay.textContent = trimmedFilename;
   };
-};
+}, false);

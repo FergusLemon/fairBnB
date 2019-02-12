@@ -8,7 +8,8 @@ block content
     label(for="name") Property Name
     input#name(type="text", name="name")
     label(for="description") Describe Your Property
-    textarea#description(name="description")
+    textarea#description(name="description", maxlength="160")
+    p#character-count
     label(for="price") Price Per Night
     input#price(type="number", name="price", min="0" oninput="validity.valid||(value='');")
     label Add A Photo
@@ -20,3 +21,4 @@ block content
 
 
   script(type="text/javascript" src="/javascripts/filenameGrabber.js")
+  script(type="text/javascript" src="/javascripts/characterCountChecker.js")
