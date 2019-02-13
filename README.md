@@ -55,6 +55,7 @@ Unit tests can be located in the `test` directory and can be run from the `fairB
             
 ##### Database 
    - MongoDB with Mongoose as the ORM.
+   - Redis for session storage.
    
 ##### Other
    - Dan Grossman's date range picker was used to allow user's to select a date range for a booking request on a property and also to block out dates for which the property was unavailable.  It comes with good documentation and it was easy to work with and integrate.  It is [avaialble here](https://github.com/dangrossman/daterangepicker), give it a star if you like it.
