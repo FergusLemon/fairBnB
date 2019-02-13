@@ -19,7 +19,8 @@ block content
         label(for="description") Descritption
         p(id="description")= listing.description
         label(for="price") Price Per Night
-        p(id="price")= listing.price
+        - var price = listing.price.toLocaleString();
+        p(id="price")= "£" + price + " GBP"
         br
         form(action=listing._id + "/bookingRequest/new", method="POST")
           input(id="date-range" name="dates")

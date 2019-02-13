@@ -44,7 +44,7 @@ fixture `Listings Page`
     await t
       .expect(nameElement.innerText).eql(name)
       .expect(descriptionElement.innerText).eql(description)
-      .expect(priceElement.innerText).eql(price);
+      .expect(priceElement.innerText).contains(price);
   });
 
   test('When there other listings, the user can see those also', async t => {
@@ -58,7 +58,7 @@ fixture `Listings Page`
       .click('#name-0')
       .expect(Selector('#name').innerText).eql(name)
       .expect(Selector('#description').innerText).eql(description)
-      .expect(Selector('#price').innerText).eql(price);
+      .expect(Selector('#price').innerText).contains(price);
   })
 
   test("When signed in a user should not see 'sign in' or 'sign up' links in the nav bar", async t => {
