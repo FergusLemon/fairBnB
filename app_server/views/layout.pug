@@ -4,9 +4,12 @@ html
     title FairBnB
     link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Noto+Sans|Nunito")
     link(rel="stylesheet", type="text/css", href="/stylesheets/layout.css")
+    link(rel="stylesheet", type="text/css", href="/stylesheets/errors.css")
     block header
   body
     header
+      if dbError
+        div(id="error-message")=dbError
     block nav
       nav
        if loggedIn
