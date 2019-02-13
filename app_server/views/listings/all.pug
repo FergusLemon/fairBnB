@@ -11,4 +11,5 @@ block content
           img(id="image-"+index, class="image", src=listing.image.url, alt="A photo of the property")
           h4(id="name-"+index)= listing.name
           p(id="description-"+index)= listing.description
-          p(id="price-"+index)= listing.price
+          - var price = listing.price.toLocaleString();
+          p(id="price-"+index)= "£" + price + " GBP/night"
