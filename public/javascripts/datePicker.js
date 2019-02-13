@@ -3,19 +3,16 @@ $(document).ready(function () {
   let pathname = window.location.pathname,
       listingIdMatch = pathname.match(/\w+$/),
       listingId = listingIdMatch[0];
-  getUnavailableDates(listingId, blockDates);
+  getUnavailableDates(listingId);
 });
 
-function getUnavailableDates(listingId, callback) {
-  $.ajax({
+function getUnavailableDates(listingId) {
+  let promise = $.ajax({
     type: 'GET',
-    url: '/api/listings/' + listingId,
-    success: callback,
-    error: function(err) {
-      console.log(err);
-    }
-  });
-}
+    url: '/api/listings/' + listingId
+    })
+    .then(blockDates);
+};
 
 function blockDates(result) {
   let unavailableDates = result.datesUnavailable,
