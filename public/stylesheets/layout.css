@@ -91,15 +91,6 @@ button:disabled {
   cursor: not-allowed;
 }
 
-#error-message {
-  font-family: 'Noto Sans', sans-serif;
-  color: #ffffff;
-  position: absolute;
-  top: 70%;
-  left: 43%;
-  transform: translate(-50%, -50%);
-}
-
 footer {
   margin: 0;
   height: 45px;

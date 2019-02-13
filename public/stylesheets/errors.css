@@ -1,0 +1,22 @@
+#error-message, #login-error-message {
+  font-family: 'Noto Sans', sans-serif;
+  color: #ffffff;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+#error-message {
+  background-color: #000034;
+  border-radius: 5px;
+  width: 335px;
+  top: 80%;
+  left: 50%;
+  padding: 4px;
+  text-align: center;
+  overflow-wrap: normal;
+}
+
+#login-error-message {
+  top: 72%;
+  left: 50%;
+}
