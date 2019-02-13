@@ -40,7 +40,8 @@ module.exports.createListing = function(req, res) {
         let id = body.owner;
         res.redirect('users/' + id);
       } else {
-        res.send("Something went wrong with the database.");
+        req.flash('error', 'Sorry, something went wrong. Please make sure you have entered the correct details.');
+        res.render('listings/new', { dbError: req.flash('error') });
       }
   });
 };
@@ -55,7 +56,8 @@ module.exports.getAllListings = function(req, res) {
         let listings = JSON.parse(body);
         res.render('listings/all', { listings: listings });
       } else {
-        res.send("Something went wrong with the database.");
+        req.flash('error', 'Sorry, there was an error on our side.');
+        res.render('users/' + res.locals.userId, { dbError: req.flash('error') });
       }
   });
 };
@@ -71,7 +73,8 @@ module.exports.getListing = function(req, res) {
         let listing = JSON.parse(body);
         res.render('listings/individual', { listing: listing });
       } else {
-        res.send("Something went wrong with the database.");
+        req.flash('error', 'Sorry, there was an error on our side.');
+        res.render('listings/all', { dbError: req.flash('error') });
       }
   });
 };
@@ -91,7 +94,8 @@ module.exports.updateListing = function(req, res) {
       if (response.statusCode === 201) {
         res.send(body);
       } else {
-        res.send("Something went wrong with the database.");
+        req.flash('error', 'Sorry, there was an error on our side.');
+        res.render('listings/' + listingId, { dbError: req.flash('error') });
       }
   });
 };

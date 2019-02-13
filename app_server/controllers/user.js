@@ -40,7 +40,8 @@ module.exports.createUser = (req, res) => {
           res.redirect('users/' + id);
         });
       } else {
-        res.send("Something went wrong with the database.");
+        req.flash('error', 'Sorry, something went wrong. Please make sure you have entered the correct details.');
+        res.render('users/new', { dbError: req.flash('error') });
       }
     }
   );
@@ -57,7 +58,8 @@ module.exports.getUserListings = (req, res) => {
         let userListings = JSON.parse(body);
         res.render('users/listings', { userListings: userListings });
       } else {
-        res.send("Something went wrong with the database.");
+        req.flash('error', 'Sorry, there was an error on our side.');
+        res.render('users/' + res.locals.userId, { dbError: req.flash('error') });
       }
   });
 };
@@ -81,7 +83,8 @@ module.exports.getAllBookingRequests = (req, res) => {
         let prettifiedRequests = dateHelper.prettify(bookingRequests);
         res.render('users/bookingRequests', { bookingRequests: prettifiedRequests, query: query });
       } else {
-        res.send("Something went wrong with the database.");
+        req.flash('error', 'Sorry, there was an error on our side.');
+        res.render('users/' + res.locals.userId, { dbError: req.flash('error') });
       }
   });
 };

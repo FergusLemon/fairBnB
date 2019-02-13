@@ -31,7 +31,8 @@ let req = {
     params: {
       bookingRequestId: id,
       listingId: id
-    }
+    },
+    flash: stub
 };
 let res = {
   sendCalledWith: '',
@@ -41,6 +42,13 @@ let res = {
   redirectCalledWith: '',
   redirect: function(arg) {
     this.redirectCalledWith = arg;
+  },
+  renderCalledWith: '',
+  render: function(arg) {
+    this.renderCalledWith = arg;
+  },
+  locals: {
+    userId: id
   }
 };
 
@@ -63,7 +71,8 @@ describe('creating a booking request', () => {
     it('responds with an error if it is passed a 403 status code back from the API', sandboxed(function() {
       this.stub(request, 'post').yields(null, { statusCode: error });
       BookingRequestController.createBookingRequest(req, res);
-      expect(res.sendCalledWith).to.contain(errorMessage);
+      expect(res.renderCalledWith).to.include('listings/');
+      expect(res.renderCalledWith).to.not.include('success');
     }));
   });
 });
@@ -79,7 +88,8 @@ describe('updating a booking request', () => {
     it('responds with an error', sandboxed(function() {
       this.stub(request, 'put').yields(null, { statusCode: error });
       BookingRequestController.updateBookingRequest(req, res);
-      expect(res.sendCalledWith).to.contain(errorMessage);
+      expect(res.renderCalledWith).to.include('users/' + res.locals.userId + '/listings/bookingRequests');
+      expect(res.renderCalledWith).to.not.include('success');
     }));
   });
 
@@ -104,7 +114,8 @@ describe('retrieving all booking requests for an individual listing', () => {
     it('responds with an error if it is passed a 403 status code back from the API', sandboxed(function() {
       this.stub(request, 'get').yields(null, { statusCode: error });
       BookingRequestController.getAllMatchingRequests(req, res);
-      expect(res.sendCalledWith).to.contain(errorMessage);
+      expect(res.renderCalledWith).to.include('listings/');
+      expect(res.renderCalledWith).to.not.include('success');
     }));
   });
   describe('when successful', () => {
