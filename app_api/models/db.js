@@ -23,11 +23,11 @@ module.exports.closeConnection = async () => {
   })
 };
 
-db.on('connected', function() {
+db.once('connected', function() {
   console.log("Mongoose conncected to " + mongoDbUri );
 });
 
-db.on('disconnected', function() {
+db.once('disconnected', function() {
   console.log("Mongoose disconnected");
 });
 
