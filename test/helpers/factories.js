@@ -56,5 +56,11 @@ module.exports.status = (status) => {
 };
 
 module.exports.message = (message) => {
-  return message === "err" ? "Something went wrong" : "All Okay";
+  if (message === "err") {
+    return "Something went wrong";
+  } else if (message === "dbErr") {
+    return "Sorry there was an error";
+  } else {
+    return "Please make sure you have entered the correct details.";
+  }
 };

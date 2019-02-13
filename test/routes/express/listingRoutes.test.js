@@ -17,6 +17,7 @@ const errorMessage = Factory.message('err');
 const listingDetails = Factory.validListing();
 const stub = sinon.stub();
 const id = 1;
+const newErrorMessage = Factory.message('new');
 chai.use(sinonChai);
 let req = {
   body: {
@@ -32,7 +33,8 @@ let req = {
   },
   session: {
     passport: { user: id }
-  }
+  },
+  flash: stub
 };
 let res = {
   sendCalledWith: '',
@@ -46,6 +48,9 @@ let res = {
   redirectCalledWith: '',
   redirect: function(arg) {
     this.redirectCalledWith = arg;
+  },
+  locals: {
+    userId: id
   }
 };
 
@@ -70,7 +75,7 @@ describe('creating a listing', () => {
     it('responds with an error if it is passed a 403 status code back from the API', sandboxed(function() {
       this.stub(request, 'post').yields(null, { statusCode: error });
       ListingController.createListing(req, res);
-      expect(res.sendCalledWith).to.contain(errorMessage);
+      expect(res.renderCalledWith).to.include('listings/new', { dbError: newErrorMessage });
       res.sendCalledWith = '';
     }));
   });
@@ -98,7 +103,8 @@ describe('retrieving all listings', () => {
     it('responds with an error if it is passed a 403 status code back from the API', sandboxed(function() {
       this.stub(request, 'get').yields(null, { statusCode: error });
       ListingController.getAllListings(req, res);
-      expect(res.sendCalledWith).to.contain(errorMessage);
+      expect(res.renderCalledWith).to.contain('users/' + res.locals.userId);
+      expect(res.renderCalledWith).to.not.include('success');
       res.sendCalledWith = '';
     }));
   });
@@ -124,7 +130,8 @@ describe('retrieving an individual listing', () => {
     it('responds with an error if it is passed a 403 status code back from the API', sandboxed(function() {
       this.stub(request, 'get').yields(null, { statusCode: error });
       ListingController.getListing(req, res);
-      expect(res.sendCalledWith).to.contain(errorMessage);
+      expect(res.renderCalledWith).to.include('listings/all');
+      expect(res.renderCalledWith).to.not.include('success');
     }));
   });
 });
@@ -148,7 +155,8 @@ describe('updating an individual listing', () => {
     it('responds with an error if it is passed a 403 status code back from the API', sandboxed(function() {
       this.stub(request, 'put').yields(null, { statusCode: error });
       ListingController.updateListing(req, res);
-      expect(res.sendCalledWith).to.contain(errorMessage);
+      expect(res.renderCalledWith).to.include('listings/' + id);
+      expect(res.renderCalledWith).to.not.include('success');
     }));
   });
 });

@@ -14,8 +14,11 @@ const dateHelper = require(path.join(HOMEDIR, 'test', 'helpers', 'dateHelpers'))
 const ok = Factory.status('ok');
 const error = Factory.status('err');
 const errorMessage = Factory.message('err');
+const dbErrorMessage = Factory.message('dbErr');
+const newErrorMessage = Factory.message('new');
 const userDetails = Factory.validUserOne();
 const stub = sinon.stub();
+const id = 1;
 chai.use(sinonChai);
 
 let req = {
@@ -27,7 +30,8 @@ let req = {
   },
   route: {
     path: stub
-  }
+  },
+  flash: stub
 };
 let res = {
   sendCalledWith: '',
@@ -41,6 +45,9 @@ let res = {
   redirectCalledWith: '',
   redirect: function(arg) {
     this.redirectCalledWith = arg;
+  },
+  locals: {
+    userId: id
   }
 };
 
@@ -62,7 +69,7 @@ describe('creating a user', () => {
     it('responds with an error if it is passed a 403 status code', sandboxed(function() {
       this.stub(request, 'post').yields(null, { statusCode: error });
       UserController.createUser(req, res);
-      expect(res.sendCalledWith).to.contain(errorMessage);
+      expect(res.renderCalledWith).to.contain('users/new', { dberror: newErrorMessage });
       res.sendCalledWith = '';
     }));
   });
@@ -87,7 +94,7 @@ describe("getting all of a user's listngs", () => {
     it('responds with an error if it is passed a 403 status code', sandboxed(function() {
       this.stub(request, 'get').yields(null, { statusCode: error });
       UserController.getUserListings(req, res);
-      expect(res.sendCalledWith).to.contain(errorMessage);
+      expect(res.renderCalledWith).to.contain('users/' + id, { dbError: dbErrorMessage });
       res.sendCalledWith = '';
     }));
   });
@@ -113,7 +120,7 @@ describe('getting all inbound booking requests', () => {
     it('responds with an error if it is passed a 403 status code', sandboxed(function() {
       this.stub(request, 'get').yields(null, { statusCode: error });
       UserController.getAllBookingRequests(req, res);
-      expect(res.sendCalledWith).to.contain(errorMessage);
+      expect(res.renderCalledWith).to.contain('users/' + id, { dbError: dbErrorMessage });
       res.sendCalledWith = '';
     }));
   });

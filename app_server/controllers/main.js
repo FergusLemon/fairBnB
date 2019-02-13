@@ -10,5 +10,5 @@ module.exports.authenticateUser = (req, res) => {
 module.exports.signOut = (req, res) => {
   req.session.destroy((err) => {
     res.redirect('/');
-  })
+  });
 };

@@ -26,7 +26,8 @@ module.exports.createBookingRequest = function(req, res) {
         let id = body.requestor;
         res.redirect('http://localhost:3000/users/' + id);
       } else {
-        res.send("Something went wrong with the database.");
+        req.flash('error', 'Sorry, there was an error on our side.');
+        res.render('listings/' + req.params.listingId, { dbError: req.flash('error') });
       }
   });
 };
@@ -48,7 +49,8 @@ module.exports.updateBookingRequest = function(req, res) {
       if (response.statusCode === 201) {
         res.send(body);
       } else {
-        res.send("Something went wrong with the database.");
+        req.flash('error', 'Sorry, there was an error on our side.');
+        res.render('users/' + res.locals.userId + '/listings/bookingRequests', { dbError: req.flash('error') });
       }
   });
 };
@@ -65,7 +67,8 @@ module.exports.getAllMatchingRequests = function(req, res) {
       if (response.statusCode === 201) {
         res.send(body);
       } else {
-        res.send("Something went wrong with the database.");
+        req.flash('error', 'Sorry, there was an error on our side.');
+        res.render('listings/' + listingId, { dbError: req.flash('error') });
       }
   });
 };
