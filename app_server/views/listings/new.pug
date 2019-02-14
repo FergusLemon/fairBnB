@@ -12,6 +12,7 @@ block content
     p#character-count
     label(for="price") Price Per Night
     input#price(type="number", name="price", min="0" oninput="validity.valid||(value='');")
+    p#price-warning
     label Add A Photo
     label(for="image", class="photo-button") Choose photo
     p#filename No photo chosen
@@ -21,3 +22,4 @@ block content
 
   script(type="text/javascript" src="/javascripts/filenameGrabber.js")
   script(type="text/javascript" src="/javascripts/characterCountChecker.js")
+  script(type="text/javascript" src="/javascripts/numberChecker.js")
