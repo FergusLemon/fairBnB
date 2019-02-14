@@ -57,5 +57,12 @@ app.use('/api/users', apiUser);
 app.use('/api/listings', apiListing);
 app.use('/api/bookingRequests', apiBookingRequest);
 
+app.use(function(req, res, next) {
+  return res.status(404).send('Sorry, we could not find the page you are looking for:  ' + req.url );
+});
+
+app.use(function(err, req, res, next) {
+  return res.status(500).send({ error: err });
+});
 
 module.exports = app;
