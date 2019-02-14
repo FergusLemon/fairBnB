@@ -58,11 +58,18 @@ app.use('/api/listings', apiListing);
 app.use('/api/bookingRequests', apiBookingRequest);
 
 app.use(function(req, res, next) {
-  return res.status(404).send('Sorry, we could not find the page you are looking for:  ' + req.url );
+  let err = new Error(`${req.ip} tried to reach ${req.originalUrl}`);
+  err.statusCode = 404;
+  err.message = "Sorry, we couldn't find the page you are looking for: " + req.url;
+  next(err);
 });
 
 app.use(function(err, req, res, next) {
-  return res.status(500).send({ error: err });
+  if (!err.statusCode) {
+    err.statusCode = 500;
+    err.message = "Sorry, something went wrong on our side.";
+    }
+  res.render('errorPage', { status: err.statusCode, message: err.message });
 });
 
 module.exports = app;

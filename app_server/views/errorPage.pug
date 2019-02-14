@@ -1,0 +1,8 @@
+extends ./layout.pug
+block header
+  head
+    link(rel="stylesheet", type="text/css", href="/stylesheets/listings.css")
+    link(rel="stylesheet", type="text/css", href="/stylesheets/errors.css")
+
+block content
+  div(class="error")=message
