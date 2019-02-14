@@ -10,15 +10,15 @@ block nav
 block content
   form(action="/users", method="POST")
     fieldset
-      legend Come On In
-      label(for="username") Username
-      input#username(type="email", name="username")
-      label(for="password") Password
-      input#password(type="password", name="password")
-      label(for="firstname") First Name
-      input#firstname(type="text", name="firstname")
-      label(for="lastname") Last name
-      input#lastname(type="text", name="lastname")
+      legend Welcome
+      label(for="username") Username*
+      input#username(type="email", name="username" required)
+      label(for="password") Password*
+      input#password(type="password", name="password" required)
+      label(for="firstname") First Name*
+      input#firstname(type="text", name="firstname" required)
+      label(for="lastname") Last name*
+      input#lastname(type="text", name="lastname" required)
       label(for="phoneNumber") Phone Number
       input#phoneNumber(type="text", name="phoneNumber")
       br
