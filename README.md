@@ -72,7 +72,7 @@ Unit tests can be located in the `test` directory and can be run from the `fairB
    - Bcrypt for encryption because it appears the best choice for the combination of excellent security and ease of use.
    - A REST API was built to interface with the application data because, amongst other things, it would make it easier to connect to an iOS app or React app if required.
    
-![FairBnB Deisgn screenshot](/public/images/design.jpg)
+![FairBnB Deisgn screenshot](/public/images/overview.jpg)
 
 
 ### License
