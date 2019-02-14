@@ -6,12 +6,12 @@ block header
 block content
   form#new-listing(action="/listings", method="POST", enctype="multipart/form-data")
     label(for="name") Property Name
-    input#name(type="text", name="name")
+    input#name(type="text", name="name", maxlength="20", required)
     label(for="description") Describe Your Property
-    textarea#description(name="description", maxlength="160")
+    textarea#description(name="description", maxlength="160", required)
     p#character-count
     label(for="price") Price Per Night
-    input#price(type="number", name="price", min="0" oninput="validity.valid||(value='');")
+    input#price(type="number", name="price", min="0", oninput="validity.valid||(value='');", max="15000", required)
     p#price-warning
     label Add A Photo
     label(for="image", class="photo-button") Choose photo

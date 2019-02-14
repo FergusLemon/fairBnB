@@ -2,6 +2,7 @@ extends ../layout.pug
 block header
   head
     link(rel="stylesheet", type="text/css", href="/stylesheets/index.css")
+    link(rel="stylesheet", type="text/css", href="/stylesheets/errors.css")
 
 block nav
   nav
@@ -12,14 +13,18 @@ block content
     fieldset
       legend Welcome
       label(for="username") Username*
-      input#username(type="email", name="username" required)
+      input#username(type="email", name="username", maxlength="30" required)
       label(for="password") Password*
-      input#password(type="password", name="password" required)
+      input#password(type="password", name="password", minlength="8",
+maxlength="32", required)
+      p#password-warning
       label(for="firstname") First Name*
-      input#firstname(type="text", name="firstname" required)
+      input#firstname(type="text", name="firstname", maxlength="20" required)
       label(for="lastname") Last name*
-      input#lastname(type="text", name="lastname" required)
+      input#lastname(type="text", name="lastname", maxlength="20" required)
       label(for="phoneNumber") Phone Number
-      input#phoneNumber(type="text", name="phoneNumber")
+      input#phoneNumber(type="text", name="phoneNumber", maxlength="15")
       br
       button#register(type="submit") Register
+
+  script(type="text/javascript" src="/javascripts/passwordChecker.js")
