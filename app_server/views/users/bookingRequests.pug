@@ -26,10 +26,11 @@ block content
         td= request.requestMadeDate
         td= request.status
         if inbound
+          - var data = { status: request.status, name: request.listing, info: request._id };
           td
-            button(id="approve-request-" + index, class="button", name="approve", data=request) Approve
+            button(id="approve-request-" + index, class="button", name="approve", data=data) Approve
           td
-            button(id="decline-request-" + index, class="button", name="decline", data=request) Decline
+            button(id="decline-request-" + index, class="button", name="decline", data=data) Decline
 
   script(type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js")
   script(type="text/javascript" src="/javascripts/updateRequests.js")

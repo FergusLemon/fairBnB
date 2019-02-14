@@ -52,7 +52,7 @@ module.exports.updateBookingRequest = (req, res) => {
     if (err) {
       sendJsonResponse(res, 400, err);
     } else {
-      sendJsonResponse(res, 201, { success: true });
+      sendJsonResponse(res, 201, { success: true, bookingRequest: bookingRequest });
     }
   });
 };

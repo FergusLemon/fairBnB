@@ -54,7 +54,7 @@ module.exports.datesInARange = function(start, end) {
 };
 
 function convertToDashedFormat(date) {
-  return moment(date, 'MMM Do YYYY').format('YYYY-MM-DD');
+  return moment(date, 'YYYY-MM-DD[T]HH:mm:ss.SSS[Z]').format('YYYY-MM-DD');
 }
 
 function incrementDay(date, count) {
