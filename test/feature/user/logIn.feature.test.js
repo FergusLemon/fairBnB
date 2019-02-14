@@ -33,7 +33,7 @@ fixture `User Login`
       .typeText(passwordField, 'n3WP@ssword')
       .click('#sign-in')
       .expect(Selector('#add-listing').exists).notOk()
-      .expect(Selector('#error-message').innerText).eql("Incorrect username.");
+      .expect(Selector('#login-error-message').innerText).eql("Incorrect username.");
   });
 
   test('An existing user can sign in', async t => {
@@ -52,7 +52,7 @@ fixture `User Login`
       .typeText(passwordField, "wrong password")
       .click('#sign-in')
       .expect(Selector('#add-listing').exists).notOk()
-      .expect(Selector('#error-message').innerText).eql("Incorrect password.");
+      .expect(Selector('#login-error-message').innerText).eql("Incorrect password.");
   });
 
   test('An existing user cannot sign in with the wrong username', async t => {
@@ -62,6 +62,6 @@ fixture `User Login`
       .typeText(passwordField, userOne.password)
       .click('#sign-in')
       .expect(Selector('#add-listing').exists).notOk()
-      .expect(Selector('#error-message').innerText).eql("Incorrect username.");
+      .expect(Selector('#login-error-message').innerText).eql("Incorrect username.");
   });
 
