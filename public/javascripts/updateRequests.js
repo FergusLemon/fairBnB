@@ -27,9 +27,11 @@ $((function () {
 }));
 
 function approveBookingRequest(bookingRequest) {
-  const userId = bookingRequest.owner,
-        listingId = bookingRequest.listing,
-        requestId = bookingRequest._id;
+  let path = window.location.pathname;
+  let regex = /(?=)\/users\/(\w+)(?<=)\/listings\//;
+  const userId = path.match(regex)[1],
+        listingId = bookingRequest.name,
+        requestId = bookingRequest.info;
   $.ajax({
     type: 'PUT',
     url: '/users/' + userId + '/listings/' + listingId + '/bookingRequests/' + requestId,
@@ -42,7 +44,7 @@ function approveBookingRequest(bookingRequest) {
     success: function(res) {
       console.log(res);
       if(res.success) {
-        addDatesToListing(bookingRequest);
+        addDatesToListing(res.bookingRequest);
       }
     },
     error: function(err) {
@@ -78,7 +80,7 @@ function checkForOtherBookingRequests(bookingRequest) {
 
 function declineBookingRequests(bookingRequests) {
   for ( let bookingRequest of bookingRequests ) {
-    let bookingRequestId = bookingRequest._id;
+    let bookingRequestId = bookingRequest._id || bookingRequest.info;
     $.ajax({
       type: 'PUT',
       url: '/bookingRequests/' + bookingRequestId,
