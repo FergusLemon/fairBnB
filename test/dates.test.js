@@ -7,9 +7,9 @@ const expect = chai.expect;
 
 describe('getting all dates within a range', () => {
   it('returns all dates between a start and end date', () => {
-    let start = 'Feb 21st 2019',
+    let start = '2019-02-21T00:00:00.000Z',
         convertedStart = '2019-02-21',
-        end = 'Feb 26th 2019',
+        end = '2019-02-26T00:00:00.000Z',
         convertedEnd = '2019-02-26',
         result = dateHelpers.datesInARange(start, end);
     expect(result.length).to.equal(6);
