@@ -3,8 +3,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const morgan = require('morgan');
-const winston = require('./config/winston');
 const path = require('path');
 const server = require('./app_server/routes/index');
 const user = require('./app_server/routes/user');
@@ -29,7 +27,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(morgan('combined', { stream: winston.stream }));
 app.use(session({ cookie: { maxAge: 60000 },
                   store: new RedisStore({ client: client, host: 'localhost', port: 6379, ttl: 260 }),
                   secret: secret,
