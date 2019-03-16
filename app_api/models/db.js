@@ -7,7 +7,7 @@ console.log("hello inside production");
   mongoDbUri = process.env.MONGODB_URI;
 }
 
-console.log(mongoDbURi);
+console.log(mongoDbUri);
 
 mongoose.connect(mongoDbUri, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;
