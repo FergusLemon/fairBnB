@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 
 let mongoDbUri = 'mongodb://localhost/TestFairBnB';
 if (process.env.NODE_ENV === 'production') {
-  mongoDbUri = 'mongodb://localhost/DevFairBnB';
+  mongoDbUri = process.env.MONGODB_URI;
 }
 
 mongoose.connect(mongoDbUri, { useNewUrlParser: true });
