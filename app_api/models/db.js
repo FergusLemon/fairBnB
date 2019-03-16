@@ -3,11 +3,8 @@ const mongoose = require('mongoose');
 
 let mongoDbUri = 'mongodb://localhost/TestFairBnB';
 if (process.env.NODE_ENV === 'production') {
-console.log("hello inside production");
   mongoDbUri = process.env.MONGODB_URI;
 }
-
-console.log(mongoDbUri);
 
 mongoose.connect(mongoDbUri, { useNewUrlParser: true });
 mongoose.Promise = global.Promise;

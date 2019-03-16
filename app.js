@@ -18,7 +18,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const redis = require('redis');
 const client = process.env.NODE_ENV === 'production'
-    ? redis.createClient(process.env.REDIS_URI)
+    ? redis.createClient(process.env.REDIS_URL)
     : redis.createClient();
 const RedisStore = require('connect-redis')(session);
 const { environment } = require('./config');
