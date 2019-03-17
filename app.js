@@ -17,11 +17,9 @@ const LocalStrategy = require('passport-local').Strategy;
 const flash = require('connect-flash');
 const session = require('express-session');
 const redis = require('redis');
-console.log(process.env.NODE_ENV === 'production');
 const client = process.env.NODE_ENV === 'production'
     ? redis.createClient(process.env.REDIS_URL)
     : redis.createClient();
-console.log(client);
 const RedisStore = require('connect-redis')(session);
 const { environment } = require('./config');
 const { secret } = require('./config');
