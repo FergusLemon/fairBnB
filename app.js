@@ -29,11 +29,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+if (process.env.NODE_ENV === 'test') {
 app.use(session({ cookie: { maxAge: 60000 },
                   store: new RedisStore({ client: client, host: 'localhost', port: 6379, ttl: 260 }),
                   secret: secret,
                   resave: false,
                   saveUninitialized: false}));
+}
 app.use(express.static('public'));
 app.use(flash());
 app.set('views', path.join(__dirname, 'app_server', 'views'));
