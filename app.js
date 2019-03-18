@@ -39,7 +39,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(session({ cookie: { maxAge: 60000 },
+app.use(session({ cookie: { maxAge: 900000 },
                   store: new RedisStore({ client: client, host: host, port: port, ttl: 260 }),
                   secret: secret,
                   resave: false,
@@ -75,10 +75,15 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
-  if (!err.statusCode) {
+  if (err instanceof TypeError) {
+    err.stateusCode = 500;
+    err.message = "Sorry, your session timed out, please sign in again.";
+  } else if (!err.statusCode)
+  {
     err.statusCode = 500;
-    err.message = "Sorry, something went wrong on our side. " + err;
-    }
+    err.message = `Sorry, something went wrong on our side. Please try and sign
+    in again.`;
+  }
   res.render('errorPage', { status: err.statusCode, message: err.message });
 });
 
