@@ -44,9 +44,15 @@ label {
   font-size: 24px;
   color: #605B56;
 }
+
 h4, p {
   font-family: 'Noto Sans', sans-serif;
   color: #000000;
+}
+
+.description {
+  max-width: 240px;
+  word-wrap: break-word;
 }
 
 #date-range {

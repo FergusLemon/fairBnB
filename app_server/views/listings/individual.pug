@@ -17,7 +17,7 @@ block content
         label(for="name") Name
         h4(id="name")= listing.name
         label(for="description") Descritption
-        p(id="description")= listing.description
+        p(class="description", id="description")= listing.description
         label(for="price") Price Per Night
         - var price = listing.price.toLocaleString();
         p(id="price")= "£" + price + " GBP"
