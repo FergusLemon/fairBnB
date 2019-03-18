@@ -24,7 +24,7 @@ module.exports.createBookingRequest = function(req, res) {
     (err, response, body) => {
       if (response.statusCode === 201) {
         let id = body.requestor;
-        res.redirect('http://localhost:3000/users/' + id);
+        res.redirect(server + '/users/' + id);
       } else {
         req.flash('error', 'Sorry, there was an error on our side.');
         res.render('listings/' + req.params.listingId, { dbError: req.flash('error') });
