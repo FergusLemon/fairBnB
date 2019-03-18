@@ -6,6 +6,7 @@ module.exports = {
   environment: process.env.NODE_ENV,
   server: process.env.SERVER,
   secret: process.env.SESSION_SECRET,
+  herokuHost: process.env.H_REDIS_HOST,
   cloudName: process.env.CLOUD_NAME,
   cloudApi: process.env.CLOUD_API,
   cloudSecret: process.env.CLOUD_SECRET,

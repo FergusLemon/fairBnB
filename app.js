@@ -4,6 +4,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
 const path = require('path');
+
 const server = require('./app_server/routes/index');
 const user = require('./app_server/routes/user');
 const listing = require('./app_server/routes/listing');
@@ -12,30 +13,38 @@ const api = require('./app_api/routes/index');
 const apiUser = require('./app_api/routes/user');
 const apiListing = require('./app_api/routes/listing');
 const apiBookingRequest = require('./app_api/routes/bookingRequest');
+
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const flash = require('connect-flash');
 const session = require('express-session');
+
+const { environment, secret, herokuHost } = require('./config');
 const redis = require('redis');
-const client = process.env.NODE_ENV === 'production'
-    ? redis.createClient(process.env.REDIS_URL)
-    : redis.createClient();
+let client, host, port;
+if (environment === 'production') {
+  client = redis.createClient(process.env.REDIS_URL);
+  host = herokuHost;
+  port = 15109;
+} else {
+  client = redis.createClient();
+  host = 'loclahost';
+  port = 6379;
+}
 const RedisStore = require('connect-redis')(session);
-const { environment } = require('./config');
-const { secret } = require('./config');
 
 require('./app_api/models/db');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
 app.use(passport.initialize());
 app.use(passport.session());
-if (process.env.NODE_ENV === 'test') {
 app.use(session({ cookie: { maxAge: 60000 },
-                  store: new RedisStore({ client: client, host: 'localhost', port: 6379, ttl: 260 }),
+                  store: new RedisStore({ client: client, host: host, port: port, ttl: 260 }),
                   secret: secret,
                   resave: false,
                   saveUninitialized: false}));
-}
+
 app.use(express.static('public'));
 app.use(flash());
 app.set('views', path.join(__dirname, 'app_server', 'views'));
