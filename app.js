@@ -28,7 +28,7 @@ if (environment === 'production') {
   port = 15109;
 } else {
   client = redis.createClient();
-  host = 'loclahost';
+  host = 'localhost';
   port = 6379;
 }
 const RedisStore = require('connect-redis')(session);
@@ -77,7 +77,7 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   if (!err.statusCode) {
     err.statusCode = 500;
-    err.message = "Sorry, something went wrong on our side.";
+    err.message = "Sorry, something went wrong on our side. " + err;
     }
   res.render('errorPage', { status: err.statusCode, message: err.message });
 });
