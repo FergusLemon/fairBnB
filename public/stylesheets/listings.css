@@ -52,6 +52,7 @@ h4, p {
 
 .description {
   max-width: 240px;
+  min-height: 150px;
   word-wrap: break-word;
 }
 
