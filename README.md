@@ -13,6 +13,8 @@ Travis CI was chosen for continuous integration testing on this project.
 
 A web application built according to the client specifications listed below to mimic a very basic Air BnB type website. Users can sign up, browse properties, add properties of their own for others to view, send booking requests to owners for dates when the property is available to rent. This project was completed as part of the Makers Academy course and the motivation for building it was to get experience writing Javascript as well as using different technologies such as Node, Express and Mongo DB and different testing frameworks and tools such as Mocha, Sinon and TestCafe. Open issues and thoughts on how to improve the project have been outlined in the Issues section.
 
+The site is hosted on Heroku, available [here](https://fairbnbuk.herokuapp.com/).
+
 ![FairBnB Front End screenshots](/public/images/fairbnb.jpg)
 
 ### Client Specifications
@@ -35,7 +37,8 @@ A web application built according to the client specifications listed below to m
 >> git clone https://github.com/FergusLemon/fairbnb.git
 ```
 - [ ] **Step 3** - `cd` into the cloned directory.
-- [ ] **Step 4** - Run the command `npm start` which will start a server listening on port 3000 and get a test database connection set up.  Open up your favourite browser and go to `http://localhost:3000`.  From there you can play with the functionality of the application.  Please note that the app has only been tested with respect to Google Chrome.
+- [ ] **Step 4** - You will need to set up your own environment variable values for the properties shown in the `config.js` file otherwise you will run into errors.
+- [ ] **Step 5** - Run the command `npm start` which will start a server listening on port 3000 and get a test database connection set up.  Open up your favourite browser and go to `http://localhost:3000`.  From there you can play with the functionality of the application.  Please note that the app has only been tested with respect to Google Chrome.
 
 ### Tests
 Unit tests can be located in the `test` directory and can be run from the `fairBnB` directory using the command `npm test`. Feature tests can be found in the `test/feature` directory and can be run from the same home directory as the unit tests using the command `npm run featureTest`.  Open issues on this project include improving the code coverage, extending feature tests to Firefox, following up with the TestCafe team with a query on selecting non-visible elements without the need to use the size of the element and its position relative to the viewport and finally improve testing of AJAX calls.
